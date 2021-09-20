@@ -1,0 +1,231 @@
+body{
+    font-family : 'Copse', serif;
+    color : #44586e;
+}
+
+.pageForm {
+    /*min-width: 450px; */
+    /*width: 80%;*/
+    /*max-width: 600px;*/
+    height: 350px;
+    min-height: 750px;
+    max-height: 1000px;
+}
+
+
+.my_policeTitle{
+    font-family: 'Fredoka One', cursive;
+}
+
+.my_shadow{
+    box-shadow: 0px 2px 15px black;
+}
+
+.my_ColorPink{
+    color : #FF00FF !important;
+}
+
+.my_ColorGreen{
+    /*color : #34C924 !important;*/
+    color : black;
+}
+
+.my_ColorRed{
+    color : rgb(230, 78, 78) !important;
+}
+
+.my_ColorBlue{
+    color : #40E0D0 !important;
+}
+
+.my_ColorOrange{
+    color : rgb(247, 179, 91) !important;
+}
+
+.my_HeaderFontSize{
+    font-size:20px;
+}
+
+.my_HeightSizeMin{
+    /*min-height:780px;*/
+    min-height:500px;
+}
+
+.my_InputSize{
+    height: 60px !important;
+}
+
+hr{
+    border-color:green;
+}
+
+.offersBox{
+    height:200px;
+}
+
+/*========================================================
+                    SOCIAL
+========================================================*/
+.social-list {
+    padding-left: 0;
+}
+
+.social-list li {
+    list-style: none;
+    display: inline-block;
+    width: 42px;
+    height: 32px;
+    margin-right: 6px;
+    margin-top: 50px;
+}
+
+.social-icon i {
+    font-size: 25px;
+    color: white;
+}
+
+
+/*========================================================
+                    FOOTER
+========================================================*/
+footer {
+    padding: 30px;
+}
+
+#contact-left h3, #contact-right h3 {
+    font-size: 30px;
+}
+
+#contact-left, #contact-right {
+    padding: 15px;
+}
+
+#contact-left p {
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+#contact-info p {
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+
+form .contact-form, #send-btn button {
+    background: transparent;
+    border-radius: 0;
+    border-color: #fff;
+    font-size: 17px;
+    font-weight: 300;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+#send-btn button:hover {
+    color: black;
+    background: white;
+}
+
+
+#footer-bottom {
+    padding: 30px 0;
+}
+
+
+#footer-copyrights p {
+    margin-left: 12px;
+    font-size: 17px;
+}
+
+#footer-menu {
+    float: left;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+#footer-menu ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#footer-menu ul li {
+    display: inline-block;
+}
+
+#footer-menu a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+
+/*========================================================
+                    Offer Details
+========================================================*/
+
+#offerDetails {
+    margin-bottom: 10px;
+}
+
+#infos {
+    font-family : 'Copse', serif;
+    font-size: 17px;
+}
+
+#infos p {
+    padding: 1px;
+    margin-bottom: 10px;
+}
+
+
+#ownerInfosLeft p {
+    font-family : 'Copse', serif;
+    font-size: 17px;
+}
+
+#ownerInfosRight p {
+    font-family : 'Copse', serif;
+    font-size: 17px;
+}
+
+/*========================================================
+                    DASHBOARD
+========================================================*/
+
+#dashboard-left ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+
+#dashboard-left ul a {
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+    font-size: 17px;
+    font-weight: 300;
+}
+
+.dashboard_HeightSizeMin{
+    /*min-height:780px;*/
+    min-height:670px;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+/*========================================================
+                    IMAGES
+========================================================*/
+/*
+#offer-images {
+    margin: 0;
+}
+ */

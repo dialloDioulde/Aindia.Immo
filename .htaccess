@@ -1,0 +1,47 @@
+
+# On lance la récruture 
+RewriteEngine On 
+
+# On met en place la redirection de l'ensemble des pages vers Index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ index.php?page=$1
+
+# Gérér les Erreurs
+ErrorDocument 301 /aindiaInterim/index.php?page=error301
+ErrorDocument 302 /aindiaInterim/index.php?page=error302
+ErrorDocument 400 /aindiaInterim/index.php?page=error400
+ErrorDocument 401 /aindiaInterim/index.php?page=error401
+ErrorDocument 402 /aindiaInterim/index.php?page=error402
+ErrorDocument 403 /aindiaInterim/index.php?page=error403
+ErrorDocument 404 /aindiaInterim/index.php?page=error404
+ErrorDocument 500 /aindiaInterim/index.php?page=error500
+ErrorDocument 505 /aindiaInterim/index.php?page=error505
+
+# Empêcher le Listing des Dossiers
+Options All -Indexes
+
+# Protéger (Masquer) les Dossiers du Serveur
+#ServerSignature Off 
+
+# Activation des Liens Symboliques 
+#Options +FollowSmyLinks
+
+# Forcer l'Encodage des Fichiers Textes par défaut 
+AddDefaultCharset UTF-8 
+
+# Protection XSS, clickJacking et Mime-Type (Contre les Injections SQL ou Fichiers)
+#<ifModule mod_headers.c>
+#Header set X-XSS-Protection "1; mode=block"
+#Header always append X-Frame-Options SAMEORIGIN
+#Header set X-Content-Type-Options: "nosniff"
+#</ifModule>
+
+#RewriteCond %{REQUEST_METHOD} GET
+#RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+#RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+#RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+#RewriteRule .* - [F]
+
+
