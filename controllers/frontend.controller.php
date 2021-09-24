@@ -14,7 +14,7 @@ function getOffersViews() {
     $title = "Accueil";
     $description = "Page d'accueil et présentation des offres";
 
-    //$test = getImageOfOffer(10);
+    $offers = getOffers();
 
     require_once "views/frontend/offers/offers.view.php";
 }

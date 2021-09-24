@@ -7,15 +7,15 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link text-white" href="<?= URL ?>welcomeOffer" id="home">
-                    Accueil
+                    A.Immo
                 </a>
             </li>
             <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    A.Immo
+                    Services
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-white" href="<?= URL ?>a.immo">Qui Sommes Nous ?</a>
+                    <a class="dropdown-item text-dark" href="<?= URL ?>a.immo">Immobilier</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -23,8 +23,8 @@
                     Secteurs
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item perso_ColorOrangeMenu" href="<?= URL ?>offerCreateView">Immobilier</a>
-                    <a class="dropdown-item perso_ColorOrangeMenu" href="#">Éducation</a>
+                    <a class="dropdown-item perso_ColorOrangeMenu" href="<?= URL ?>dashboard">Admin</a>
+                    <a class="dropdown-item perso_ColorOrangeMenu" href="#">Annonces</a>
                 </div>
             </li>
         </ul>

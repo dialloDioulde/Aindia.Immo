@@ -63,7 +63,7 @@ function getImageOfOffer($offerId) {
     $request = $database->prepare($query);
     $request->bindValue(":offerId",$offerId,PDO::PARAM_INT);
     $request->execute();
-    $images = $request->fetch(PDO::FETCH_ASSOC);
+    $images = $request->fetchAll(PDO::FETCH_ASSOC);
     $request->closeCursor();
     return $images;
 }

@@ -6,6 +6,7 @@ const COLOR_TITLE_LEVEL_A_INTERIM_TEAM = "my_ColorGreen";
 
 // Constantes liées à la Connexion de la Base De Données
 /*
+
 const HOST_NAME = "dioulddiallo.mysql.db";
 const DATABASE_NAME = "dioulddiallo";
 const USER_NAME = "dioulddiallo";

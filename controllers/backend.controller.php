@@ -44,9 +44,8 @@ function getUserRegisterView()
             $subject = "Validation | Inscription ";
             $message = 'Bonjour '.mb_strtoupper($username).', votre compte a bien été créé ! '. "\r\n" . "\r\n" .
                 'Afin de valider votre inscription veuillez cliquer sur le lien ci-dessous : '. "\r\n" . "\r\n" .
-                'https://www.house.diouldediallo.fr/aindiaInterim/userEmailValidation?email='.$email.'&token='.$token.''. "\r\n" .
+                'https://www.house.diouldediallo.fr/aindiaImmo/userEmailValidation&email='.$email.'&token='.$token.''. "\r\n" .
                 'Merci pour votre inscription !' . "\r\n" . "\r\n" . "";
-
             $headers = 'From:noreply@aindia.net' . "\r\n";
             mail($to, $subject, $message, $headers);
         }
@@ -102,7 +101,6 @@ function getUserEmailValidationView()
     } else {
         echo "Aucun utilisateur ne correspond aux identifiants renseignés !";
     }
-
     require_once "views/backend/account/userEmailValidation.view.php";
 }
 
@@ -178,13 +176,11 @@ function getDashboardView() {
     $description = "Page de Gestion du Site";
 
     $contentDashboard = "";
-
     if (isset($_GET["actionType"]) && $_GET["actionType"] === "ManageUsers") {
         require_once "views/backend/dashboard/manageUsers.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "ManageOffers") {
         require_once "views/backend/dashboard/manageOffers.php";
     }
-
     require_once "views/backend/dashboard/dashboard.php";
 }
 
@@ -192,13 +188,11 @@ function getDashboardView() {
 function getManageUsersView() {
     $title = "Gestion des Utilisateurs";
     $description = "Page de Gestion des utilisateurs";
-
     require_once "views/backend/dashboard/manageUsers.php";
 }
 
 function getManageOffersView() {
     $title = "Gestion des Offres";
     $description = "Page de Gestion des offres";
-
     require_once "views/backend/dashboard/manageOffers.php";
 }

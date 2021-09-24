@@ -119,7 +119,7 @@ $offers = getOffers();
                                 <h5 class="modal-title text-center" id="offerModalTitle">Édition d'une Offre</h5>
                             </div>
                             <div class="modal-body">
-                                <div class="notificationMessage"></div>
+                                <div class="editNotificationMessage"></div>
                                 <form id="editOfferForm" class="editOfferForm" enctype="multipart/form-data">
                                     <div class="form-row">
                                         <input type="hidden" id="offerId<?= $offer['id_offer'] ?>" name="offerId" value="<?= $offer['id_offer'] ?>">
@@ -276,7 +276,7 @@ $offers = getOffers();
                         </div>
                         <div class="form-group col-4">
                             <label for="offerPieces">Nombre de pièce(s) : </label>
-                            <input type="number" class="form-control" name="offerPieces" id="offerPieces">
+                            <input type="text" class="form-control" name="offerPieces" id="offerPieces">
                         </div>
                         <div class="form-group col-4">
                             <label for="offerArea">Surface (m2) : </label>
@@ -286,7 +286,7 @@ $offers = getOffers();
                     <div class="form-row">
                         <div class="form-group col-4">
                             <label for="offerPrice">Loyé / Mois : </label>
-                            <input type="number" class="form-control" name="offerPrice" id="offerPrice">
+                            <input type="text" class="form-control" name="offerPrice" id="offerPrice">
                         </div>
                         <div class="form-group col-4">
                             <label for="offerCountry">Pays : </label>

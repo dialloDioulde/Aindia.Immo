@@ -20,23 +20,26 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                //
-                console.log(response);
-                //
-
                 $('.notificationMessage').html('');
                 if (response.status === 1) {
                     $('.notificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
-                    $("form")[0].reset();
+                    $("#createOfferForm")[0].reset();
                     let responseData = response.data;
+                    /*
 
                     $("#offer-row").html();
                     let resultDiv = '<div class="col-md-4" id="offer-card">';
                     resultDiv += '<div class="card m-1">';
 
+                    //**************************************************************************************************
+                    let offerDisplayModal = "#offerDisplayModal" + responseData['id_offer'];
+                    let offerEditModal = "#offerEditModal" + responseData['id_offer'];
+                    console.log(offerDisplayModal, offerEditModal);
+                    //**************************************************************************************************
+
                     let cardDiv = '<div class="card-header text-center">';
-                    cardDiv += '<a href="#" class="btn btn-primary mr-1">' + 'ÉDITER' + '</a>';
-                    cardDiv += '<a href="#" class="btn btn-danger">' + 'RETIRER' + '</a>';
+                    cardDiv += '<button class="btn btn-primary mr-1" data-toggle="modal" data-target="' + offerDisplayModal + '">' + 'Voir' + '</button>';
+                    cardDiv += '<button class="btn btn-primary offer-edit-btn" data-toggle="modal" data-target="' + offerEditModal + '" data-id="'+ responseData['id_offer'] +'">' + 'Éditer' + '</button>';
                     cardDiv += '</div>';
                     resultDiv += cardDiv;
 
@@ -48,6 +51,7 @@ $(document).ready(function () {
                     resultDiv += resultUl;
                     resultDiv += '</div>';
                     $('#offer-row').append(resultDiv);
+                     */
                     $("#offerModal").modal('hide');
                 } else {
                     $('.notificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
@@ -117,8 +121,15 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: false,
             processData: false,
-            success: function (data) {
-                console.log(data);
+            success: function (response) {
+                $('.editNotificationMessage').html('');
+                if (response.status === 1) {
+                    $('.editNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
+                    console.log(response.data);
+                    //$("#offerModal").modal('hide');
+                } else {
+                    $('.editNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
+                }
             }
         });
     });

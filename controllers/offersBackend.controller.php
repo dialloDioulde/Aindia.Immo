@@ -11,6 +11,14 @@ require_once "models/imageDao.php";
 
 // Création d'une offre via AJAX
 function createOfferWithAJAX() {
+    $response = array(
+        'status' => 0,
+        'message' => '',
+        'hasError' => true,
+        'data' => '',
+    );
+    $hasError = true;
+
     if (isset($_POST['offerPrice']) && !empty($_POST['offerPrice']) &&
         isset($_POST['offerAvailable']) && !empty($_POST['offerAvailable']) &&
         isset($_POST['offerTime']) && !empty($_POST['offerTime']) &&
@@ -42,15 +50,19 @@ function createOfferWithAJAX() {
                 $offerId = insertOfferToDatabase($offerCategory, $offerPrice, $offerAvailable, $offerPeople, $offerTime, $offerDescription,
                     $offerOwner, $offerPieces, $offerArea, $offerCountry, $offerCity, $offerAddress, $offerPostalCode);
                 if ($offerId > 0) {
+                    $hasError = false;
                     addImage($_FILES["offerImage"], $offerCategory, $offerPrice, $offerId, ALERT_OFFER_CREATE);
                 } else {
-                    echo json_encode(ALERT_OFFER_CREATE_ERROR);
+                    $response['message'] = ALERT_OFFER_CREATE_ERROR;
                 }
             } else {
-                echo json_encode(ALERT_OFFER_CREATE_NUMBER_OF_IMAGES);
+                $response['message'] = ALERT_OFFER_CREATE_NUMBER_OF_IMAGES;
             }
         } else {
-            echo json_encode(ALERT_USER_NOT_LOGIN_ERROR);
+            $response['message'] = ALERT_USER_NOT_LOGIN_ERROR;
+        }
+        if ($hasError) {
+            echo json_encode($response);
         }
     }
 }
@@ -68,6 +80,14 @@ function getDataOfOfferWithAJAX() {
 
 // Édition des informations d'une offre par son ID via AJAX
 function editDataOfOfferWithAJAX() {
+    $response = array(
+        'status' => 0,
+        'message' => '',
+        'hasError' => true,
+        'data' => '',
+    );
+    $hasError = true;
+
     if (isset($_POST['offerId']) && !empty($_POST['offerId']) &&
         isset($_POST['offerPrice']) && !empty($_POST['offerPrice']) &&
         isset($_POST['offerAvailable']) && !empty($_POST['offerAvailable']) &&
@@ -110,15 +130,21 @@ function editDataOfOfferWithAJAX() {
             if ($result) {
                 $imageSize = $_FILES["offerImage"]['size'][0];
                 if ($imageSize > 0 ) {
+                    $hasError = false;
                     addImage($_FILES["offerImage"], $offerCategory, $offerPrice, $offerId, ALERT_OFFER_UPDATE);
                 } else {
-                    echo json_encode(ALERT_OFFER_UPDATE);
+                    $response['status'] = 1;
+                    $response['data'] = getOfferById($offerId);
+                    $response['message'] = ALERT_OFFER_UPDATE;
                 }
             } else {
-                echo json_encode(ALERT_OFFER_UPDATE_ERROR);
+                $response['message'] = ALERT_OFFER_UPDATE_ERROR;
             }
         } else {
-            echo json_encode(ALERT_USER_NOT_LOGIN_ERROR);
+            $response['message'] = ALERT_USER_NOT_LOGIN_ERROR;
+        }
+        if ($hasError) {
+            echo json_encode($response);
         }
     }
 }
