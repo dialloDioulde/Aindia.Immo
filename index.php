@@ -42,6 +42,8 @@ try {
             break;
             case "editDataOfOfferWithAJAX": editDataOfOfferWithAJAX();
             break;
+            case "getImagesOfOfferByIdWithAJAX": getImagesOfOfferByIdWithAJAX();
+            break;
             case "error301":
             case "error302":
             case "error400":

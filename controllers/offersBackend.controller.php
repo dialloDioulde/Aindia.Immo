@@ -148,3 +148,17 @@ function editDataOfOfferWithAJAX() {
         }
     }
 }
+
+
+// Récupération des images d'une offre par son Id via AJAX
+function getImagesOfOfferByIdWithAJAX() {
+    $data = array(
+        'offerId' => '',
+        'imageData' => '',
+    );
+    if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
+        $data['offerId'] = $_POST['offerId'];
+        $data['imageData'] = getImagesOfOffer($_POST['offerId']);
+        echo json_encode($data);
+    }
+}
