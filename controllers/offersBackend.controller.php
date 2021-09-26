@@ -71,9 +71,40 @@ function createOfferWithAJAX() {
 // Récupération des données d'une offre à partir de son ID via AJAX
 function getDataOfOfferWithAJAX() {
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $offerId = $_POST['offerId'];
+        $offerId = Security::securityHtml($_POST['offerId']);
         $offer = getOfferById($offerId);
         echo json_encode($offer);
+    }
+}
+
+// Récupération de toutes les informations d'une offre à partir de son ID
+function getAllDataOfOfferWithAJAX() {
+    $data = array(
+        'offerOwner' => '',
+        'offerImages' => '',
+        'offerData' => '',
+        'offerPublic' => '',
+        'offerCategory' => '',
+    );
+    if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
+        $offerId = Security::securityHtml($_POST['offerId']);
+        $offer = getOfferById($offerId);
+        $data['offerOwner'] = getUserById($offer['offer_owner']);
+        $data['offerImages'] = getImagesOfOffer($offerId);
+        $data['offerData'] = $offer;
+        $data['offerPublic'] = getPublicOfOffer($offer['public_offer']);
+        $data['offerCategory'] = getCategoryOfOffer($offer['category_offer']);
+        //$data['offerOwnerTest '] = getUserById($offer['offer_owner']);
+        echo json_encode($data);
+    }
+}
+
+//********
+function getUserByIdWithAJAX() {
+    if (isset($_POST['userId']) && !empty($_POST['userId'])) {
+        $userId = Security::securityHtml($_POST['userId']);
+        $user = getUserById($userId);
+        echo json_encode($user);
     }
 }
 
@@ -157,8 +188,11 @@ function getImagesOfOfferByIdWithAJAX() {
         'imageData' => '',
     );
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $data['offerId'] = $_POST['offerId'];
-        $data['imageData'] = getImagesOfOffer($_POST['offerId']);
+        $offerId = Security::securityHtml($_POST['offerId']);
+        $data['offerId'] = $offerId;
+        $data['imageData'] = getImagesOfOffer($offerId);
         echo json_encode($data);
     }
 }
+
+

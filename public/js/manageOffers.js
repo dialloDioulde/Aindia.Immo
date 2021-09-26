@@ -9,6 +9,22 @@ $(document).ready(function () {
         $("#createOfferModal").modal('hide');
     });
 
+    // Récupérer un utilisateur par son Id
+    function getUserById(idUserParam) {
+        $.ajax({
+            type: 'POST',
+            url: 'getUserByIdWithAJAX',
+            data: "userId=" + idUserParam,
+            success: function (data) {
+                let resData = JSON.parse(data);
+                let userDataArray = [];
+                userDataArray.push(resData['id_user']);
+                userDataArray.push(resData['name_user']);
+                userDataArray.push(resData['email_user']);
+            }
+        });
+    }
+
     // Création d'une offre
     $("#createOfferForm").submit( function (e) {
         e.preventDefault();
@@ -36,25 +52,42 @@ $(document).ready(function () {
     // Affichage des informations d'une offre à partir de son ID
     // Ouverture du modal présentant les informations d'une offre
     $(".offer-display-btn").click(function () {
-        let id_offer = $(this).data('id');
+        let idOfferParam = $(this).data('id');
         $.ajax({
             type: 'POST',
-            url: 'getDataOfOfferWithAJAX',
-            data: "offerId=" + id_offer,
+            url: 'getAllDataOfOfferWithAJAX',
+            data: "offerId=" + idOfferParam,
             success: function (data) {
+                console.log(data);
                 let resData = JSON.parse(data);
-                //$('#d_offerId').val(resData['id_offer']);
-                document.getElementById("d_offerCategory").innerHTML = "Type de Logement : " + resData['category_offer'];
-                document.getElementById("d_offerPrice").innerHTML = "Loyé : " + resData['price_offer'];
-                document.getElementById("d_offerPieces").innerHTML = "Nb Pièces :" + resData['pieces_offer'];
-                document.getElementById("d_offerArea").innerHTML = "Surface (m2) : " + resData['area_offer'];
-                document.getElementById("d_offerTime").innerHTML = "Contrat : " + resData['contract_offer'];
-                document.getElementById("d_offerAvailable").innerHTML = "Disponibilité : " + resData['availablity_offer'];
-                document.getElementById("d_offerPeople").innerHTML = "Locataire Souhaité : " + resData['public_offer'];
-                document.getElementById("d_offerCity").innerHTML = resData['city_offer'];
-                document.getElementById("d_offerPostalCode").innerHTML = resData['postal_code_offer'];
-                document.getElementById("d_offerAddress").innerHTML = resData['location_offer'];
-                //document.getElementById("d_offerDescription").innerHTML = resData['description_offer'];
+                let offerOwner = resData.offerOwner;
+                let offerImages = resData.offerImages;
+                let offerData = resData.offerData;
+                let idOffer = offerData['id_offer'];
+                let offerPublic = resData.offerPublic['name_public'];
+                let offerCategory = resData.offerCategory['name_category'];
+
+                document.getElementById("d_offerCategory").innerHTML = "Type de Logement : " + offerCategory;
+                document.getElementById("d_offerPrice").innerHTML = "Loyé : " + offerData['price_offer'];
+                document.getElementById("d_offerPieces").innerHTML = "Nb Pièces :" + offerData['pieces_offer'];
+                document.getElementById("d_offerArea").innerHTML = "Surface (m2) : " + offerData['area_offer'];
+                document.getElementById("d_offerTime").innerHTML = "Contrat : " + offerData['contract_offer'];
+                document.getElementById("d_offerAvailable").innerHTML = "Disponibilité : " + offerData['availablity_offer'];
+                document.getElementById("d_offerPeople").innerHTML = "Locataire Souhaité : " + offerPublic;
+                document.getElementById("d_offerCity").innerHTML = offerData['city_offer'];
+                document.getElementById("d_offerPostalCode").innerHTML = offerData['postal_code_offer'];
+                document.getElementById("d_offerAddress").innerHTML = offerData['location_offer'];
+                //document.getElementById("d_offerDescription").innerHTML = offerData['description_offer'];
+                document.getElementById("d_offerOwnerName").innerHTML = "Nom : " + offerOwner['name_user'];
+                document.getElementById("d_offerOwnerEmail").innerHTML = "Email : " + offerOwner['email_user'];
+
+                let offer_display_image = "offer-display-image-" + idOffer;
+                let displayImageTagClassName = document.getElementsByClassName(offer_display_image);
+                let offer_image_display_div_content_id = "offer-image-display-div-content-id-" + idOffer;
+                // On vérifie qu'aucune image de l'offre séléctionnée n'est déjà affichée
+                // Pour éviter d'afficher une nouvelle fois les images déjà affichées lors du premier clic
+                displayImagesOfOfferById(offer_display_image, displayImageTagClassName, offer_image_display_div_content_id,
+                    idOfferParam, offerImages, idOffer, displayOfferImagesDivContentId);
             }
         });
         $("#offerDisplayModal").modal('show');
@@ -121,7 +154,8 @@ $(document).ready(function () {
         });
     }
 
-    let displayImagesDivContentId = document.getElementById("displayImages");
+    let displayEditOfferImagesDivContentId = document.getElementById("displayImages");
+    let displayOfferImagesDivContentId = document.getElementById("offerImagesDisplay");
     // Récupération des images d'une offre par son Id
     function getImagesOfOfferById(idOfferParam) {
         $.ajax({
@@ -137,18 +171,22 @@ $(document).ready(function () {
                 let image_div_content_id = "image-div-content-id-" + idOffer;
                 // On vérifie qu'aucune image de l'offre séléctionnée n'est déjà affichée
                 // Pour éviter d'afficher une nouvelle fois les images déjà affichées lors du premier clic
-                displayImagesOfOfferById(offer_edit_image, displayImageTagClassName, image_div_content_id, idOfferParam, imageData, idOffer)
+                displayImagesOfOfferById(offer_edit_image, displayImageTagClassName, image_div_content_id,
+                    idOfferParam, imageData, idOffer, displayEditOfferImagesDivContentId);
             }
         });
     }
 
+
     // Affichage des images d'une offre par son ID
-    function displayImagesOfOfferById(offerEditImage, displayImageTagClassName, imageDivContentId, idOfferParam, imageData, idOffer) {
-        if (displayImageTagClassName.length === 0) {
-            console.log(displayImageTagClassName.length);
-            // On supprime toutes les images déjà ajoutées dans la DIV (displayImagesDivContentId, affichant les images)
-            while(displayImagesDivContentId.firstChild) {
-                displayImagesDivContentId.removeChild( displayImagesDivContentId.firstChild);
+    function displayImagesOfOfferById(imgTagClassName, countImgTagClassName, imageDivContentId, idOfferParam, imageData,
+                                      idOffer, divId)
+    {
+        if (countImgTagClassName.length === 0) {
+            console.log(countImgTagClassName.length);
+            // On supprime toutes les images déjà ajoutées dans la DIV (displayEditOfferImagesDivContentId, affichant les images)
+            while(divId.firstChild) {
+                divId.removeChild(divId.firstChild);
             }
             // On réaffiche les images de l'offre dont l'ID est passé en paramétre
             if (idOfferParam === parseInt(idOffer)) {
@@ -156,12 +194,13 @@ $(document).ready(function () {
                 for (let i = 0; i < imageData.length; i++) {
                     console.log(imageData[i]);
                     console.log(imageData[i]['id_image']);
-                    let image = '<img src="'+ imageData[i]['url_image'] +'" class="m-1 '+ offerEditImage +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'" style="width: 130px; height: 100px;"/>';
+                    let image = '<img src="'+ imageData[i]['url_image'] +'" class="m-1 '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'" style="width: 130px; height: 100px;"/>';
                     imageDivContent += image;
                 }
                 imageDivContent += '</div>';
-                $("#displayImages").html();
-                $('#displayImages').append(imageDivContent);
+                console.log(divId);
+                $(divId).html();
+                $(divId).append(imageDivContent);
             }
         }
     }
@@ -188,9 +227,9 @@ $(document).ready(function () {
     // Fermeture du Modal permettant d'éditer les informations d'une offre
     $(".editOfferCancelBtn").click(function () {
         console.log("test");
-        // On supprime toutes les images déjà ajoutées dans la DIV (displayImagesDivContentId, affichant les images)
-        while(displayImagesDivContentId.firstChild) {
-            displayImagesDivContentId.removeChild( displayImagesDivContentId.firstChild);
+        // On supprime toutes les images déjà ajoutées dans la DIV (displayEditOfferImagesDivContentId, affichant les images)
+        while(displayEditOfferImagesDivContentId.firstChild) {
+            displayEditOfferImagesDivContentId.removeChild( displayEditOfferImagesDivContentId.firstChild);
         }
         $(".offerEditModal").modal('hide');
     });

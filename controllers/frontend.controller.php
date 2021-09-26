@@ -26,11 +26,9 @@ function getOfferDetailsView() {
 
         $id_offer = Security::securityHtml($_GET['id_offer']);
         $offer = getOfferById($id_offer);
-
         $images = getImagesOfOffer($offer['id_offer']);
         $publicOffer = getPublicOfOffer($offer['public_offer']);
         $categoryOffer = getCategoryOfOffer($offer['category_offer']);
-
         $offer_owner = getUserById($offer['offer_owner']);
 
         $title = "L'Offre N° " . $offer['id_offer'];

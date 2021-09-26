@@ -144,17 +144,7 @@ $offers = getOffers();
             </div>
             <div class="modal-body">
                 <!-- DÉBUT : Les Images de l'Offre -->
-                <div class="row p-1">
-                    <?php $images = getImagesOfOffer($offer['id_offer']); ?>
-                    <?php foreach ($images as $image) { ?>
-                        <img class="m-1 offer-display-image" src="<?= URL ?><?= $image['url_image'] ?>"
-                             style="width: 350px; height: 280px;"
-                             data-src="<?= $image["name_image"] ?>"
-                             data-id="<?= $image['id_image'] ?>"
-                             alt="<?= $image["name_image"] ?>">
-                        <?php
-                    }
-                    ?>
+                <div class="row p-1" id="offerImagesDisplay">
                 </div>
                 <!-- FIN : Les Images de l'Offre  -->
 
@@ -193,8 +183,8 @@ $offers = getOffers();
                     <div class="col-md-4">
                         <h3 class="text-center">Auteur</h3>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Nom : </li>
-                            <li class="list-group-item">Email: </li>
+                            <li class="list-group-item" id="d_offerOwnerName"></li>
+                            <li class="list-group-item" id="d_offerOwnerEmail">Email: </li>
                         </ul>
                     </div>
                 </div>
