@@ -94,7 +94,6 @@ function getAllDataOfOfferWithAJAX() {
         $data['offerData'] = $offer;
         $data['offerPublic'] = getPublicOfOffer($offer['public_offer']);
         $data['offerCategory'] = getCategoryOfOffer($offer['category_offer']);
-        //$data['offerOwnerTest '] = getUserById($offer['offer_owner']);
         echo json_encode($data);
     }
 }

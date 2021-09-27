@@ -224,8 +224,12 @@ form .contact-form, #send-btn button {
 /*========================================================
                     IMAGES
 ========================================================*/
-/*
-#offer-images {
-    margin: 0;
+
+#offerImagesDisplay > div img {
+    height: 200px;
+    width: 250px;
 }
- */
+#displayImages > div img {
+    height: 100px;
+    width: 130px;
+}

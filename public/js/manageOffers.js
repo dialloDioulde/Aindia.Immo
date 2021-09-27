@@ -52,13 +52,13 @@ $(document).ready(function () {
     // Affichage des informations d'une offre à partir de son ID
     // Ouverture du modal présentant les informations d'une offre
     $(".offer-display-btn").click(function () {
+        editImage = false;
         let idOfferParam = $(this).data('id');
         $.ajax({
             type: 'POST',
             url: 'getAllDataOfOfferWithAJAX',
             data: "offerId=" + idOfferParam,
             success: function (data) {
-                console.log(data);
                 let resData = JSON.parse(data);
                 let offerOwner = resData.offerOwner;
                 let offerImages = resData.offerImages;
@@ -77,7 +77,7 @@ $(document).ready(function () {
                 document.getElementById("d_offerCity").innerHTML = offerData['city_offer'];
                 document.getElementById("d_offerPostalCode").innerHTML = offerData['postal_code_offer'];
                 document.getElementById("d_offerAddress").innerHTML = offerData['location_offer'];
-                //document.getElementById("d_offerDescription").innerHTML = offerData['description_offer'];
+                document.getElementById("d_offerDescription").innerHTML = offerData['description_offer'];
                 document.getElementById("d_offerOwnerName").innerHTML = "Nom : " + offerOwner['name_user'];
                 document.getElementById("d_offerOwnerEmail").innerHTML = "Email : " + offerOwner['email_user'];
 
@@ -93,16 +93,13 @@ $(document).ready(function () {
         $("#offerDisplayModal").modal('show');
     });
 
-    // Initialisation des variables
-    let imagesToDelete = [];
-    let displayImage = true;
 
     // Récupération des informations de l'offre à éditer à partir de son ID
     $(".offer-edit-btn").click(function () {
-        imagesToDelete = [];
         let id_offer = $(this).data('id');
         getEditOfferDataById(id_offer);
         getImagesOfOfferById(id_offer);
+        editImage = true;
         $("#offerEditModal").modal('show');
     });
 
@@ -154,8 +151,10 @@ $(document).ready(function () {
         });
     }
 
+    // Initialisation des variables
     let displayEditOfferImagesDivContentId = document.getElementById("displayImages");
     let displayOfferImagesDivContentId = document.getElementById("offerImagesDisplay");
+    let editImage = false;  // Permettra de détecter un clic sur une image affichée uniquement s'il s'agit d'une action d'édition
     // Récupération des images d'une offre par son Id
     function getImagesOfOfferById(idOfferParam) {
         $.ajax({
@@ -177,13 +176,10 @@ $(document).ready(function () {
         });
     }
 
-
     // Affichage des images d'une offre par son ID
-    function displayImagesOfOfferById(imgTagClassName, countImgTagClassName, imageDivContentId, idOfferParam, imageData,
-                                      idOffer, divId)
+    function displayImagesOfOfferById(imgTagClassName, countImgTagClassName, imageDivContentId, idOfferParam, imageData, idOffer, divId)
     {
         if (countImgTagClassName.length === 0) {
-            console.log(countImgTagClassName.length);
             // On supprime toutes les images déjà ajoutées dans la DIV (displayEditOfferImagesDivContentId, affichant les images)
             while(divId.firstChild) {
                 divId.removeChild(divId.firstChild);
@@ -192,19 +188,41 @@ $(document).ready(function () {
             if (idOfferParam === parseInt(idOffer)) {
                 let imageDivContent = '<div id="'+imageDivContentId+'">';
                 for (let i = 0; i < imageData.length; i++) {
-                    console.log(imageData[i]);
-                    console.log(imageData[i]['id_image']);
-                    let image = '<img src="'+ imageData[i]['url_image'] +'" class="m-1 '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'" style="width: 130px; height: 100px;"/>';
+                    let image = '<img src="'+ imageData[i]['url_image'] +'" class="m-1 image-to-edit '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'"/>';
                     imageDivContent += image;
                 }
                 imageDivContent += '</div>';
-                console.log(divId);
                 $(divId).html();
                 $(divId).append(imageDivContent);
+                // On appelle la fonction permettant de récupérer l'ID de l'image à supprimer
+                if (editImage)
+                    getIdOfImageToEdit();
             }
         }
     }
 
+
+    // Gestion des images de l'offre
+    let imagesToDelete = [];
+    function getIdOfImageToEdit() {
+        imagesToDelete = [];
+        $(".image-to-edit").click(function () {
+            let image_id_from_database = $(this).data('id');
+            if ($(this).hasClass("border-danger")) {
+                $(this).removeClass("border-danger");
+                $(this).css("border", "");
+                let id_image = imagesToDelete.indexOf(image_id_from_database);
+                imagesToDelete.splice(id_image, 1);
+            } else {
+                $(this).addClass("border-danger");
+                $(this).css("border", "3px solid");
+                imagesToDelete.push(image_id_from_database);
+            }
+            let images_to_delete = document.getElementById("imagesToDelete").value = imagesToDelete;
+            console.log(images_to_delete)
+        });
+    }
+    /*
     // Gestion des images de l'offre
     $(".offer-edit-image").click(function () {
         let image_id_from_database = $(this).data('id');
@@ -221,12 +239,12 @@ $(document).ready(function () {
             imagesToDelete.push(image_id_from_database);
         }
         let images_to_delete = document.getElementById("imagesToDelete").value = imagesToDelete;
-        //console.log("imagesToDelete : " + images_to_delete);
+
     });
+     */
 
     // Fermeture du Modal permettant d'éditer les informations d'une offre
     $(".editOfferCancelBtn").click(function () {
-        console.log("test");
         // On supprime toutes les images déjà ajoutées dans la DIV (displayEditOfferImagesDivContentId, affichant les images)
         while(displayEditOfferImagesDivContentId.firstChild) {
             displayEditOfferImagesDivContentId.removeChild( displayEditOfferImagesDivContentId.firstChild);

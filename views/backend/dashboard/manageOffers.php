@@ -133,7 +133,6 @@ $offers = getOffers();
 </div>
 <!-- Fin : Création d'une Offre -->
 
-
 <!-- Début : Affichage d'une Offre  -->
 <div class="modal fade offerDisplayModal" id="offerDisplayModal" role="dialog">
     <div class="modal-dialog modal-xl">
@@ -184,11 +183,22 @@ $offers = getOffers();
                         <h3 class="text-center">Auteur</h3>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" id="d_offerOwnerName"></li>
-                            <li class="list-group-item" id="d_offerOwnerEmail">Email: </li>
+                            <li class="list-group-item" id="d_offerOwnerEmail"></li>
                         </ul>
                     </div>
                 </div>
                 <!-- FIN : Auteur de l'Offre -->
+
+                <!-- DÉBUT : Description de l'Offre -->
+                <div class="row mt-2 border-top">
+                    <div class="col-md-4">
+                        <h3 class="text-center">Description</h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="d_offerDescription"></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- FIN : Description de l'Offre -->
 
             </div>
         </div>
