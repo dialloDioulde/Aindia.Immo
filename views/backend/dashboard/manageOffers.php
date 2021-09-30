@@ -7,22 +7,23 @@ ob_start();
 $offers = getOffers();
 ?>
 
-
-
 <div class="" id="manageOffers">
     <div class="container">
         <h3 class="text-center">GESTION DES OFFRES</h3>
-        <button type="button" id="offerModalBtn" class="btn btn-primary ml-1">Publier une Offre</button>
+        <button type="button" id="offerModalBtn" class="btn btn-primary">Publier une Offre</button>
         <div class="row" id="offer-row">
             <?php foreach ($offers as $offer) : ?>
-                <div class="col-md-4" id="offer-card">
-                    <div class="card m-1">
-                        <div class="card-header text-center">
+                <div class="" id="<?= $offer['id_offer'] ?>">
+                    <div class="card m-1" >
+                        <div class="card-header">
                             <button type="button" class="btn btn-primary offer-display-btn"
                                     data-id="<?= $offer['id_offer'] ?>" data-toggle="modal">Voir
                             </button>
                             <button type="button" class="btn btn-primary offer-edit-btn"
                                     data-id="<?= $offer['id_offer'] ?>" data-toggle="modal">Éditer
+                            </button>
+                            <button type="button" class="btn btn-primary offerDeleteBtn"
+                                    data-id="<?= $offer['id_offer'] ?>" data-toggle="modal">Supprimer
                             </button>
                         </div>
                         <ul class="list-group list-group-flush" id="displayOffer">
@@ -154,14 +155,14 @@ $offers = getOffers();
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" id="d_offerCategory"></li>
                             <li class="list-group-item" id="d_offerPrice"></li>
-                            <li class="list-group-item" id="d_offerPieces">Nb Pièces </li>
-                            <li class="list-group-item" id="d_offerArea">Surface (m2) </li>
+                            <li class="list-group-item" id="d_offerPieces">Nb Pièces</li>
+                            <li class="list-group-item" id="d_offerArea">Surface (m2)</li>
                         </ul>
                     </div>
                     <div class="col-md-4">
                         <h3 class="text-center">Conditions</h3>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item" id="d_offerTime">Contrat </li>
+                            <li class="list-group-item" id="d_offerTime">Contrat</li>
                             <li class="list-group-item" id="d_offerAvailable">Disponibilité</li>
                             <li class="list-group-item" id="d_offerPeople">Locataire Souhaité</li>
                         </ul>
@@ -296,11 +297,11 @@ $offers = getOffers();
                     <!-- Fin : Affichage des images de l'Offre via AJAX -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary editOfferCancelBtn"
-                                data-bs-dismiss="modal">Annuler
+                                data-bs-dismiss="modal">Fermer
                         </button>
                         <button type="submit" class="btn btn-primary" name="editOfferFormSubmitBtn"
                                 id="editOfferFormSubmitBtn">
-                            Enregistrer
+                            Mettre À Jour
                         </button>
                     </div>
                 </form>
@@ -309,6 +310,32 @@ $offers = getOffers();
     </div>
 </div>
 <!-- Fin : Édition d'une Offre -->
+
+<!-- Début : Suppression d'une Offre -->
+<div class="modal fade offerDeleteModal p-2" id="offerDeleteModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="offerModalTitle">Suppression d'une Offre</h5>
+            </div>
+            <div class="modal-body">
+                <form id="deleteOfferForm" class="deleteOfferForm" enctype="multipart/form-data">
+                    <p id="deleteOfferMessage">Êtes vous sûr de vouloir supprimer l'offre ...</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary deleteOfferCancelBtn"
+                                data-bs-dismiss="modal">Non
+                        </button>
+                        <button type="submit" class="btn btn-danger" name="deleteOfferFormSubmitBtn"
+                                id="deleteOfferFormSubmitBtn">
+                            Oui
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin : Suppression d'une Offre -->
 
 
 <script src="<?= URL ?>public/js/manageOffers.js"></script>

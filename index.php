@@ -48,6 +48,8 @@ try {
             break;
             case "getUserByIdWithAJAX": getUserByIdWithAJAX();
             break;
+            case "deleteOfferByIdWithAJAX": deleteOfferByIdWithAJAX();
+            break;
             case "error301":
             case "error302":
             case "error400":

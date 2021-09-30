@@ -5,7 +5,7 @@ ob_start();
 <div class="mb-1 border-top border-bottom" id="dashboard">
     <div class="container-fluid dashboard_HeightSizeMin">
         <div class="row">
-            <div class="col-md-2 bg-dark p-2" id="dashboard-left">
+            <div class="col-md-2 bg-dark p-2 dashboard_HeightSizeMin" id="dashboard-left">
                 <ul>
                     <li><a href="dashboard&actionType=editProfil" class="mt-2 text-decoration-none">Éditer Mon Profil</a></li>
                     <li><a href="dashboard&actionType=ManageUsers" class="mt-2 text-decoration-none">Utilisateurs</a></li>

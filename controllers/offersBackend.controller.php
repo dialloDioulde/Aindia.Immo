@@ -98,7 +98,7 @@ function getAllDataOfOfferWithAJAX() {
     }
 }
 
-//********
+//***************************************************************
 function getUserByIdWithAJAX() {
     if (isset($_POST['userId']) && !empty($_POST['userId'])) {
         $userId = Security::securityHtml($_POST['userId']);
@@ -194,4 +194,28 @@ function getImagesOfOfferByIdWithAJAX() {
     }
 }
 
+
+// Suppression d'une offre par son Id via AJAX
+function deleteOfferByIdWithAJAX() {
+    $data = array(
+        'status' => 0,
+        'offerId' => '',
+        'message' => 'Une erreur est survenue lors la suppression de votre offre',
+    );
+    if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
+        $offerId = Security::securityHtml($_POST['offerId']);
+        if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
+            $offerOwner = (int)$_SESSION['id'];
+            $data['status'] = 1;
+            $data['offerId'] = $offerId;
+            $data['message'] = "Votre offre a bien été supprimée";
+            $result = deleteOfferById($offerId, $offerOwner);
+            if ($result) {
+                echo json_encode($data);
+            }
+        } else {
+            echo json_encode($data);
+        }
+    }
+}
 

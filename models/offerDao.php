@@ -135,3 +135,18 @@ function updateOfferById($offerId, $category, $price, $availablity, $public, $co
     if ($result > 0) return true;
     return false;
 }
+
+
+// Suppression d'une Offre
+function deleteOfferById($offerId, $offerOwner)
+{
+    $database = connexionPDO();
+    $query = 'DELETE FROM offers WHERE id_offer = :id_offer AND offer_owner = :offer_owner';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
+    $request->bindValue(":offer_owner", $offerOwner, PDO::PARAM_INT);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+}

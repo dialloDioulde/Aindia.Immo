@@ -9,22 +9,6 @@ $(document).ready(function () {
         $("#createOfferModal").modal('hide');
     });
 
-    // Récupérer un utilisateur par son Id
-    function getUserById(idUserParam) {
-        $.ajax({
-            type: 'POST',
-            url: 'getUserByIdWithAJAX',
-            data: "userId=" + idUserParam,
-            success: function (data) {
-                let resData = JSON.parse(data);
-                let userDataArray = [];
-                userDataArray.push(resData['id_user']);
-                userDataArray.push(resData['name_user']);
-                userDataArray.push(resData['email_user']);
-            }
-        });
-    }
-
     // Création d'une offre
     $("#createOfferForm").submit( function (e) {
         e.preventDefault();
@@ -40,7 +24,7 @@ $(document).ready(function () {
                 if (response.status === 1) {
                     $('.notificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
                     $("#createOfferForm")[0].reset();
-                    let responseData = response.data;
+                    location.reload();
                     $("#offerModal").modal('hide');
                 } else {
                     $('.notificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
@@ -103,6 +87,7 @@ $(document).ready(function () {
         $("#offerEditModal").modal('show');
     });
 
+
     // Édition d'une Offre par son ID
     $(".editOfferForm").submit(function (e) {
         e.preventDefault();
@@ -117,7 +102,6 @@ $(document).ready(function () {
                 $('.editNotificationMessage').html('');
                 if (response.status === 1) {
                     $('.editNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
-                    console.log(response.data);
                     //$("#offerModal").modal('hide');
                 } else {
                     $('.editNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
@@ -155,6 +139,7 @@ $(document).ready(function () {
     let displayEditOfferImagesDivContentId = document.getElementById("displayImages");
     let displayOfferImagesDivContentId = document.getElementById("offerImagesDisplay");
     let editImage = false;  // Permettra de détecter un clic sur une image affichée uniquement s'il s'agit d'une action d'édition
+
     // Récupération des images d'une offre par son Id
     function getImagesOfOfferById(idOfferParam) {
         $.ajax({
@@ -201,7 +186,6 @@ $(document).ready(function () {
         }
     }
 
-
     // Gestion des images de l'offre
     let imagesToDelete = [];
     function getIdOfImageToEdit() {
@@ -219,29 +203,8 @@ $(document).ready(function () {
                 imagesToDelete.push(image_id_from_database);
             }
             let images_to_delete = document.getElementById("imagesToDelete").value = imagesToDelete;
-            console.log(images_to_delete)
         });
     }
-    /*
-    // Gestion des images de l'offre
-    $(".offer-edit-image").click(function () {
-        let image_id_from_database = $(this).data('id');
-        console.log(image_id_from_database + 'test');
-
-        if ($(this).hasClass("border-danger")) {
-            $(this).removeClass("border-danger");
-            $(this).css("border", "");
-            let id_image = imagesToDelete.indexOf(image_id_from_database);
-            imagesToDelete.splice(id_image, 1);
-        } else {
-            $(this).addClass("border-danger");
-            $(this).css("border", "3px solid");
-            imagesToDelete.push(image_id_from_database);
-        }
-        let images_to_delete = document.getElementById("imagesToDelete").value = imagesToDelete;
-
-    });
-     */
 
     // Fermeture du Modal permettant d'éditer les informations d'une offre
     $(".editOfferCancelBtn").click(function () {
@@ -251,5 +214,40 @@ $(document).ready(function () {
         }
         $(".offerEditModal").modal('hide');
     });
+
+    let idOfferToDelete = 0;
+    // Bouton de suppresion d'une image
+    // Ouverture du modal permettant de supprimer une offre
+    $(".offerDeleteBtn").click(function () {
+        idOfferToDelete = parseInt($(this).data('id'));
+        document.getElementById("deleteOfferMessage").innerHTML = "Êtes vous sûr de vouloir supprimer l'offre numéro" + " " + idOfferToDelete + " " + " ?";
+        $("#offerDeleteModal").modal('show');
+    });
+
+    // Suppression de l'offre selectionnée par son Id
+    $("#deleteOfferForm").submit(function (e) {
+        e.preventDefault();
+        deleteOfById(idOfferToDelete);
+    });
+
+    // Fermeture du modal permettant de supprimer une offre
+    $(".deleteOfferCancelBtn").click(function () {
+        $("#offerDeleteModal").modal('hide');
+    });
+
+    // Suppression d'une offre par son Id
+    function deleteOfById(idOfferParam) {
+        $.ajax({
+            type: 'POST',
+            url: 'deleteOfferByIdWithAJAX',
+            data: "offerId=" + idOfferParam,
+            dataType: 'json',
+            success: function (response) {
+                let offerId = parseInt(response.offerId);
+                document.getElementById(offerId).remove();
+                $("#offerDeleteModal").modal('hide');
+            }
+        });
+    }
 
 });
