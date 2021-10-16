@@ -2,9 +2,8 @@
 <html lang="en">
 
 <head>
-    <!-- <meta charset="UTF-8"> -->
     <meta charset="UTF-8">
-    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="<?= $description ?>">
@@ -30,20 +29,21 @@
 </head>
 
 <body>
-
     <!-- Début : Corps Du Site WEB -->
     <div class="container-fluid p-0 rounded my_shadow">
         <!-- Début Header -->
-        <header class="bg-dark text-white sticky-top rounded-top my_policeTitle ">
+        <header class="bg-info text-white sticky-top rounded-top my_policeTitle ">
             <div class="row align-items-center m-0">
                 <div class="col-6 col-lg-10 m-0 p-0">
                     <?php include("views/commons/menu.php") ?>
                 </div>
                 <div class="col col-lg-2  text-right pt-1 pr-4">
-                    <?php if(isset($_SESSION["id"])) { ?>
-                        <a href="<?= URL ?>userLogout" class="nav-link d-inline text-white">Deconnexion</a>
-                    <?php } else {?>
-                        <a href="<?= URL ?>userLogin" class="nav-link d-inline text-white">Connexion</a>
+                    <?php if(isset($_SESSION["id"]) && $_SESSION['role_is_admin']) { ?>
+                        <a href="<?= URL ?>dashboard" class="nav-link d-inline text-white">Admin</a>
+                    <?php } elseif (isset($_SESSION["id"]) && $_SESSION['role_is_user']) { ?>
+                        <a href="<?= URL ?>userProfil" class="nav-link d-inline text-white"><?php echo $_SESSION['name_user']?></a>
+                        <?php } else {?>
+                        <a href="<?= URL ?>registerOrView&actionType=loginView" class="nav-link d-inline text-white">Connexion</a>
                     <?php }?>
                 </div>
             </div>
@@ -123,7 +123,8 @@
                 </div>
             </div>
 
-        </footer> -->
+        </footer>
+        -->
         <!-- Fin Footer -->
     </div>
 

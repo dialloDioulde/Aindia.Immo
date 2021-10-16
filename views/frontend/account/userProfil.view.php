@@ -1,54 +1,30 @@
 <?php
 ob_start();
-echo styleTitleLevel_2("Mon Tableau De Bord", COLOR_TITLE_LEVEL_A_INTERIM);
+//echo styleTitleLevel_2("Mon Tableau De Bord", COLOR_TITLE_LEVEL_A_INTERIM);
+// echo ($_SESSION['name_user']. " ". $_SESSION['email_user']. " ". "773908675". " ". "Sénégal". " ". "Dakar")
 ?>
 
-<div class="mb-1" id="dashboard">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 bg-dark">
-                <?php
-                echo  $_SESSION['id'] . "<br/>";
-                echo  $_SESSION['name_user'] . "<br/>";
-                echo  $_SESSION['email_user'] . "<br/>";
-                ?>
-                <ul>
-                    <li><a href="<?= URL ?>userLogin" class="mt-2 text-decoration-none">Éditer Mon Profil</a></li>
-                    <li><a href="<?= URL ?>userLogin" class="mt-2 text-decoration-none">Mes Offres</a></li>
-                    <li><a href="<?= URL ?>userLogin" class="mt-2 text-decoration-none">Supprimer Mon Compte</a></li>
-                    <li><a href="<?= URL ?>userLogin" class="mt-2 text-decoration-none">Déconnexion</a></li>
+<div class="mt-3 mb-1" id="">
+    <div class="container">
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-2 mt-5">
+                <ul class="list-unstyled">
+                    <li><a href="userProfil&actionType=pending" class="btn btn-primary mb-2 text-white">En Attentes</a></li>
+                    <li><a href="userProfil&actionType=approved" class="btn btn-primary  mb-2 text-white">Approuvées</a></li>
+                    <li><a href="userProfil&actionType=moderated" class="btn btn-primary mb-2 text-white">Modérées</a></li>
+                    <li><a href="userProfil&actionType=hided" class="btn btn-primary mb-2 text-white">Retirer</a></li>
+                    <li><a href="userProfil&actionType=blocked" class="btn btn-primary  mb-2 text-white">Bloquées</a></li>
                 </ul>
             </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-12 bg-info p-2">
-                        <h3>Mes Offres</h3>
-                        <?php
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        echo "ID : ". $_SESSION['id'] . "<br/>";
-                        echo "NOM : ". $_SESSION['name_user'] . "<br/>";
-                        echo "EMAIL : ". $_SESSION['email_user'] . "<br/>";
-                        ?>
-                    </div>
-                </div>
+            <div class="col-md-10">
+                <?= $contentView ?>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <?php
 $content = ob_get_clean();

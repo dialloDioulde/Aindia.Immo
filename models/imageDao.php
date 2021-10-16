@@ -73,7 +73,7 @@ function getImageOfOffer($offerId) {
 function deleteImagesOfOffer($imageId, $offerId) {
     $database = connexionPDO();
     $query = 'DELETE FROM offers_images 
-        WHERE id_image =:imageId AND id_offer =:offerId';
+        WHERE id_image = :imageId AND id_offer = :offerId';
     $request = $database->prepare($query);
     $request->bindValue(":imageId",$imageId,PDO::PARAM_INT);
     $request->bindValue(":offerId",$offerId,PDO::PARAM_INT);

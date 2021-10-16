@@ -5,13 +5,14 @@ require_once "pdo.php";
 
 
 // Enregistrement de l'offre en Base De Données
-function insertOfferToDatabase($category, $price, $availablity, $public, $contract, $description, $owner, $pieces, $area, $country, $city, $address, $postalCode)
+function insertOfferToDatabase($category, $price, $availablity, $public, $contract, $description, $owner,
+                               $pieces, $area, $country, $city, $address, $postalCode, $offerPeculiarity): string
 {
     $database = connexionPDO();
     $query = 'INSERT INTO offers (category_offer, price_offer, availablity_offer, public_offer, contract_offer, description_offer, offer_owner,
-                    pieces_offer, area_offer, country_offer, city_offer, location_offer, postal_code_offer) 
+                    pieces_offer, area_offer, country_offer, city_offer, location_offer, postal_code_offer, offer_peculiarity) 
                 VALUES (:category_offer, :price_offer, :availablity_offer, :public_offer, :contract_offer, :description_offer, :offer_owner,
-                        :pieces_offer, :area_offer, :country_offer, :city_offer, :location_offer, :postal_code_offer)';
+                        :pieces_offer, :area_offer, :country_offer, :city_offer, :location_offer, :postal_code_offer, :offer_peculiarity)';
     $request = $database->prepare($query);
     $request->bindValue(":category_offer", $category, PDO::PARAM_INT);
     $request->bindValue(":price_offer", $price, PDO::PARAM_STR);
@@ -25,6 +26,7 @@ function insertOfferToDatabase($category, $price, $availablity, $public, $contra
     $request->bindValue(":city_offer", $city, PDO::PARAM_STR);
     $request->bindValue(":location_offer", $address, PDO::PARAM_STR);
     $request->bindValue(":postal_code_offer", $postalCode, PDO::PARAM_STR);
+    $request->bindValue(":offer_peculiarity", $offerPeculiarity, PDO::PARAM_STR);
     $request->bindValue(":offer_owner", $owner, PDO::PARAM_INT);
     $request->execute();
     $result = $database->lastInsertId();
@@ -34,7 +36,7 @@ function insertOfferToDatabase($category, $price, $availablity, $public, $contra
 
 
 // Récupération des Catégories d'offres
-function getOfferCategories()
+function getOfferCategories(): array
 {
     $database = connexionPDO();
     $query = 'SELECT * FROM offers_categories';
@@ -47,7 +49,7 @@ function getOfferCategories()
 
 
 // Récupération du Public visé par l'offre
-function getOfferPublic()
+function getOfferPublic(): array
 {
     $database = connexionPDO();
     $query = 'SELECT * FROM offers_public';
@@ -60,7 +62,7 @@ function getOfferPublic()
 
 
 // Récupération des Données (Offres) de la Base De Données
-function getOffers()
+function getOffers(): array
 {
     $database = connexionPDO();
     $query = 'SELECT * FROM offers';
@@ -86,39 +88,52 @@ function getOfferById($offerId)
 }
 
 
-// On récupére les Informations du Propriétaire de l'Offre postée
-function getOfferOwner($offerOwnerId)
+// On récupére Toutes les offres postées par l'utilisateur à partir de son Id
+function getOfferByOwner($offerOwnerId): array
 {
     $database = connexionPDO();
-    $query = '
-                SELECT u.name_user, u.email_user, u.address_user, c.name_category, o.job_offer
-                FROM users u 
-                INNER JOIN offers o on u.id_user = o.id_owner_offer
-                INNER JOIN categories c on c.id_category = o.id_category_offer
-                WHERE o.id_owner_offer = :id_owner_offer
-                ORDER BY o.publication_date_offer
-            ';
+    $query = 'SELECT * FROM offers WHERE offer_owner = :offer_owner';
     $request = $database->prepare($query);
-    $request->bindValue(":id_owner_offer", $offerOwnerId, PDO::PARAM_INT);
+    $request->bindValue(":offer_owner", $offerOwnerId, PDO::PARAM_INT);
     $request->execute();
-    $owner_category = $request->fetch(PDO::FETCH_ASSOC);
+    $offer = $request->fetchAll(PDO::FETCH_ASSOC);
     $request->closeCursor();
-    return $owner_category;
+    return $offer;
+}
+
+// Récupérer une offre par son statut et l'Id de son auteur
+function getOfferByStatusIdAndOfferOwnerId($offerStatusId, $offerOwnerId): array
+{
+    $database = connexionPDO();
+    $query = 'SELECT * FROM offers o
+        INNER JOIN offers_approval oa on o.id_offer = oa.id_offer
+        INNER JOIN approval a on a.id_approval = oa.id_approval
+        WHERE oa.id_approval = :offer_status_id AND offer_owner = :offer_owner
+    ';
+    $request = $database->prepare($query);
+    $request->bindValue(":offer_status_id",$offerStatusId,PDO::PARAM_INT);
+    $request->bindValue(":offer_owner", $offerOwnerId, PDO::PARAM_INT);
+    $request->execute();
+    $offers = $request->fetchAll(PDO::FETCH_ASSOC);
+    $request->closeCursor();
+    return $offers;
 }
 
 
 // Édition des informations d'une offre à partir de son Id
-function updateOfferById($offerId, $category, $price, $availablity, $public, $contract, $description, $pieces, $area, $country, $city, $address, $postalCode) {
+function updateOfferById($offerId, $category, $price, $availablity, $public, $contract, $description, $pieces,
+                         $area, $country, $city, $address, $postalCode, $offerPeculiarity): bool
+{
     $database = connexionPDO();
     $query = 'UPDATE offers SET category_offer = :category_offer, price_offer = :price_offer, 
                   availablity_offer = :availablity_offer, public_offer = :public_offer,contract_offer = :contract_offer, 
                   description_offer = :description_offer, pieces_offer = :pieces_offer, area_offer = :area_offer,
                   country_offer = :country_offer, city_offer = :city_offer, location_offer = :location_offer, 
-                  postal_code_offer = :postal_code_offer    
+                  postal_code_offer = :postal_code_offer, offer_peculiarity = :offer_peculiarity    
         WHERE id_offer = :id_offer';
     $request = $database->prepare($query);
     $request->bindValue(":id_offer", $offerId, PDO::PARAM_STR);
-    $request->bindValue(":category_offer", $category, PDO::PARAM_INT);
+    $request->bindValue(":category_offer", $category, PDO::PARAM_STR);
     $request->bindValue(":price_offer", $price, PDO::PARAM_STR);
     $request->bindValue(":availablity_offer", $availablity, PDO::PARAM_STR);
     $request->bindValue(":public_offer", $public, PDO::PARAM_STR);
@@ -130,15 +145,30 @@ function updateOfferById($offerId, $category, $price, $availablity, $public, $co
     $request->bindValue(":city_offer", $city, PDO::PARAM_STR);
     $request->bindValue(":location_offer", $address, PDO::PARAM_STR);
     $request->bindValue(":postal_code_offer", $postalCode, PDO::PARAM_STR);
+    $request->bindValue(":offer_peculiarity", $offerPeculiarity, PDO::PARAM_STR);
     $result = $request->execute();
     $request->closeCursor();
     if ($result > 0) return true;
     return false;
 }
 
+// Éditer le statut d'une offre
+function updateOfferStatusById($offerId, $statusId): bool
+{
+    $database = connexionPDO();
+    $query = 'UPDATE offers_approval SET id_approval = :id_approval    
+        WHERE id_offer = :id_offer';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
+    $request->bindValue(":id_approval", $statusId, PDO::PARAM_INT);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+}
 
 // Suppression d'une Offre
-function deleteOfferById($offerId, $offerOwner)
+function deleteOfferById($offerId, $offerOwner): bool
 {
     $database = connexionPDO();
     $query = 'DELETE FROM offers WHERE id_offer = :id_offer AND offer_owner = :offer_owner';
@@ -149,4 +179,61 @@ function deleteOfferById($offerId, $offerOwner)
     $request->closeCursor();
     if ($result > 0) return true;
     return false;
+
+    /*
+     $database = connexionPDO();
+    $query = 'DELETE FROM offers WHERE id_offer = :id_offer AND offer_owner = :offer_owner';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
+    $request->bindValue(":offer_owner", $offerOwner, PDO::PARAM_INT);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+     */
+}
+
+// Suppression d'une offre par un admin
+function deleteOfferWithAdminStatus($offerId): bool
+{
+    $database = connexionPDO();
+    $query = 'DELETE FROM offers WHERE id_offer = :id_offer';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+}
+
+// Assignation de statuts aux offres
+function offerStatusAssignation($offerId, $statusId): string
+{
+    $database = connexionPDO();
+    $query = 'INSERT INTO offers_approval (id_offer, id_approval) 
+                VALUES (:id_offer, :id_status)';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
+    $request->bindValue(":id_status", $statusId, PDO::PARAM_INT);
+    $request->execute();
+    $result = $database->lastInsertId();
+    $request->closeCursor();
+    return $result;
+}
+
+// Récupération du ou des statut(s) de l'utilisateur
+function getOfferStatusById($offerId): array
+{
+    $database = connexionPDO();
+    $query = 'SELECT * FROM approval s
+        INNER JOIN offers_approval os on s.id_approval = os.id_approval
+        INNER JOIN offers o on o.id_offer = os.id_offer
+        WHERE o.id_offer = :id_offer
+    ';
+    $request = $database->prepare($query);
+    $request->bindValue(":id_offer",$offerId,PDO::PARAM_INT);
+    $request->execute();
+    $usersRoles = $request->fetchAll(PDO::FETCH_ASSOC);
+    $request->closeCursor();
+    return $usersRoles;
 }

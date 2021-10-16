@@ -18,9 +18,9 @@ try {
             break;
             case "contact": getContactView();
             break;
-            case "userRegister": getUserRegisterView();
+            case "userRegister": userRegister();
             break;
-            case "userLogin": getUserLoginView();
+            case "userLogin": userLogin();
             break;
             case "userEmailValidation": getUserEmailValidationView();
             break;
@@ -40,15 +40,21 @@ try {
             break;
             case "getDataOfOfferWithAJAX": getDataOfOfferWithAJAX();
             break;
-            case "editDataOfOfferWithAJAX": editDataOfOfferWithAJAX();
+            case "updateDataOfOfferWithAJAX": updateDataOfOfferWithAJAX();
             break;
             case "getImagesOfOfferByIdWithAJAX": getImagesOfOfferByIdWithAJAX();
             break;
             case "getAllDataOfOfferWithAJAX": getAllDataOfOfferWithAJAX();
             break;
-            case "getUserByIdWithAJAX": getUserByIdWithAJAX();
-            break;
             case "deleteOfferByIdWithAJAX": deleteOfferByIdWithAJAX();
+            break;
+            case "registerOrView": getRegisterOrViewView();
+            break;
+            case "editOfferStatusWithAJAX": editOfferStatusWithAJAX();
+            break;
+            case "getStatusOfOfferWithAJAX": getStatusOfOfferWithAJAX();
+            break;
+            case "deleteOfferByIdAndAdminStatusWithAJAX": deleteOfferByIdAndAdminStatusWithAJAX();
             break;
             case "error301":
             case "error302":

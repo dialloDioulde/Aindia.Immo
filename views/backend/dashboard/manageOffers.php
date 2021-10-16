@@ -5,7 +5,13 @@ ob_start();
 <?php
 // On récupère les données grâce à la fonction que nous avons créée dans le offerDao.php
 $offers = getOffers();
+$myOffers = $offers;
 ?>
+
+<script>
+    var myOffers = <?php echo json_encode($myOffers); ?>;
+</script>
+
 
 <div class="" id="manageOffers">
     <div class="container">
@@ -14,7 +20,7 @@ $offers = getOffers();
         <div class="row" id="offer-row">
             <?php foreach ($offers as $offer) : ?>
                 <div class="" id="<?= $offer['id_offer'] ?>">
-                    <div class="card m-1" >
+                    <div class="card m-1">
                         <div class="card-header">
                             <button type="button" class="btn btn-primary offer-display-btn"
                                     data-id="<?= $offer['id_offer'] ?>" data-toggle="modal">Voir
@@ -209,7 +215,7 @@ $offers = getOffers();
 
 <!-- Début : Édition d'une Offre -->
 <div class="modal fade offerEditModal" id="offerEditModal" role="dialog">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-center" id="offerModalTitle">Édition d'une Offre</h5>
@@ -219,82 +225,31 @@ $offers = getOffers();
                 <form id="editOfferForm" class="editOfferForm" enctype="multipart/form-data">
                     <div class="form-row">
                         <input type="hidden" id="offerId" name="offerId"/>
-                        <input type="hidden" id="imagesToDelete" name="imagesToDelete"/>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="e_offerCategory">Type de logement : </label>
-                            <select name="offerCategory" id="e_offerCategory" class="form-control">
-                                <?php foreach ($offerCategory = getOfferCategories() as $category) { ?>
-                                    <?php echo '<option value="' . $category["id_category"] . '">' . $category["name_category"] . '</option>'; ?>
+                        <div class="form-group">
+                            <label for="e_offerStatus">Satut de l'Offre : </label>
+                            <select name="e_offerStatus" id="e_offerStatus" class="form-control">
+                                <?php foreach (getStatusList() as $status) { ?>
+                                    <?php
+                                    if ($status['name_approval'] == 'approved')
+                                        $status['name_approval'] = 'Approuvée';
+                                    if ($status['name_approval'] == 'hided')
+                                        $status['name_approval'] = 'Retirée';
+                                    if ($status['name_approval'] == 'denied')
+                                        $status['name_approval'] = 'Refusée';
+                                    if ($status['name_approval'] == 'blocked')
+                                        $status['name_approval'] = 'Bloquée';
+                                    if ($status['name_approval'] == 'pending')
+                                        $status['name_approval'] = 'En Attente';
+                                    if ($status['name_approval'] == 'moderated')
+                                        $status['name_approval'] = 'Modérée';
+                                        ?>
+                                    <?php echo '<option value="' . $status["id_approval"] . '">' . $status["name_approval"] . '</option>'; ?>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerPeople">Locataire souhaité : </label>
-                            <select name="offerPeople" id="e_offerPeople" class="form-control">
-                                <?php foreach ($offerPublic = getOfferPublic() as $public) { ?>
-                                    <?php echo '<option value="' . $public["id_public"] . '">' . $public["name_public"] . '</option>'; ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerTime">Durée du Contrat : </label>
-                            <input type="text" class="form-control" name="offerTime" id="e_offerTime">
-                        </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="e_offerAvailable">Disponibilité : </label>
-                            <input type="text" class="form-control" name="offerAvailable" id="e_offerAvailable">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerPieces">Nombre de pièce(s) : </label>
-                            <input type="text" class="form-control" name="offerPieces" id="e_offerPieces">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerArea">Surface (m2) : </label>
-                            <input type="text" class="form-control" name="offerArea" id="e_offerArea">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="e_offerPrice">Loyé / Mois : </label>
-                            <input type="text" class="form-control" name="offerPrice" id="e_offerPrice">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerCountry">Pays : </label>
-                            <input type="text" class="form-control" name="offerCountry" id="e_offerCountry">
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="e_offerCity">Ville : </label>
-                            <input type="text" class="form-control" name="offerCity" id="e_offerCity">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="e_offerPostalCode">Code Postal : </label>
-                            <input type="text" class="form-control" name="offerPostalCode" id="e_offerPostalCode">
-                        </div>
-                        <div class="form-group col-8">
-                            <label for="e_offerAddress">Adresse : </label>
-                            <input type="text" class="form-control" name="offerAddress" id="e_offerAddress">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="e_offerDescription">Description : </label>
-                        <textarea class="form-control" id="e_offerDescription" name="offerDescription"
-                                  rows="5"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="e_numberOfImage">Photo(s): </label>
-                        <input type="file" class='form-control-file mt-2' name="offerImage[]" multiple="multiple"
-                               id="e_offerImage"/>
-                    </div>
-                    <!-- Affichage des images de l'Offre via AJAX -->
-                    <div class="row p-2" id="displayImages">
-                    </div>
-                    <!-- Fin : Affichage des images de l'Offre via AJAX -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary editOfferCancelBtn"
                                 data-bs-dismiss="modal">Fermer
@@ -318,6 +273,7 @@ $offers = getOffers();
             <div class="modal-header">
                 <h5 class="modal-title text-center" id="offerModalTitle">Suppression d'une Offre</h5>
             </div>
+            <div class="deleteOfferNotificationMessage p-2"></div>
             <div class="modal-body">
                 <form id="deleteOfferForm" class="deleteOfferForm" enctype="multipart/form-data">
                     <p id="deleteOfferMessage">Êtes vous sûr de vouloir supprimer l'offre ...</p>

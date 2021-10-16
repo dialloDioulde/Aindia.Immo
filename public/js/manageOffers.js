@@ -36,7 +36,6 @@ $(document).ready(function () {
     // Affichage des informations d'une offre à partir de son ID
     // Ouverture du modal présentant les informations d'une offre
     $(".offer-display-btn").click(function () {
-        editImage = false;
         let idOfferParam = $(this).data('id');
         $.ajax({
             type: 'POST',
@@ -77,23 +76,21 @@ $(document).ready(function () {
         $("#offerDisplayModal").modal('show');
     });
 
-
     // Récupération des informations de l'offre à éditer à partir de son ID
     $(".offer-edit-btn").click(function () {
+        $(".editNotificationMessage").html("");
         let id_offer = $(this).data('id');
+        document.getElementById("offerId").value = id_offer;
         getEditOfferDataById(id_offer);
-        getImagesOfOfferById(id_offer);
-        editImage = true;
         $("#offerEditModal").modal('show');
     });
 
-
-    // Édition d'une Offre par son ID
+    // Édition du statut d'une Offre par son ID
     $(".editOfferForm").submit(function (e) {
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: 'editDataOfOfferWithAJAX',
+            url: 'editOfferStatusWithAJAX',
             data: new FormData(this),
             dataType: 'json',
             contentType: false,
@@ -101,7 +98,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('.editNotificationMessage').html('');
                 if (response.status === 1) {
-                    $('.editNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
+                    $('.editNotificationMessage').html('<p id="test" class="alert alert-success">'+response.message+'</p>');
                     //$("#offerModal").modal('hide');
                 } else {
                     $('.editNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
@@ -114,52 +111,17 @@ $(document).ready(function () {
     function getEditOfferDataById(idOffer) {
         $.ajax({
             type: 'POST',
-            url: 'getDataOfOfferWithAJAX',
+            url: 'getStatusOfOfferWithAJAX',
             data: "offerId=" + idOffer,
             success: function (data) {
                 let resData = JSON.parse(data);
-                $('#offerId').val(resData['id_offer']);
-                $('#e_offerCategory').val(resData['category_offer']);
-                $('#e_offerPeople').val(resData['public_offer']);
-                $('#e_offerTime').val(resData['contract_offer']);
-                $('#e_offerAvailable').val(resData['availablity_offer']);
-                $('#e_offerPieces').val(resData['pieces_offer']);
-                $('#e_offerArea').val(resData['area_offer']);
-                $('#e_offerPrice').val(resData['price_offer']);
-                $('#e_offerCountry').val(resData['country_offer']);
-                $('#e_offerCity').val(resData['city_offer']);
-                $('#e_offerPostalCode').val(resData['postal_code_offer']);
-                $('#e_offerAddress').val(resData['location_offer']);
-                $('#e_offerDescription').val(resData['description_offer']);
+                $('#e_offerStatus').val(resData['id_approval']);
             }
         });
     }
 
     // Initialisation des variables
-    let displayEditOfferImagesDivContentId = document.getElementById("displayImages");
     let displayOfferImagesDivContentId = document.getElementById("offerImagesDisplay");
-    let editImage = false;  // Permettra de détecter un clic sur une image affichée uniquement s'il s'agit d'une action d'édition
-
-    // Récupération des images d'une offre par son Id
-    function getImagesOfOfferById(idOfferParam) {
-        $.ajax({
-            type: 'POST',
-            url: 'getImagesOfOfferByIdWithAJAX',
-            data: "offerId=" + idOfferParam,
-            success: function (data) {
-                let resData = JSON.parse(data);
-                let idOffer = resData.offerId
-                let imageData = resData.imageData;
-                let offer_edit_image = "offer-edit-image-" + idOffer;
-                let displayImageTagClassName = document.getElementsByClassName(offer_edit_image);
-                let image_div_content_id = "image-div-content-id-" + idOffer;
-                // On vérifie qu'aucune image de l'offre séléctionnée n'est déjà affichée
-                // Pour éviter d'afficher une nouvelle fois les images déjà affichées lors du premier clic
-                displayImagesOfOfferById(offer_edit_image, displayImageTagClassName, image_div_content_id,
-                    idOfferParam, imageData, idOffer, displayEditOfferImagesDivContentId);
-            }
-        });
-    }
 
     // Affichage des images d'une offre par son ID
     function displayImagesOfOfferById(imgTagClassName, countImgTagClassName, imageDivContentId, idOfferParam, imageData, idOffer, divId)
@@ -179,9 +141,6 @@ $(document).ready(function () {
                 imageDivContent += '</div>';
                 $(divId).html();
                 $(divId).append(imageDivContent);
-                // On appelle la fonction permettant de récupérer l'ID de l'image à supprimer
-                if (editImage)
-                    getIdOfImageToEdit();
             }
         }
     }
@@ -202,16 +161,12 @@ $(document).ready(function () {
                 $(this).css("border", "3px solid");
                 imagesToDelete.push(image_id_from_database);
             }
-            let images_to_delete = document.getElementById("imagesToDelete").value = imagesToDelete;
+            document.getElementById("imagesToDelete").value = imagesToDelete;
         });
     }
 
     // Fermeture du Modal permettant d'éditer les informations d'une offre
     $(".editOfferCancelBtn").click(function () {
-        // On supprime toutes les images déjà ajoutées dans la DIV (displayEditOfferImagesDivContentId, affichant les images)
-        while(displayEditOfferImagesDivContentId.firstChild) {
-            displayEditOfferImagesDivContentId.removeChild( displayEditOfferImagesDivContentId.firstChild);
-        }
         $(".offerEditModal").modal('hide');
     });
 
@@ -219,6 +174,7 @@ $(document).ready(function () {
     // Bouton de suppresion d'une image
     // Ouverture du modal permettant de supprimer une offre
     $(".offerDeleteBtn").click(function () {
+        $(".deleteOfferNotificationMessage").html("");
         idOfferToDelete = parseInt($(this).data('id'));
         document.getElementById("deleteOfferMessage").innerHTML = "Êtes vous sûr de vouloir supprimer l'offre numéro" + " " + idOfferToDelete + " " + " ?";
         $("#offerDeleteModal").modal('show');
@@ -232,6 +188,7 @@ $(document).ready(function () {
 
     // Fermeture du modal permettant de supprimer une offre
     $(".deleteOfferCancelBtn").click(function () {
+        $(".deleteOfferNotificationMessage").html("");
         $("#offerDeleteModal").modal('hide');
     });
 
@@ -239,13 +196,20 @@ $(document).ready(function () {
     function deleteOfById(idOfferParam) {
         $.ajax({
             type: 'POST',
-            url: 'deleteOfferByIdWithAJAX',
+            url: 'deleteOfferByIdAndAdminStatusWithAJAX',
             data: "offerId=" + idOfferParam,
             dataType: 'json',
             success: function (response) {
-                let offerId = parseInt(response.offerId);
-                document.getElementById(offerId).remove();
-                $("#offerDeleteModal").modal('hide');
+                $('.deleteOfferNotificationMessage').html('');
+                if (response.status === 1) {
+                    let offerId = parseInt(response.offerId);
+                    $('.deleteOfferNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
+                    document.getElementById(offerId).remove();
+                    $("#offerDeleteModal").modal('hide');
+                } else if (response.status === 0){
+                    $('.deleteOfferNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
+                }
+
             }
         });
     }

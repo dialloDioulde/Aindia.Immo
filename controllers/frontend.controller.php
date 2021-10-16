@@ -8,6 +8,7 @@ require_once "models/imageDao.php";
 require_once "models/publicDao.php";
 require_once "models/categoryDao.php";
 require_once "models/userDao.php";
+require_once "models/statusDao..php";
 
 // Fonction qui renvoie la view ACCUEIL
 function getOffersViews() {
@@ -58,10 +59,29 @@ function getContactView() {
     require_once "views/frontend/contacts/contact.view.php";
 }
 
+
 //  Fonction qui renvoie la page de profile de l'utilisateur
 function getUserProfilView() {
     $title = "Profile";
     $description = "Page de profil de l'utilisateur";
+
+    $contentView = "";
+    if (isset($_GET["actionType"]) && $_GET["actionType"] === "approved") {
+        $offers = getOfferByStatusIdAndOfferOwnerId(1, $_SESSION["id"]);
+        require_once "views/frontend/offers/offerApproved.view.php";
+    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "pending") {
+        $offers = getOfferByStatusIdAndOfferOwnerId(6, $_SESSION["id"]);
+        require_once "views/frontend/offers/offerPending.view.php";
+    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "moderated") {
+        $offers = getOfferByStatusIdAndOfferOwnerId(3, $_SESSION["id"]);
+        require_once "views/frontend/offers/offerModerated.view.php";
+    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "hided") {
+        $offers = getOfferByStatusIdAndOfferOwnerId(4, $_SESSION["id"]);
+        require_once "views/frontend/offers/offerHided.view.php";
+    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "blocked") {
+        $offers = getOfferByStatusIdAndOfferOwnerId(5, $_SESSION["id"]);
+        require_once "views/frontend/offers/offerBlocked.view.php";
+    }
     require_once "views/frontend/account/userProfil.view.php";
 }
 

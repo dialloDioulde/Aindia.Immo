@@ -4,9 +4,9 @@ echo styleTitleLevel_1("Détails De l'Offre N° " . $offer['id_offer'] . "", COL
 ?>
 
 <!-- Début : Affichage Des Détails De l'Offre -->
-<div class="mt-2 bg-white text-dark p-2" id="offerDetails">
+<div class="mt-1 bg-white text-dark p-2" id="offerDetails">
     <div class="container">
-        <div class="row">
+        <div class="row p-2 border-right border-top border-left border-bottom mb-1">
             <div class="col-md-6">
                 <div id="images">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -39,110 +39,48 @@ echo styleTitleLevel_1("Détails De l'Offre N° " . $offer['id_offer'] . "", COL
                 </div>
             </div>
             <div class="col-md-6">
-                <div id="infos" class="">
-                    <?php echo styleTitleLevel_2("Caractéristiques", COLOR_TITLE_LEVEL_A_INTERIM_TEAM); ?>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="shadow text-center">
-                                <strong>Type de Logement </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Locataire Souhaité </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Disponibilité </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Loyé / Mois </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Nombre de Pièces </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Surface (m2) </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Contrat </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Pays </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Ville </strong>
-                            </p>
-                            <p class="shadow text-center">
-                                <strong>Adresse </strong>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="shadow text-center">
-                                <?php echo $categoryOffer['name_category'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $publicOffer['name_public'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['availablity_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['price_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['pieces_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['availablity_offer'] ?>
-                                <?php echo $offer['contract_offer'] ?>
-                                <?php echo $offer['area_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['contract_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['country_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['city_offer'] ?>
-                            </p>
-                            <p class="shadow text-center">
-                                <?php echo $offer['location_offer'] ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="text-center">Informations</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id="">Type de Logement : <?php echo $categoryOffer['name_category'] ?></li>
+                    <li class="list-group-item" id="">Profil Recherché : <?php echo $publicOffer['name_public'] ?></li>
+                    <li class="list-group-item" id="">Disponibilité : <?php echo $offer['availablity_offer'] ?></li>
+                    <li class="list-group-item" id="">Loyé Mensuel : <?php echo $offer['price_offer'] ?></li>
+                    <li class="list-group-item" id="">Nombre de Pièces : <?php echo $offer['pieces_offer'] ?></li>
+                    <li class="list-group-item" id="">Disponibilité : <?php echo $offer['availablity_offer'] ?></li>
+                    <li class="list-group-item" id="">Surface (m2) : <?php echo $offer['area_offer'] ?></li>
+                    <li class="list-group-item" id="">Durée du Contrat : <?php echo $offer['contract_offer'] ?></li>
+                </ul>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" id="description">
-                <?php echo styleTitleLevel_2("Description", COLOR_TITLE_LEVEL_A_INTERIM_TEAM); ?>
-                <p>
-                    <?php echo $offer['description_offer'] ?>
-                </p>
+            <div class="col-md-6 mt-3">
+                <h3 class="text-center">Localisation</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id="">Pays : <?php echo $offer['country_offer'] ?></li>
+                    <li class="list-group-item" id="">Ville : <?php echo $offer['city_offer'] ?></li>
+                    <li class="list-group-item" id="">Quartier : <?php echo $offer['location_offer'] ?></li>
+                </ul>
             </div>
-            <div class="col-md-6">
-                <?php echo styleTitleLevel_2("Auteur", COLOR_TITLE_LEVEL_A_INTERIM_TEAM); ?>
-                <div class="row">
-                    <div class="col-md-6" id="ownerInfosLeft">
-                        <p class="">
-                            <strong>Nom </strong>
-                        </p>
-                        <p class="">
-                            <strong>Email </strong>
-                        </p>
-                    </div>
-                    <div class="col-md-6" id="ownerInfosRight">
-                        <p class="">
-                            <?php echo $offer_owner['name_user'] ?>
-                        </p>
-                        <p class="">
-                            <?php echo $offer_owner['email_user'] ?>
-                        </p>
-                    </div>
-                </div>
+            <div class="col-md-6 mt-3">
+                <h3 class="text-center">Contact</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id="">Nom : <?php echo $offer_owner['name_user'] ?></li>
+                    <li class="list-group-item" id="">Email : <?php echo $offer_owner['email_user'] ?></li>
+                    <li class="list-group-item" id="">Tel : 06 26 58 57 13</li>
+                </ul>
+            </div>
+            <div class="col-md-6 mt-3">
+                <h3 class="text-center">Description</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id=""><?php echo $offer['description_offer'] ?></li>
+                </ul>
+            </div>
+            <div class="col-md-6 mt-3">
+                <h3 class="text-center">Pièces</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id=""><?php echo $offer['offer_peculiarity'] ?></li>
+                </ul>
             </div>
         </div>
     </div>
-
 </div>
 <!-- Fin : Affichage Des Détails De l'Offre -->
 

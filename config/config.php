@@ -6,12 +6,13 @@ const COLOR_TITLE_LEVEL_A_INTERIM_TEAM = "my_ColorGreen";
 
 // Constantes liées à la Connexion de la Base De Données
 /*
-
 const HOST_NAME = "dioulddiallo.mysql.db";
 const DATABASE_NAME = "dioulddiallo";
 const USER_NAME = "dioulddiallo";
 const PASSWORD = "Maria9512Sehawa";
+
 */
+
 
 const HOST_NAME = "localhost";
 const DATABASE_NAME = "Aindia";
@@ -22,11 +23,14 @@ const COOKIE_PROTECT = "hersougool";
 
 
 // Constantes liées aux utilisateurs
-const ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE = "Un lien de validation de votre inscription vient de vous être envoyé à votre adresse email";
+const ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE_SENT = "Un lien de validation de votre inscription vient de vous être envoyé à votre adresse email";
+const ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE  = "Votre compte a bien été validé, merci pour votre confiance !";
 const ALERT_USER_REGISTER_EMAIL_VALIDATION_ERROR_MESSAGE = "Une erreur s'est produite lors de l'envoie du lien de validation de votre inscription";
+const ALERT_USER_REGISTER_EMAIL_VALIDATION_ERROR = "Une erreur est survenue lors de la validation de votre compte !";
+const ALERT_USER_REGISTER_EMAIL_VALIDATION_LINK_ERROR = "Lien de validation invalide !";
 const ALERT_USER_REGISTER_ERROR = "Une erreur s'est produite lors de la création de votre compte";
-const ALERT_USER_REGISTER_USERNAME_ERROR = "Pseudo déjà utilissé par un autre utilisateur";
-const ALERT_USER_REGISTER_EMAIL_ERROR = "Adresse email déjà utilisée par un autre utilisateur";
+const ALERT_USER_REGISTER_USERNAME_EXIST_ERROR = "Pseudo déjà utilissé par un autre utilisateur";
+const ALERT_USER_REGISTER_EMAIL_EXIST_ERROR = "Adresse email déjà utilisée par un autre utilisateur";
 const ALERT_USER_NOT_LOGIN_ERROR = "Vous n'êtes pas connecté(e) à votre compte utilisateur";
 
 const ALERT_USER_LOGIN_WELCOME = "Bienvenue, nous sommes content de vous revoir !";
@@ -43,6 +47,10 @@ const ALERT_OFFER_CREATE_FILE_EXTENSION_ERROR = "Seules les extensions png, jpeg
 const ALERT_OFFER_CREATE_NUMBER_OF_IMAGES = "Vous devez chosir au moins 4 images";
 const ALERT_OFFER_UPDATE = "Votre offre a bien été mise à jour";
 const ALERT_OFFER_UPDATE_ERROR = "Une érreur est survenue lors de mise à jour de votre offre";
+
+
+const ALERT_OFFER_STATUS_UPDATE = "Offre mis à jour avec succés";
+const ALERT_OFFER_STATUS_UPDATE_ERROR = "Une erreur est survenue lors de la mise à jour de l'offre";
 
 
 
