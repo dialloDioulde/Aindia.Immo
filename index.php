@@ -4,6 +4,7 @@ session_start();
 require_once "controllers/frontend.controller.php";
 require_once "controllers/backend.controller.php";
 require_once "controllers/offersBackend.controller.php";
+//require_once "controllers/usersBackend.controller.php";
 require_once "config/Security.class.php";
 
 try {
@@ -18,9 +19,9 @@ try {
             break;
             case "contact": getContactView();
             break;
-            case "userRegister": userRegister();
+            case "userRegister": userRegisterView();
             break;
-            case "userLogin": userLogin();
+            case "userLogin": getUserLogin();
             break;
             case "userEmailValidation": getUserEmailValidationView();
             break;
@@ -48,13 +49,15 @@ try {
             break;
             case "deleteOfferByIdWithAJAX": deleteOfferByIdWithAJAX();
             break;
-            case "registerOrView": getRegisterOrViewView();
-            break;
             case "editOfferStatusWithAJAX": editOfferStatusWithAJAX();
             break;
             case "getStatusOfOfferWithAJAX": getStatusOfOfferWithAJAX();
             break;
             case "deleteOfferByIdAndAdminStatusWithAJAX": deleteOfferByIdAndAdminStatusWithAJAX();
+            break;
+            case "userResetPasswordSendLink": getUserResetPasswordSendLinkView();
+            break;
+            case "userResetPassword": getUserResetPasswordView();
             break;
             case "error301":
             case "error302":

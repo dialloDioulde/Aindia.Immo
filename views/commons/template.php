@@ -43,7 +43,7 @@
                     <?php } elseif (isset($_SESSION["id"]) && $_SESSION['role_is_user']) { ?>
                         <a href="<?= URL ?>userProfil" class="nav-link d-inline text-white"><?php echo $_SESSION['name_user']?></a>
                         <?php } else {?>
-                        <a href="<?= URL ?>registerOrView&actionType=loginView" class="nav-link d-inline text-white">Connexion</a>
+                        <a href="<?= URL ?>userLogin" class="nav-link d-inline text-white">Connexion</a>
                     <?php }?>
                 </div>
             </div>

@@ -99,10 +99,9 @@ $(document).ready(function () {
             success: function (response) {
                 $('.editNotificationMessage').html('');
                 if (response.status === 1) {
-                    $('.editNotificationMessage').html('<p id="test" class="alert alert-success">'+response.message+'</p>');
+                    $('.editNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
                     //$("#offerModal").modal('hide');
                 } else {
-                    console.log("non");
                     $('.editNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
                 }
             }

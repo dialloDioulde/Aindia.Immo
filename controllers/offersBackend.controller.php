@@ -72,7 +72,6 @@ function createOfferWithAJAX() {
     }
 }
 
-
 // Récupération des données d'une offre à partir de son ID via AJAX
 function getDataOfOfferWithAJAX() {
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
@@ -206,7 +205,6 @@ function editOfferStatusWithAJAX() {
     }
 }
 
-
 // Récupération des images d'une offre par son Id via AJAX
 function getImagesOfOfferByIdWithAJAX() {
     $data = array(
@@ -220,7 +218,6 @@ function getImagesOfOfferByIdWithAJAX() {
         echo json_encode($data);
     }
 }
-
 
 // Suppression d'une offre par son Id via AJAX
 function deleteOfferByIdWithAJAX() {

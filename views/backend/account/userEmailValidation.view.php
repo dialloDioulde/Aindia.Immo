@@ -1,8 +1,6 @@
 <?php
 ob_start();
-echo styleTitleLevel_2("Validation Du Compte Utilisateur", COLOR_TITLE_LEVEL_A_INTERIM);
 ?>
-
 
 <div class="row mt-2 p-2 justify-content-center" id="registerError">
     <?php if ($ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE != "") {?>

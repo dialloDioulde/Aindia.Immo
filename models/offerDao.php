@@ -14,7 +14,7 @@ function insertOfferToDatabase($category, $price, $availablity, $public, $contra
                 VALUES (:category_offer, :price_offer, :availablity_offer, :public_offer, :contract_offer, :description_offer, :offer_owner,
                         :pieces_offer, :area_offer, :country_offer, :city_offer, :location_offer, :postal_code_offer, :offer_peculiarity)';
     $request = $database->prepare($query);
-    $request->bindValue(":category_offer", $category, PDO::PARAM_INT);
+    $request->bindValue(":category_offer", $category, PDO::PARAM_STR);
     $request->bindValue(":price_offer", $price, PDO::PARAM_STR);
     $request->bindValue(":availablity_offer", $availablity, PDO::PARAM_STR);
     $request->bindValue(":public_offer", $public, PDO::PARAM_STR);
@@ -179,18 +179,6 @@ function deleteOfferById($offerId, $offerOwner): bool
     $request->closeCursor();
     if ($result > 0) return true;
     return false;
-
-    /*
-     $database = connexionPDO();
-    $query = 'DELETE FROM offers WHERE id_offer = :id_offer AND offer_owner = :offer_owner';
-    $request = $database->prepare($query);
-    $request->bindValue(":id_offer", $offerId, PDO::PARAM_INT);
-    $request->bindValue(":offer_owner", $offerOwner, PDO::PARAM_INT);
-    $result = $request->execute();
-    $request->closeCursor();
-    if ($result > 0) return true;
-    return false;
-     */
 }
 
 // Suppression d'une offre par un admin

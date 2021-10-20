@@ -1,7 +1,8 @@
 <?php
 // Pour Sécuriser les Informations passées avec $GET et $POST
 class Security {
-    public static function securityHtml($string) {
+    public static function securityHtml($string): string
+    {
         return htmlentities($string);
     }
 
@@ -12,7 +13,8 @@ class Security {
         $_SESSION[COOKIE_PROTECT] = $cookie;
     }
 
-    public static function verifyCookie() {
+    public static function verifyCookie(): bool
+    {
         if ($_COOKIE[COOKIE_PROTECT] === $_SESSION[COOKIE_PROTECT]) {
             Security::generateCookiePassword();
             return true;

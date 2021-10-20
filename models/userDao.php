@@ -123,3 +123,46 @@ function getUserRolesById($userId): array
     $request->closeCursor();
     return $usersRoles;
 }
+
+// Réinitialisation de mot de passe
+function resetPassword($email, $token): string
+{
+    $database = connexionPDO();
+    $query = 'INSERT INTO password_resets (email, token) VALUES (:email, :token)';
+    $request = $database->prepare($query);
+    $request->bindValue(":email", $email, PDO::PARAM_STR);
+    $request->bindValue(":token", $token, PDO::PARAM_STR);
+    $request->execute();
+    $result = $database->lastInsertId();
+    $request->closeCursor();
+    return $result;
+}
+
+// Vérification de l'existence de l'email utiliser pour la réinitialisation du mot de passe dans la table password_resets
+function verifyIfUserEmailExist($email, $token) {
+    $database = connexionPDO();
+    $query = 'SELECT * FROM password_resets WHERE email = :email AND token = :token';
+    $request = $database->prepare($query);
+    $request->bindValue(":email", $email, PDO::PARAM_STR);
+    $request->bindValue(":token", $token, PDO::PARAM_STR);
+    $request->execute();
+    $result = $request->fetch(PDO::FETCH_ASSOC);
+    $request->closeCursor();
+    return $result;
+}
+
+// Modification du mot utilisateur
+function updateUserPassword($email, $password): bool
+{
+    $database = connexionPDO();
+    $query = 'UPDATE users SET password_user = :password    
+        WHERE email_user = :email';
+    $request = $database->prepare($query);
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $request->bindValue(":email", $email, PDO::PARAM_STR);
+    $request->bindValue(":password", $passwordHash, PDO::PARAM_STR);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+}

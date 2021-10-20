@@ -6,18 +6,20 @@ const COLOR_TITLE_LEVEL_A_INTERIM_TEAM = "my_ColorGreen";
 
 // Constantes liées à la Connexion de la Base De Données
 /*
-const HOST_NAME = "dioulddiallo.mysql.db";
-const DATABASE_NAME = "dioulddiallo";
-const USER_NAME = "dioulddiallo";
-const PASSWORD = "Maria9512Sehawa";
-
-*/
-
-
-const HOST_NAME = "localhost";
+ const HOST_NAME = "localhost";
 const DATABASE_NAME = "Aindia";
 const USER_NAME = "root";
 const PASSWORD = "root";
+*/
+
+
+const HOST_NAME = "dioulddaindia.mysql.db";
+const DATABASE_NAME = "dioulddaindia";
+const USER_NAME = "dioulddaindia";
+const PASSWORD = "Maria9512Sehawa";
+
+
+
 
 const COOKIE_PROTECT = "hersougool";
 
@@ -35,7 +37,10 @@ const ALERT_USER_NOT_LOGIN_ERROR = "Vous n'êtes pas connecté(e) à votre compt
 
 const ALERT_USER_LOGIN_WELCOME = "Bienvenue, nous sommes content de vous revoir !";
 const ALERT_USER_LOGIN_ERROR = "Mot de passe ou Nom d'utilisateur Invalide";
-
+const ALERT_USER_RESET_PASSWORD_LINK_SENT = "Un lien vous permettant de procéder à la réinitialisation de votre mot de passe vient de vous être envoyé à l'adresse email";
+const ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = "Une erreur est survenue lors de la prise en compte de votre requête";
+const ALERT_USER_EMAIL_NOT_EXIST_ERROR = "Utilisateur inconnu de notre system";
+const ALERT_USER_RESET_PASSWORD_IS_OK = "Votre mot de passe a bien été modifié";
 
 // Constantes lées aux offres
 const ALERT_OFFER_CREATE = "Votre Offre a bien été créée";

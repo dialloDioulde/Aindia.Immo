@@ -98,7 +98,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('.editNotificationMessage').html('');
                 if (response.status === 1) {
-                    $('.editNotificationMessage').html('<p id="test" class="alert alert-success">'+response.message+'</p>');
+                    $('.editNotificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
                     //$("#offerModal").modal('hide');
                 } else {
                     $('.editNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
@@ -145,26 +145,6 @@ $(document).ready(function () {
         }
     }
 
-    // Gestion des images de l'offre
-    let imagesToDelete = [];
-    function getIdOfImageToEdit() {
-        imagesToDelete = [];
-        $(".image-to-edit").click(function () {
-            let image_id_from_database = $(this).data('id');
-            if ($(this).hasClass("border-danger")) {
-                $(this).removeClass("border-danger");
-                $(this).css("border", "");
-                let id_image = imagesToDelete.indexOf(image_id_from_database);
-                imagesToDelete.splice(id_image, 1);
-            } else {
-                $(this).addClass("border-danger");
-                $(this).css("border", "3px solid");
-                imagesToDelete.push(image_id_from_database);
-            }
-            document.getElementById("imagesToDelete").value = imagesToDelete;
-        });
-    }
-
     // Fermeture du Modal permettant d'éditer les informations d'une offre
     $(".editOfferCancelBtn").click(function () {
         $(".offerEditModal").modal('hide');
@@ -209,7 +189,6 @@ $(document).ready(function () {
                 } else if (response.status === 0){
                     $('.deleteOfferNotificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
                 }
-
             }
         });
     }

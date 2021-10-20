@@ -14,7 +14,7 @@ require_once "models/categoryDao.php";
 require_once "models/statusDao..php";
 
 // Création du compte du compte utilisateur
-function userRegister()
+function userRegisterView()
 {
     $title = "Inscription";
     $description = "Page de d'Inscription";
@@ -54,10 +54,11 @@ function userRegister()
             $ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE_SENT = ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE_SENT;
         }
     }
+    require_once "views/backend/account/userRegister.view.php";
 }
 
 // Connexion de l'utilisateur
-function userLogin()
+function getUserLogin()
 {
     $ALERT_USER_LOGIN_ERROR = "";
     $title = "Connexion";
@@ -80,17 +81,17 @@ function userLogin()
             $ALERT_USER_LOGIN_ERROR = ALERT_USER_LOGIN_ERROR;
         }
     }
+    require_once "views/backend/account/userLogin.view.php";
 }
 
 // Validation de l'adresse mail de l'utilisateur
 function getUserEmailValidationView()
 {
+    $title = "Validation Compte Utilisateur";
+    $description = "Validation du compte utilisateur";
     $ALERT_USER_REGISTER_EMAIL_VALIDATION_MESSAGE = "";
     $ALERT_USER_REGISTER_EMAIL_VALIDATION_ERROR = "";
     $ALERT_USER_REGISTER_EMAIL_VALIDATION_LINK_ERROR = "";
-    $title = "Validation Compte Utilisateur";
-    $description = "Validation du compte utilisateur";
-
     $email = $_GET['email'];
     $token = $_GET['token'];
     $user = getUserByEmailAndToken($email, $token);
@@ -118,6 +119,62 @@ function getUserLogoutView()
         header("Location: welcomeOffer");
     }
     require_once "views/backend/account/userLogout.view.php";
+}
+
+// Envoie du lien permettant à l'utilisateur de réinitialiser son mot de passe
+function getUserResetPasswordSendLinkView() {
+    $title = "Réinitialisation mot de passe";
+    $description = "Envoie du lien de réinitialisation du mot de passe";
+    $ALERT_USER_RESET_PASSWORD_LINK_SENT = "";
+    $ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = "";
+    $ALERT_USER_EMAIL_NOT_EXIST_ERROR = "";
+    if (isset($_POST['email']) && !empty($_POST['email'])) {
+        $email = Security::securityHtml($_POST['email']);
+        $verifyIfUserExist = getUserByEmail($email);
+        if ($verifyIfUserExist > 0) {
+            $token = generateToken();
+            $result = resetPassword($email, $token);
+            if ($result > 0) {
+                $to = $email;
+                $subject = "Réinitialisation de mot de passe";
+                $message = 'Bonjour '.mb_strtoupper($email) . ",". "\r\n" .
+                    'Veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe : '. "\r\n" . "\r\n" .
+                    'https://www.house.diouldediallo.fr/aindiaImmo/userResetPassword&email='.$email.'&token='.$token.''. "\r\n";
+                $headers = 'From:noreply-rp@aindia.net' . "\r\n";
+                mail($to, utf8_decode($subject), utf8_decode($message), $headers);
+                $ALERT_USER_RESET_PASSWORD_LINK_SENT = ALERT_USER_RESET_PASSWORD_LINK_SENT . " " .$email;
+            } else {
+                $ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR;
+            }
+        }
+        if ($verifyIfUserExist <= 0) {
+            $ALERT_USER_EMAIL_NOT_EXIST_ERROR = ALERT_USER_EMAIL_NOT_EXIST_ERROR;
+        }
+    }
+    require_once "views/backend/account/sendUserResetPasswordLink.view.php";
+}
+
+// Réinitialisation de mot de passe
+function getUserResetPasswordView() {
+    $title = "Réinitialisation du mot de passe";
+    $description = "Réinitialisation du mot de passe";
+    $ALERT_USER_RESET_PASSWORD_IS_OK = "";
+    $ALERT_USER_EMAIL_NOT_EXIST_ERROR = "";
+    $email = $_GET['email'];
+    $token = $_GET['token'];
+    $user = verifyIfUserEmailExist($email, $token);
+    if ($user > 0) {
+        if (isset($_POST['password']) && !empty($_POST['password']) &&
+            isset($_POST['passwordConfirmation']) && !empty($_POST['passwordConfirmation'])) {
+            $password = Security::securityHtml($_POST['password']);
+            $result = updateUserPassword($email, $password);
+            if ($result)
+                $ALERT_USER_RESET_PASSWORD_IS_OK = ALERT_USER_RESET_PASSWORD_IS_OK;
+        }
+    } else {
+        $ALERT_USER_EMAIL_NOT_EXIST_ERROR = ALERT_USER_EMAIL_NOT_EXIST_ERROR;
+    }
+    require_once "views/backend/account/userResetPassword.view.php";
 }
 
 // Enregistrement de l'offre
@@ -151,19 +208,4 @@ function getManageOffersView() {
     $title = "Gestion des Offres";
     $description = "Page de Gestion des offres";
     require_once "views/backend/dashboard/manageOffers.php";
-}
-
-// Register Or Login View
-function getRegisterOrViewView() {
-    $title = "Inscription ou Connexion";
-    $description = "Page d'Inscription ou de Connexion";
-    $contentView = "";
-    if (isset($_GET["actionType"]) && $_GET["actionType"] === "registerView") {
-        userRegister();
-        require_once "views/backend/account/userRegister.view.php";
-    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "loginView") {
-        userLogin();
-        require_once "views/backend/account/userLogin.view.php";
-    }
-    require_once "views/backend/account/registerOrLogin.view.php";
 }
