@@ -84,7 +84,7 @@ ob_start();
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="e_offerAvailable">Disponibilité : </label>
-                                                <input type="text" class="form-control" name="offerAvailable" id="e_offerAvailable" value="<?= $offer['availablity_offer'] ?>">
+                                                <input type="date" class="form-control" name="offerAvailable" id="e_offerAvailable" value="<?= $offer['availablity_offer'] ?>">
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="e_offerPieces">Nombre de pièce(s) : </label>

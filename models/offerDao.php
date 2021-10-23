@@ -5,14 +5,14 @@ require_once "pdo.php";
 
 
 // Enregistrement de l'offre en Base De Données
-function insertOfferToDatabase($category, $price, $availablity, $public, $contract, $description, $owner,
-                               $pieces, $area, $country, $city, $address, $postalCode, $offerPeculiarity): string
+function insertOfferToDatabase($category, $price, $availablity, $public, $contract, $description, $owner, $pieces,
+                               $area, $country, $city, $address, $postalCode, $offerPeculiarity, $offerCreateDate): string
 {
     $database = connexionPDO();
     $query = 'INSERT INTO offers (category_offer, price_offer, availablity_offer, public_offer, contract_offer, description_offer, offer_owner,
-                    pieces_offer, area_offer, country_offer, city_offer, location_offer, postal_code_offer, offer_peculiarity) 
+                    pieces_offer, area_offer, country_offer, city_offer, location_offer, postal_code_offer, offer_peculiarity, offer_create_date) 
                 VALUES (:category_offer, :price_offer, :availablity_offer, :public_offer, :contract_offer, :description_offer, :offer_owner,
-                        :pieces_offer, :area_offer, :country_offer, :city_offer, :location_offer, :postal_code_offer, :offer_peculiarity)';
+                        :pieces_offer, :area_offer, :country_offer, :city_offer, :location_offer, :postal_code_offer, :offer_peculiarity, :offer_create_date)';
     $request = $database->prepare($query);
     $request->bindValue(":category_offer", $category, PDO::PARAM_STR);
     $request->bindValue(":price_offer", $price, PDO::PARAM_STR);
@@ -28,6 +28,7 @@ function insertOfferToDatabase($category, $price, $availablity, $public, $contra
     $request->bindValue(":postal_code_offer", $postalCode, PDO::PARAM_STR);
     $request->bindValue(":offer_peculiarity", $offerPeculiarity, PDO::PARAM_STR);
     $request->bindValue(":offer_owner", $owner, PDO::PARAM_INT);
+    $request->bindValue(":offer_create_date", $offerCreateDate, PDO::PARAM_STR);
     $request->execute();
     $result = $database->lastInsertId();
     $request->closeCursor();
@@ -122,14 +123,14 @@ function getOfferByStatusIdAndOfferOwnerId($offerStatusId, $offerOwnerId): array
 
 // Édition des informations d'une offre à partir de son Id
 function updateOfferById($offerId, $category, $price, $availablity, $public, $contract, $description, $pieces,
-                         $area, $country, $city, $address, $postalCode, $offerPeculiarity): bool
+                         $area, $country, $city, $address, $postalCode, $offerPeculiarity, $offerUpdateDate): bool
 {
     $database = connexionPDO();
     $query = 'UPDATE offers SET category_offer = :category_offer, price_offer = :price_offer, 
                   availablity_offer = :availablity_offer, public_offer = :public_offer,contract_offer = :contract_offer, 
                   description_offer = :description_offer, pieces_offer = :pieces_offer, area_offer = :area_offer,
                   country_offer = :country_offer, city_offer = :city_offer, location_offer = :location_offer, 
-                  postal_code_offer = :postal_code_offer, offer_peculiarity = :offer_peculiarity    
+                  postal_code_offer = :postal_code_offer, offer_peculiarity = :offer_peculiarity, offer_update_date = :offer_update_date    
         WHERE id_offer = :id_offer';
     $request = $database->prepare($query);
     $request->bindValue(":id_offer", $offerId, PDO::PARAM_STR);
@@ -146,6 +147,7 @@ function updateOfferById($offerId, $category, $price, $availablity, $public, $co
     $request->bindValue(":location_offer", $address, PDO::PARAM_STR);
     $request->bindValue(":postal_code_offer", $postalCode, PDO::PARAM_STR);
     $request->bindValue(":offer_peculiarity", $offerPeculiarity, PDO::PARAM_STR);
+    $request->bindValue(":offer_update_date", $offerUpdateDate, PDO::PARAM_STR);
     $result = $request->execute();
     $request->closeCursor();
     if ($result > 0) return true;

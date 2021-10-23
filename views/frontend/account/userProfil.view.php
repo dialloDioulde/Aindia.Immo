@@ -9,6 +9,7 @@ ob_start();
         <div class="row justify-content-center mt-3">
             <div class="col-md-2 mt-5">
                 <ul class="list-unstyled">
+                    <li><li><a href="<?= URL ?>userLogout" class="btn btn-primary mb-2 text-white">Déconnexion</a></li></li>
                     <li><a href="userProfil&actionType=pending" class="btn btn-primary mb-2 text-white">En Attentes</a></li>
                     <li><a href="userProfil&actionType=approved" class="btn btn-primary  mb-2 text-white">Approuvées</a></li>
                     <li><a href="userProfil&actionType=moderated" class="btn btn-primary mb-2 text-white">Modérées</a></li>

@@ -33,6 +33,8 @@ function userRegisterView()
         $email = Security::securityHtml($_POST['email']);
         $password = Security::securityHtml($_POST['password']);
         $token = generateToken();
+        $createDate = date("Y-m-d H:i:s");
+        echo $createDate;
 
         $usernameResult = getUserByUsername($username);
         $emailResult = getUserByEmail($email);
@@ -41,7 +43,7 @@ function userRegisterView()
         } elseif ($emailResult > 0) {
             $ALERT_USER_REGISTER_EMAIL_EXIST_ERROR = ALERT_USER_REGISTER_EMAIL_EXIST_ERROR;
         } else {
-            $userId = registerUserOnDatabase($username, $email, $password, $token);
+            $userId = registerUserOnDatabase($username, $email, $password, $token, $createDate);
             userRoleAssignation($userId, 1);
             $to = $email;
             $subject = "Validation | Inscription ";
@@ -162,12 +164,13 @@ function getUserResetPasswordView() {
     $ALERT_USER_EMAIL_NOT_EXIST_ERROR = "";
     $email = $_GET['email'];
     $token = $_GET['token'];
+    $updateDate = date("Y-m-d H:i:s");
     $user = verifyIfUserEmailExist($email, $token);
     if ($user > 0) {
         if (isset($_POST['password']) && !empty($_POST['password']) &&
             isset($_POST['passwordConfirmation']) && !empty($_POST['passwordConfirmation'])) {
             $password = Security::securityHtml($_POST['password']);
-            $result = updateUserPassword($email, $password);
+            $result = updateUserPassword($email, $password, $updateDate);
             if ($result)
                 $ALERT_USER_RESET_PASSWORD_IS_OK = ALERT_USER_RESET_PASSWORD_IS_OK;
         }

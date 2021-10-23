@@ -6,18 +6,18 @@ const COLOR_TITLE_LEVEL_A_INTERIM_TEAM = "my_ColorGreen";
 
 // Constantes liées à la Connexion de la Base De Données
 /*
- const HOST_NAME = "localhost";
-const DATABASE_NAME = "Aindia";
-const USER_NAME = "root";
-const PASSWORD = "root";
-*/
-
-
 const HOST_NAME = "dioulddaindia.mysql.db";
 const DATABASE_NAME = "dioulddaindia";
 const USER_NAME = "dioulddaindia";
 const PASSWORD = "Maria9512Sehawa";
 
+*/
+
+
+const HOST_NAME = "localhost";
+const DATABASE_NAME = "Aindia";
+const USER_NAME = "root";
+const PASSWORD = "root";
 
 
 

@@ -4,17 +4,18 @@ require_once "config/config.php";
 require_once "pdo.php";
 
 // Création d'un compte utilisateur
-function registerUserOnDatabase($username, $email, $password, $token): string
+function registerUserOnDatabase($username, $email, $password, $token, $createDate): string
 {
     $database = connexionPDO();
-    $query = 'INSERT INTO users (name_user, email_user, password_user, token_user) 
-                VALUES (:username, :email, :password, :token)';
+    $query = 'INSERT INTO users (name_user, email_user, password_user, token_user, create_date_user) 
+                VALUES (:username, :email, :password, :token, :create_date)';
     $request = $database->prepare($query);
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $request->bindValue(":username", $username, PDO::PARAM_STR);
     $request->bindValue(":email", $email, PDO::PARAM_STR);
     $request->bindValue(":password", $passwordHash, PDO::PARAM_STR);
     $request->bindValue(":token", $token, PDO::PARAM_STR);
+    $request->bindValue(":create_date", $createDate, PDO::PARAM_STR);
     $request->execute();
     $result = $database->lastInsertId();
     $request->closeCursor();
@@ -152,15 +153,16 @@ function verifyIfUserEmailExist($email, $token) {
 }
 
 // Modification du mot utilisateur
-function updateUserPassword($email, $password): bool
+function updateUserPassword($email, $password, $updateDate): bool
 {
     $database = connexionPDO();
-    $query = 'UPDATE users SET password_user = :password    
+    $query = 'UPDATE users SET password_user = :password, update_date_user = :update_date    
         WHERE email_user = :email';
     $request = $database->prepare($query);
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $request->bindValue(":email", $email, PDO::PARAM_STR);
     $request->bindValue(":password", $passwordHash, PDO::PARAM_STR);
+    $request->bindValue(":update_date", $updateDate, PDO::PARAM_STR);
     $result = $request->execute();
     $request->closeCursor();
     if ($result > 0) return true;

@@ -47,13 +47,14 @@ function createOfferWithAJAX() {
         $offerPostalCode = Security::securityHtml($_POST['offerPostalCode']);
         $numberOfImage = count($_FILES["offerImage"]['name']);
         $offerPeculiarity = getCheckBoxValue($_POST['checkBoxValue']);
+        $offerCreateDate = date("Y-m-d H:i:s");
 
         if (isset($_SESSION["id"]) && !empty($_SESSION["id"])){
             $offerOwner = $_SESSION["id"];
             if ($numberOfImage >= 4 && $numberOfImage <= 10) {
                 $offerId = insertOfferToDatabase($offerCategory, $offerPrice, $offerAvailable, $offerPeople, $offerTime,
                     $offerDescription, $offerOwner, $offerPieces, $offerArea, $offerCountry, $offerCity, $offerAddress,
-                    $offerPostalCode, $offerPeculiarity);
+                    $offerPostalCode, $offerPeculiarity, $offerCreateDate);
                 if ($offerId > 0) {
                     $hasError = false;
                     offerStatusAssignation($offerId, 6);
@@ -140,12 +141,13 @@ function updateDataOfOfferWithAJAX() {
         $imagesToDelete = Security::securityHtml($_POST['imagesToDelete']);
         $offerId = Security::securityHtml($_POST['offerId']);
         $offerPeculiarity = getCheckBoxValue($_POST['checkBoxValue']);
+        $offerUpdateDate = date("Y-m-d H:i:s");
 
         if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) {
             // Enregistrement des modifications apportées à l'offre
             $result = updateOfferById($offerId, $offerCategory, $offerPrice, $offerAvailable, $offerPeople, $offerTime,
                 $offerDescription, $offerPieces, $offerArea, $offerCountry, $offerCity, $offerAddress, $offerPostalCode,
-                $offerPeculiarity);
+                $offerPeculiarity, $offerUpdateDate);
             // Suppression de toutes les images contenues dans $ImagesId
             if (isset($imagesToDelete) && !empty($imagesToDelete)) {
                 $ImagesId = explode(",", $imagesToDelete);

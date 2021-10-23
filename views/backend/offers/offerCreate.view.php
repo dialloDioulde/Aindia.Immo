@@ -42,8 +42,8 @@ ob_start();
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
-                        <label for="offerAvailable">Disponibilité : </label>
-                        <input type="text" class="form-control" name="offerAvailable" id="offerAvailable">
+                        <label for="offerAvailable">Disponibile: </label>
+                        <input type="date" class="form-control" name="offerAvailable" id="offerAvailable">
                     </div>
                     <div class="form-group col-4">
                         <label for="offerPieces">Nombre de pièce(s) : </label>
@@ -127,7 +127,7 @@ ob_start();
                            id="offerImage"/>
                 </div>
                 <div class="row no-guters p-1">
-                    <input type="submit" value="CRÉER L'OFFRE" class="btn btn-primary col-3">
+                    <input type="submit" value="CRÉER L'OFFRE" class="btn btn-primary col-3" id="btnSubmit">
                 </div>
             </form>
         </div>
