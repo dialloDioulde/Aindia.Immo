@@ -37,45 +37,54 @@ ob_start();
                     </div>
                     <div class="form-group col-4">
                         <label for="offerTime">Durée du Contrat : </label>
-                        <input type="text" class="form-control" name="offerTime" id="offerTime">
+                        <input type="text" class="form-control" name="offerTime" id="offerTime" onkeyup="inputFieldValidation(this, 'offerTimeError', regexOnlyIntAndLetters, timeErrorMessage)">
+                        <span class="error mb-1" id="offerTimeError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
                         <label for="offerAvailable">Disponibile: </label>
                         <input type="date" class="form-control" name="offerAvailable" id="offerAvailable">
+                        <span class="error mb-1" id="offerAvailableError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerPieces">Nombre de pièce(s) : </label>
-                        <input type="text" class="form-control" name="offerPieces" id="offerPieces">
+                        <input type="text" class="form-control" name="offerPieces" id="offerPieces" placeholder="ex : 2" onkeyup="inputFieldValidation(this, 'offerPiecesError', regexOnlyInt, piecesErrorMessage)">
+                        <span class="error mb-1" id="offerPiecesError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerArea">Surface (m2) : </label>
-                        <input type="text" class="form-control" name="offerArea" id="offerArea">
+                        <input type="text" class="form-control" name="offerArea" id="offerArea" onkeyup="inputFieldValidation(this, 'offerAreaError', regexIntAndFloat, areaErrorMessage)">
+                        <span class="error mb-1" id="offerAreaError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
                         <label for="offerPrice">Loyé / Mois : </label>
-                        <input type="text" class="form-control" name="offerPrice" id="offerPrice">
+                        <input type="text" class="form-control" name="offerPrice" id="offerPrice" onkeyup="inputFieldValidation(this, 'offerPriceError', regexIntAndFloat, priceErrorMessage)">
+                        <span class="error mb-1" id="offerPriceError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerCountry">Pays : </label>
-                        <input type="text" class="form-control" name="offerCountry" id="offerCountry">
+                        <input type="text" class="form-control" name="offerCountry" id="offerCountry" onkeyup="inputFieldValidation(this, 'offerCountryError', regexOnlyIntAndLetters, countryErrorMessage)">
+                        <span class="error mb-1" id="offerCountryError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerCity">Ville : </label>
-                        <input type="text" class="form-control" name="offerCity" id="offerCity">
+                        <input type="text" class="form-control" name="offerCity" id="offerCity" onkeyup="inputFieldValidation(this, 'offerCityError', regexOnlyIntAndLetters, cityErrorMessage)">
+                        <span class="error mb-1" id="offerCityError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
                         <label for="offerPostalCode">Code Postal : </label>
-                        <input type="text" class="form-control" name="offerPostalCode" id="offerPostalCode">
+                        <input type="text" class="form-control" name="offerPostalCode" id="offerPostalCode" onkeyup="inputFieldValidation(this, 'offerPostalCodeError', regexOnlyIntAndLetters, postalCodeErrorMessage)">
+                        <span class="error mb-1" id="offerPostalCodeError"></span>
                     </div>
                     <div class="form-group col-8">
                         <label for="offerAddress">Adresse : </label>
-                        <input type="text" class="form-control" name="offerAddress" id="offerAddress">
+                        <input type="text" class="form-control" name="offerAddress" id="offerAddress" onkeyup="inputFieldValidation(this, 'offerAddressError', regexOnlyIntAndLetters, addressErrorMessage)">
+                        <span class="error mb-1" id="offerAddressError"></span>
                     </div>
                 </div>
                 <div class="row m-1 mt-1 mb-2">
@@ -118,13 +127,14 @@ ob_start();
                 </div>
                 <div class="form-group">
                     <label for="offerDescription">Description : </label>
-                    <textarea class="form-control" id="offerDescription" name="offerDescription"
-                              rows="4"></textarea>
+                    <textarea class="form-control" id="offerDescription" name="offerDescription" rows="4"></textarea>
+                    <span class="error mb-1" id="offerDescriptionError"></span>
                 </div>
                 <div class="form-group">
                     <label for="numberOfImage">Photo(s): </label>
                     <input type="file" class='form-control-file mt-1' name="offerImage[]" multiple="multiple"
                            id="offerImage"/>
+                    <span class="error mb-1" id="offerImageError"></span>
                 </div>
                 <div class="row no-guters p-1">
                     <input type="submit" value="CRÉER L'OFFRE" class="btn btn-primary col-3" id="btnSubmit">
