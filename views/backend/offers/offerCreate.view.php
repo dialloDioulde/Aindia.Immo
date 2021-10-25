@@ -37,13 +37,13 @@ ob_start();
                     </div>
                     <div class="form-group col-4">
                         <label for="offerTime">Durée du Contrat : </label>
-                        <input type="text" class="form-control" name="offerTime" id="offerTime" onkeyup="inputFieldValidation(this, 'offerTimeError', regexOnlyIntAndLetters, timeErrorMessage)">
+                        <input type="text" class="form-control" name="offerTime" id="offerTime" placeholder="ex : 12 mois" onkeyup="inputFieldValidation(this, 'offerTimeError', regexOnlyIntAndLetters, timeErrorMessage)">
                         <span class="error mb-1" id="offerTimeError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
-                        <label for="offerAvailable">Disponibile: </label>
+                        <label for="offerAvailable">Disponibile : </label>
                         <input type="date" class="form-control" name="offerAvailable" id="offerAvailable">
                         <span class="error mb-1" id="offerAvailableError"></span>
                     </div>
@@ -54,36 +54,36 @@ ob_start();
                     </div>
                     <div class="form-group col-4">
                         <label for="offerArea">Surface (m2) : </label>
-                        <input type="text" class="form-control" name="offerArea" id="offerArea" onkeyup="inputFieldValidation(this, 'offerAreaError', regexIntAndFloat, areaErrorMessage)">
+                        <input type="text" class="form-control" name="offerArea" id="offerArea" placeholder="ex : 18,50" onkeyup="inputFieldValidation(this, 'offerAreaError', regexIntAndFloat, areaErrorMessage)">
                         <span class="error mb-1" id="offerAreaError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
-                        <label for="offerPrice">Loyé / Mois : </label>
-                        <input type="text" class="form-control" name="offerPrice" id="offerPrice" onkeyup="inputFieldValidation(this, 'offerPriceError', regexIntAndFloat, priceErrorMessage)">
+                        <label for="offerPrice">Loyé Mensuel (f cfa) : </label>
+                        <input type="text" class="form-control" name="offerPrice" id="offerPrice" placeholder="ex : 50695,75" onkeyup="inputFieldValidation(this, 'offerPriceError', regexIntAndFloat, priceErrorMessage)">
                         <span class="error mb-1" id="offerPriceError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerCountry">Pays : </label>
-                        <input type="text" class="form-control" name="offerCountry" id="offerCountry" onkeyup="inputFieldValidation(this, 'offerCountryError', regexOnlyIntAndLetters, countryErrorMessage)">
+                        <input type="text" class="form-control" name="offerCountry" id="offerCountry" placeholder="ex : Sénégal" onkeyup="inputFieldValidation(this, 'offerCountryError', regexOnlyLetters, countryErrorMessage)">
                         <span class="error mb-1" id="offerCountryError"></span>
                     </div>
                     <div class="form-group col-4">
                         <label for="offerCity">Ville : </label>
-                        <input type="text" class="form-control" name="offerCity" id="offerCity" onkeyup="inputFieldValidation(this, 'offerCityError', regexOnlyIntAndLetters, cityErrorMessage)">
+                        <input type="text" class="form-control" name="offerCity" id="offerCity" placeholder="ex : Marsassoum" onkeyup="inputFieldValidation(this, 'offerCityError', regexOnlyLetters, cityErrorMessage)">
                         <span class="error mb-1" id="offerCityError"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-4">
                         <label for="offerPostalCode">Code Postal : </label>
-                        <input type="text" class="form-control" name="offerPostalCode" id="offerPostalCode" onkeyup="inputFieldValidation(this, 'offerPostalCodeError', regexOnlyIntAndLetters, postalCodeErrorMessage)">
+                        <input type="text" class="form-control" name="offerPostalCode" id="offerPostalCode" placeholder="ex : 31700 DK" onkeyup="inputFieldValidation(this, 'offerPostalCodeError', regexOnlyIntAndLetters, postalCodeErrorMessage)">
                         <span class="error mb-1" id="offerPostalCodeError"></span>
                     </div>
                     <div class="form-group col-8">
-                        <label for="offerAddress">Adresse : </label>
-                        <input type="text" class="form-control" name="offerAddress" id="offerAddress" onkeyup="inputFieldValidation(this, 'offerAddressError', regexOnlyIntAndLetters, addressErrorMessage)">
+                        <label for="offerAddress">Localisation : </label>
+                        <input type="text" class="form-control" name="offerAddress" id="offerAddress" placeholder="ex : 8 Rue de la Casamance" onkeyup="inputFieldValidation(this, 'offerAddressError', regexOnlyIntAndLetters, addressErrorMessage)">
                         <span class="error mb-1" id="offerAddressError"></span>
                     </div>
                 </div>
@@ -127,7 +127,9 @@ ob_start();
                 </div>
                 <div class="form-group">
                     <label for="offerDescription">Description : </label>
-                    <textarea class="form-control" id="offerDescription" name="offerDescription" rows="4"></textarea>
+                    <textarea class="form-control" id="offerDescription" name="offerDescription" rows="4"
+                              placeholder="ex : Nous mettons en location notre maison au bord de la mer..."
+                              onkeyup="inputFieldValidation(this, 'offerDescriptionError', regexOnlyIntAndLetters, descriptionMessage)"></textarea>
                     <span class="error mb-1" id="offerDescriptionError"></span>
                 </div>
                 <div class="form-group">
