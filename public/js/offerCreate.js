@@ -31,6 +31,7 @@ let offerPostalCodeIsValid = false;
 let offerAddressIsValid = false;
 let offerDescriptionIsValid = false;
 let offerDateIsValid = false;
+let offerImageIsValid = false;
 
 // Disable form submit button after loading page
 let formBtnSubmitID = document.getElementById('btnSubmit');
@@ -41,7 +42,7 @@ addEventListener("load", function () {
 // Display form submit button
 function displayFormBtnSubmit() {
     if (offerTimeIsValid && offerPiecesIsValid && offerAreaIsValid && offerPriceIsValid && offerCountryIsValid && offerCityIsValid
-        && offerPostalCodeIsValid && offerAddressIsValid && offerDescriptionIsValid && offerDateIsValid)
+        && offerPostalCodeIsValid && offerAddressIsValid && offerDescriptionIsValid && offerDateIsValid && offerImageIsValid)
         formBtnSubmitID.disabled = false;
 }
 
@@ -67,23 +68,15 @@ function inputFieldValidation(inputField, inputStatusNotificationFieldId, regexA
     let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
     if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
         if (inputField.value.match(regexApply)) {
-            inputStatusNotificationField.textContent = 'Saisie Correcte';
-            inputStatusNotificationField.style.color = 'green';
-            inputField.style.border= '';
+            displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Saisie Correcte', 'green');
             fieldStatusValidation(inputStatusNotificationFieldId);
             displayFormBtnSubmit();
         } else {
-            formBtnSubmitID.disabled = true;
-            inputField.style.border = '2px solid red';
-            inputStatusNotificationField.textContent = "Saisie incorrecte";
-            inputStatusNotificationField.style.color = 'red';
+            displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '2px solid red', "Saisie incorrecte", 'red');
         }
     }
     if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
-        formBtnSubmitID.disabled = true;
-        inputField.style.border = '2px solid red';
-        inputStatusNotificationField.textContent = errorMessage;
-        inputStatusNotificationField.style.color = 'red';
+        displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '2px solid red', errorMessage, 'red');
     }
 }
 
@@ -109,7 +102,6 @@ function fieldStatusValidation(inputStatusNotificationFieldId) {
         offerDescriptionIsValid = true;
 }
 
-
 // Count number of spaces in input value
 function calculateNumberOfSpaces(fieldValue) {
     let numberOfSpaces = 0;
@@ -126,32 +118,55 @@ function verifyIfFieldValueContainOnlySpaces(fieldValue) {
     return calculateNumberOfSpaces(fieldValue) === fieldValue.length;
 }
 
-
 // This function allows to display date input field validation status notification
-function displayDateInputFieldValidationStatus(border, textContent, color) {
-    let offerAvailableInputField = document.getElementById("offerAvailable");
-    let inputStatusNotificationField = document.getElementById('offerAvailableError');
+function displayInputFieldValidationStatus(inputField, inputNotification, border, textContent, color) {
     formBtnSubmitID.disabled = true;
-    offerAvailableInputField.style.border = border;
-    inputStatusNotificationField.textContent = textContent;
-    inputStatusNotificationField.style.color = color;
+    inputField.style.border = border;
+    inputNotification.textContent = textContent;
+    inputNotification.style.color = color;
 }
 
 // Date input field validation
 $('#offerAvailable').on('change', function(){
+    let offerAvailableInputField = document.getElementById("offerAvailable");
+    let inputStatusNotificationField = document.getElementById('offerAvailableError');
     let dateInput = new Date($('#offerAvailable').val());
     let dateValidator = new Date();
     if(dateInput.getMonth() < dateValidator.getMonth() && dateInput.getFullYear() === dateValidator.getFullYear()) {
-        displayDateInputFieldValidationStatus('2px solid red', 'Mois invalide', 'red');
+        displayInputFieldValidationStatus(offerAvailableInputField, inputStatusNotificationField,'2px solid red', 'Mois invalide', 'red');
     } else if (dateInput.getFullYear() < dateValidator.getFullYear()) {
-        displayDateInputFieldValidationStatus('2px solid red', 'Année invalide', 'red');
+        displayInputFieldValidationStatus(offerAvailableInputField, inputStatusNotificationField,'2px solid red', 'Année invalide', 'red');
     } else if (dateInput.getDate() < dateValidator.getDate() && dateInput.getFullYear() === dateValidator.getFullYear() && dateInput.getMonth() === dateValidator.getMonth()) {
-        displayDateInputFieldValidationStatus('2px solid red', 'Date invalide', 'red');
+        displayInputFieldValidationStatus(offerAvailableInputField, inputStatusNotificationField,'2px solid red', 'Date invalide', 'red');
     } else {
-        displayDateInputFieldValidationStatus('', 'Date Valide', 'green');
+        displayInputFieldValidationStatus(offerAvailableInputField, inputStatusNotificationField,'', 'Date Valide', 'green');
         offerDateIsValid = true;
         displayFormBtnSubmit();
     }
 });
 
+// Image input field validation
+let imageExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+$('#offerImage').on('change', function(){
+    let offerImage = document.getElementById("offerImage");
+    let inputStatusNotificationField = document.getElementById("offerImageError");
+    let count = 0;
+    for (let i = 0; i < this.files.length; i++) {
+        let image = this.files[i];
+        let imageType = image.type;
+        if (imageExtensions.includes(imageType))
+            count = count + 1;
+    }
+    if (count !== this.files.length) {
+        displayInputFieldValidationStatus(offerImage, inputStatusNotificationField, '2px solid red', 'Seules les extensions jpg, jpeg et png sont autorisées', 'red');
+    } else if (count < 4) {
+        displayInputFieldValidationStatus(offerImage, inputStatusNotificationField, '2px solid red', "Le nombre minimal d'images est 4", 'red');
+    } else if (count > 10) {
+        displayInputFieldValidationStatus(offerImage, inputStatusNotificationField, '2px solid red', "Le nombre maximal d'image est 10", 'red');
+    } else if (count >= 4 || count <= 10) {
+        offerImageIsValid = true;
+        displayInputFieldValidationStatus(offerImage, inputStatusNotificationField, '', 'Images Valides', 'green');
+        displayFormBtnSubmit();
+    }
+});
 

@@ -43,10 +43,9 @@ echo styleTitleLevel_1("Détails De l'Offre N° " . $offer['id_offer'] . "", COL
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" id="">Type de Logement : <?php echo $categoryOffer['name_category'] ?></li>
                     <li class="list-group-item" id="">Profil Recherché : <?php echo $publicOffer['name_public'] ?></li>
-                    <li class="list-group-item" id="">Disponibilité : <?php echo $offer['availablity_offer'] ?></li>
                     <li class="list-group-item" id="">Loyé Mensuel : <?php echo $offer['price_offer'] ?></li>
                     <li class="list-group-item" id="">Nombre de Pièces : <?php echo $offer['pieces_offer'] ?></li>
-                    <li class="list-group-item" id="">Disponibilité : <?php echo $offer['availablity_offer'] ?></li>
+                    <li class="list-group-item" id="">Disponibile : <?php echo $offer['availablity_offer'] ?></li>
                     <li class="list-group-item" id="">Surface (m2) : <?php echo $offer['area_offer'] ?></li>
                     <li class="list-group-item" id="">Durée du Contrat : <?php echo $offer['contract_offer'] ?></li>
                 </ul>
