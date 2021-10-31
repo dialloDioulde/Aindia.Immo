@@ -1,34 +1,128 @@
-<?php
-ob_start();
-//echo styleTitleLevel_2("Mon Tableau De Bord", COLOR_TITLE_LEVEL_A_INTERIM);
-// echo ($_SESSION['name_user']. " ". $_SESSION['email_user']. " ". "773908675". " ". "Sénégal". " ". "Dakar")
-?>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="mt-3 mb-1" id="">
-    <div class="container">
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-2 mt-5">
-                <ul class="list-unstyled">
-                    <li><li><a href="<?= URL ?>userLogout" class="btn btn-primary mb-2 text-white">Déconnexion</a></li></li>
-                    <li><a href="userProfil&actionType=pending" class="btn btn-primary mb-2 text-white">En Attentes</a></li>
-                    <li><a href="userProfil&actionType=approved" class="btn btn-primary  mb-2 text-white">Approuvées</a></li>
-                    <li><a href="userProfil&actionType=moderated" class="btn btn-primary mb-2 text-white">Modérées</a></li>
-                    <li><a href="userProfil&actionType=hided" class="btn btn-primary mb-2 text-white">Retirer</a></li>
-                    <li><a href="userProfil&actionType=blocked" class="btn btn-primary  mb-2 text-white">Bloquées</a></li>
-                </ul>
-            </div>
-            <div class="col-md-10">
-                <?= $contentView ?>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="userProfile">
+    <title><?= "userProfile" ?></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="<?= URL ?>public/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<?= URL ?>public/css/userProfile.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Copse" rel="stylesheet">
+
+    <!-- ===== BOX ICONS ===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="<?= URL ?>public/bootstrap/js/bootstrap.js"></script>
+
+</head>
+
+
+<body id="body-pd">
+<header class="header" id="header">
+    <div class="header__toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+
+    <div class="header__img">
+        <?php echo $_SESSION['name_user']?>
+        <img src="assets/img/perfil.jpg" alt="">
+    </div>
+</header>
+
+<div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+        <div>
+            <a href="userProfil&actionType=pending" class="nav__logo">
+                <i class='bx bx-store nav__logo-icon''></i>
+                <span class="nav__logo-name">AINDIA</span>
+            </a>
+
+            <div class="nav__list">
+
+                <a href="#" class="nav__link">
+                    <i class='bx bx-user-circle  nav__icon' ></i>
+                    <span class="nav__name">PROFIL</span>
+                </a>
+
+                <!-- Dashboard -->
+                <div  class="submenu">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="nav__name ml-3">OFFRES</span>
+                    <i class='bx bx-chevron-down' id="collapse__link"></i>
+                    <ul class="collapse__menu">
+                        <li><a href="userProfil&actionType=pending" class="collapse__sublink">Attentes</a></li>
+                        <li><a href="userProfil&actionType=moderated"  class="collapse__sublink">Modérées</a></li>
+                        <li><a href="userProfil&actionType=hided"  class="collapse__sublink">Retirées</a></li>
+                        <li><a href="userProfil&actionType=blocked"  class="collapse__sublink">Bloquées</a></li>
+                    </ul>
+                </div>
+                <!-- Dashboard -->
+
+                <a href="#" class="nav__link">
+                    <i class='bx bx-wallet nav__icon'></i>
+                    <span class="nav__name">PAIEMENTS</span>
+                </a>
+
             </div>
         </div>
-    </div>
+
+        <a href="userLogout"class="nav__link logout">
+            <i class='bx bx-log-out nav__icon' ></i>
+            <span class="nav__name">Déconnexion</span>
+        </a>
+    </nav>
 </div>
 
+<section class="home-section mt-2">
+    <?= $contentView ?>
+</section>
+
+<!--===== MAIN JS =====-->
+<script src="<?= URL ?>public/js/userProfile.js"></script>
+</body>
+
+
+<!--
+<body>
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("open");
+        menuBtnChange();//calling the function(optional)
+    });
+
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+        sidebar.classList.toggle("open");
+        menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+        if(sidebar.classList.contains("open")){
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+        }else {
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+        }
+    }
+</script>
+</body>
+-->
+
+</html>
 
 
 
-<?php
-$content = ob_get_clean();
-require "views/commons/template.php";
-
-?>

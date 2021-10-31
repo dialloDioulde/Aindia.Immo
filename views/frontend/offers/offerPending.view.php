@@ -36,7 +36,7 @@ ob_start();
                         </div>
                     </div>
                     <!-- Début : Édition d'une Offre -->
-                    <div class="modal fade offerEditModal" id="offerEditModal<?= $offer['id_offer'] ?>" role="dialog">
+                    <div class="modal fade offerEditModal mt-5" id="offerEditModal<?= $offer['id_offer'] ?>" role="dialog">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">

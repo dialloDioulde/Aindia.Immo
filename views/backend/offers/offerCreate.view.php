@@ -129,7 +129,7 @@ ob_start();
                     <label for="offerDescription">Description : </label>
                     <textarea class="form-control" id="offerDescription" name="offerDescription" rows="4"
                               placeholder="ex : Nous mettons en location notre maison au bord de la mer..."
-                              onkeyup="inputFieldValidation(this, 'offerDescriptionError', regexOnlyIntAndLetters, descriptionMessage)"></textarea>
+                              onkeyup="inputFieldValidation(this, 'offerDescriptionError', regexOnlyLettersDescription, descriptionMessage)"></textarea>
                     <span class="error mb-1" id="offerDescriptionError"></span>
                 </div>
                 <div class="form-group">

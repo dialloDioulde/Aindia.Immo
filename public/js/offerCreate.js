@@ -42,15 +42,17 @@ addEventListener("load", function () {
 // Display form submit button
 function displayFormBtnSubmit() {
     if (offerTimeIsValid && offerPiecesIsValid && offerAreaIsValid && offerPriceIsValid && offerCountryIsValid && offerCityIsValid
-        && offerPostalCodeIsValid && offerAddressIsValid && offerDescriptionIsValid && offerDateIsValid && offerImageIsValid)
+        && offerPostalCodeIsValid && offerAddressIsValid && offerDescriptionIsValid && offerDateIsValid && offerImageIsValid) {
         formBtnSubmitID.disabled = false;
+    }
 }
 
 // Regex
-const regexIntAndFloat = /^(?![0,]+$)\d+(\,\d{1,2})?$/;
-const regexOnlyIntAndLetters = /^[A-Za-z0-9\sàâçéèêëîïôûùüÿñæœ',]*$/;
-const regexOnlyInt = /^[1-9]\d*$/;
-const regexOnlyLetters = /^[A-Za-z\sàâçéèêëîïôûùüÿñæœ',]*$/;
+let regexIntAndFloat = /^(?![0,]+$)\d+(\,\d{1,2})?$/;
+let regexOnlyIntAndLetters = /^[A-Za-z0-9\sàâçéèêëîïôûùüÿñæœ',]*$/;
+let regexOnlyInt = /^[1-9]\d*$/;
+let regexOnlyLetters = /^[A-Za-z\sàâçéèêëîïôûùüÿñæœ',]*$/;
+let regexOnlyLettersDescription = /^[A-Za-z0-9\sàâçéèêëîïôûùüÿñæœ.',]*$/;
 
 // Message of errors
 let timeErrorMessage = 'Saisir la durée du contrat';

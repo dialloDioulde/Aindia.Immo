@@ -73,7 +73,7 @@ $(document).ready(function () {
                     idOfferParam, offerImages, idOffer, displayOfferImagesDivContentId);
             }
         });
-        $("#offerDisplayModal").modal('show');
+        $("#offerDisplayModal").appendTo("body").modal('show');
     });
 
     // Récupération des informations de l'offre à éditer à partir de son ID
@@ -82,7 +82,7 @@ $(document).ready(function () {
         $(".editNotificationMessage").html("");
         let id_offer = $(this).data('id');
         let offer_edit_modal = "#offerEditModal" + id_offer;
-        $(offer_edit_modal).modal('show');
+        $(offer_edit_modal).appendTo("body").modal('show');
         offerIdToDeleteImages = id_offer;
     });
 
@@ -164,7 +164,7 @@ $(document).ready(function () {
     $(".offerDeleteBtn").click(function () {
         idOfferToDelete = parseInt($(this).data('id'));
         document.getElementById("deleteOfferMessage").innerHTML = "Êtes vous sûr de vouloir supprimer l'offre numéro" + " " + idOfferToDelete + " " + " ?";
-        $("#offerDeleteModal").modal('show');
+        $("#offerDeleteModal").appendTo("body").modal('show');
     });
 
     // Suppression de l'offre selectionnée par son Id
