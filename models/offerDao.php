@@ -120,6 +120,32 @@ function getOfferByStatusIdAndOfferOwnerId($offerStatusId, $offerOwnerId): array
     return $offers;
 }
 
+// ******************
+function getUserOffersList($offerStatusId, $offerOwnerId, $offset, $numberOfLinesPerPage): array
+{
+    $database = connexionPDO();
+    $query = 'SELECT * FROM offers o
+        INNER JOIN offers_approval oa on o.id_offer = oa.id_offer
+        INNER JOIN approval a on a.id_approval = oa.id_approval
+        WHERE oa.id_approval = :offer_status_id AND offer_owner = :offer_owner
+        LIMIT :offset, :limit;
+    ';
+    $request = $database->prepare($query);
+    $request->bindValue(":offer_status_id",$offerStatusId,PDO::PARAM_INT);
+    $request->bindValue(":offer_owner", $offerOwnerId, PDO::PARAM_INT);
+    //$request->execute([$numberOfLinesPerPage, $offset]);
+    //$request->execute(['limit' => $numberOfLinesPerPage, 'offsett' => $offset]);
+    //$request->execute(['limit' => 2, 'offsett' => 2]);
+    $request->bindParam(':offset',$offset, PDO::PARAM_INT);
+    $request->bindParam(':limit', $numberOfLinesPerPage, PDO::PARAM_INT);
+    //$request->bindValue(":number_of_lines_per_page", $numberOfLinesPerPage, PDO::PARAM_INT);
+    //$request->bindValue(":offset_page", $offset, PDO::PARAM_INT);
+    $request->execute();
+    $offers = $request->fetchAll(PDO::FETCH_ASSOC);
+    $request->closeCursor();
+    return $offers;
+}
+
 
 // Édition des informations d'une offre à partir de son Id
 function updateOfferById($offerId, $category, $price, $availablity, $public, $contract, $description, $pieces,

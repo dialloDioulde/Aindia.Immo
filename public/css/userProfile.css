@@ -40,7 +40,9 @@ a{
     text-decoration: none;
 }
 
-/*===== HEADER =====*/
+/*========================================================
+                    HEADER
+========================================================*/
 .header{
     width: 100%;
     height: var(--header-height);
@@ -75,7 +77,9 @@ a{
     width: 40px;
 }
 
-/*===== NAV =====*/
+/*========================================================
+                    NAV
+========================================================*/
 .l-navbar{
     position: fixed;
     top: 0;
@@ -95,6 +99,7 @@ a{
     justify-content: space-between;
     overflow: hidden;
 }
+
 .bx-chevron-down{
     cursor: pointer;
 }
@@ -108,7 +113,6 @@ a{
 
 .nav__logo{
     margin-bottom: 2rem;
-    /* text-decoration: none;*/
 }
 
 .nav__logo-icon{
@@ -117,14 +121,13 @@ a{
 }
 
 .nav__logo-name{
-    /*color: var(--white-color);*/
     font-weight: 700;
 }
 
 .nav__logo .nav__logo-name {
     color: white;
 }
-/**/
+
 .nav a {
     text-decoration: none;
 }
@@ -135,7 +138,6 @@ a{
     border-radius: 12px;
     background-color: #AFA5D9;
 }
-/**/
 
 .nav__link{
     position: relative;
@@ -147,7 +149,7 @@ a{
 .nav__link:hover{
     color: var(--white-color);
 }
-/* My Code */
+
 .nav .nav__list a {
     text-decoration: none;
     background: #11101D;
@@ -158,9 +160,10 @@ a{
     transition: all 0.5s ease;
     background: #FFF;
 }
-/**/
 
-/* Logout  */
+/*========================================================
+                    LOGOUT
+========================================================*/
 .nav .logout {
     text-decoration: none;
     background: #11101D;
@@ -176,7 +179,6 @@ a{
     font-size: 1.25rem;
 }
 
-/*Show navbar movil*/
 .showHeader{
     left: 0;
 }
@@ -197,10 +199,11 @@ a{
     left: 0;
     width: 2px;
     height: 32px;
-    /*background-color: var(--white-color); */
 }
 
-/*===== COLLAPSE =====*/
+/*========================================================
+                    COLLAPSE
+========================================================*/
 .collapse__sublink{
     color: var(--sub-color);
     font-size: 20px;
@@ -238,14 +241,13 @@ a{
     padding: 5px;
 }
 
-/*Rotate icon*/
 .rotate{
     transform: rotate(180deg);
 }
 
-/*===== COLLAPSE =====*/
-
-/*Home section*/
+/*========================================================
+                    HOME SECTION
+========================================================*/
 .home-section{
     position: relative;
     background: #E4E9F7;
@@ -255,8 +257,14 @@ a{
     transition: all 0.5s ease;
     z-index: 2;
 }
-/*Home Section*/
 
+/*========================================================
+                    BUTTON
+========================================================*/
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
 
 /*========================================================
                     IMAGES
@@ -271,8 +279,28 @@ a{
     width: 130px;
 }
 
+/*========================================================
+                    Offer Dashboard Pagination
+========================================================*/
+#offer-dashboard-pagination {
+    display: flex;
+    padding: .75rem 2.25rem;
+    list-style: none;
+    justify-content: center;
+}
 
-/* ===== MEDIA QUERIES=====*/
+#offer-dashboard-pagination li {
+    margin: 2px;
+    padding: 4px;
+}
+#offer-dashboard-pagination li a {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/*========================================================
+                    MEDIA QUERIES
+========================================================*/
 @media screen and (min-width: 768px){
     body{
         margin: calc(var(--header-height) + 1rem) 0 0 0;

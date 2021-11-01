@@ -9,14 +9,13 @@ require_once "models/publicDao.php";
 require_once "models/categoryDao.php";
 require_once "models/userDao.php";
 require_once "models/statusDao..php";
+require_once "public/utils/getPagination.php";
 
 // Fonction qui renvoie la view ACCUEIL
 function getOffersViews() {
     $title = "Accueil";
     $description = "Page d'accueil et présentation des offres";
-
     $offers = getOffers();
-
     require_once "views/frontend/offers/offers.view.php";
 }
 
@@ -60,29 +59,77 @@ function getContactView() {
 }
 
 
-//  Fonction qui renvoie la page de profile de l'utilisateur
+// Fonction qui renvoie la page de profile de l'utilisateur
 function getUserProfilView() {
     $title = "Profile";
     $description = "Page de profil de l'utilisateur";
 
     $contentView = "";
     if (isset($_GET["actionType"]) && $_GET["actionType"] === "approved") {
-        $offers = getOfferByStatusIdAndOfferOwnerId(1, $_SESSION["id"]);
+        $title = "Offres Approuvées";
+        $description = "Page contenant les offres approuvées";
+        $OFFER_HEADER_TITLE = "Offres Approuvées";
+        $getPagination = getPagination(1, $_SERVER['REQUEST_URI']);
+        $offers = $getPagination[0];
+        $totalNumberOfPages = $getPagination[1];
+        $viewHasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerApproved.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "pending") {
-        $offers = getOfferByStatusIdAndOfferOwnerId(6, $_SESSION["id"]);
+        $title = "Offres en Attentes";
+        $description = "Page contenant les offres en attantes d'approbation";
+        $OFFER_HEADER_TITLE = "Offres en Attentes d'approbation";
+        $getPagination = getPagination(6, $_SERVER['REQUEST_URI']);
+        $offers = $getPagination[0];
+        $totalNumberOfPages = $getPagination[1];
+        $viewHasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerPending.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "moderated") {
-        $offers = getOfferByStatusIdAndOfferOwnerId(3, $_SESSION["id"]);
+        $title = "Offres Modérées";
+        $description = "Page contenant les offres modérées par nos services";
+        $OFFER_HEADER_TITLE = "Offres Modérées";
+        $getPagination = getPagination(3, $_SERVER['REQUEST_URI']);
+        $offers = $getPagination[0];
+        $totalNumberOfPages = $getPagination[1];
+        $viewHasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerModerated.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "hided") {
-        $offers = getOfferByStatusIdAndOfferOwnerId(4, $_SESSION["id"]);
+        $title = "Offres Retirées";
+        $description = "Page contenant les offres retirées de notre système";
+        $OFFER_HEADER_TITLE = "Offres Retirées";
+        $getPagination = getPagination(4, $_SERVER['REQUEST_URI']);
+        $offers = $getPagination[0];
+        $totalNumberOfPages = $getPagination[1];
+        $viewHasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerHided.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "blocked") {
-        $offers = getOfferByStatusIdAndOfferOwnerId(5, $_SESSION["id"]);
+        $title = "Offres Bloquées";
+        $description = "Page contenant les offres retirées de notre système";
+        $OFFER_HEADER_TITLE = "Offres Bloquées";
+        $getPagination = getPagination(5, $_SERVER['REQUEST_URI']);
+        $offers = $getPagination[0];
+        $totalNumberOfPages = $getPagination[1];
+        $viewHasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerBlocked.view.php";
     }
     require_once "views/frontend/account/userProfil.view.php";
 }
 
 
+
+/*
+        $title = "Offres Approuvées";
+        $description = "Page contenant les offres approuvées";
+        $OFFER_HEADER_TITLE = "Offres Approuvées";
+        $currentPageUri = explode("?", $_SERVER['REQUEST_URI']);
+        $currentPageUriItemsCount = count($currentPageUri);
+        $currentPage = Security::securityHtml(substr($currentPageUri[1], strpos($currentPageUri[1], "=") + 1));
+        $numberTotalOfOffer = count(getOfferByStatusIdAndOfferOwnerId(1, $_SESSION["id"]));
+        $numberOfLinesPerPage = 2;
+        $offset = 0;
+        if ($currentPageUriItemsCount === 1)
+            $offset = 0;
+        if ($currentPageUriItemsCount === 2)
+            $offset = ($currentPage - 1) * $numberOfLinesPerPage;
+        $offers = getUserOffersList(1, $_SESSION["id"], $offset, $numberOfLinesPerPage);
+        $totalNumberOfPages = ceil($numberTotalOfOffer / $numberOfLinesPerPage);
+         */

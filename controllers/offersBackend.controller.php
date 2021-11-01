@@ -10,7 +10,6 @@ require_once "models/userDao.php";
 require_once "models/imageDao.php";
 require_once "models/statusDao..php";
 
-
 // Création d'une offre via AJAX
 function createOfferWithAJAX() {
     $response = array(

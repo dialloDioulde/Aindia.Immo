@@ -1,7 +1,7 @@
 <?php
 
 // Génération de token
-function generateToken()
+function generateToken(): string
 {
     $str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $token = '';
