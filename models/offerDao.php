@@ -120,7 +120,14 @@ function getOfferByStatusIdAndOfferOwnerId($offerStatusId, $offerOwnerId): array
     return $offers;
 }
 
-// ******************
+/**
+ * Get offer list of user by offer status
+ * @param $offerStatusId
+ * @param $offerOwnerId
+ * @param $offset
+ * @param $numberOfLinesPerPage
+ * @return array
+ */
 function getUserOffersList($offerStatusId, $offerOwnerId, $offset, $numberOfLinesPerPage): array
 {
     $database = connexionPDO();
@@ -133,13 +140,8 @@ function getUserOffersList($offerStatusId, $offerOwnerId, $offset, $numberOfLine
     $request = $database->prepare($query);
     $request->bindValue(":offer_status_id",$offerStatusId,PDO::PARAM_INT);
     $request->bindValue(":offer_owner", $offerOwnerId, PDO::PARAM_INT);
-    //$request->execute([$numberOfLinesPerPage, $offset]);
-    //$request->execute(['limit' => $numberOfLinesPerPage, 'offsett' => $offset]);
-    //$request->execute(['limit' => 2, 'offsett' => 2]);
     $request->bindParam(':offset',$offset, PDO::PARAM_INT);
     $request->bindParam(':limit', $numberOfLinesPerPage, PDO::PARAM_INT);
-    //$request->bindValue(":number_of_lines_per_page", $numberOfLinesPerPage, PDO::PARAM_INT);
-    //$request->bindValue(":offset_page", $offset, PDO::PARAM_INT);
     $request->execute();
     $offers = $request->fetchAll(PDO::FETCH_ASSOC);
     $request->closeCursor();
@@ -147,7 +149,25 @@ function getUserOffersList($offerStatusId, $offerOwnerId, $offset, $numberOfLine
 }
 
 
-// Édition des informations d'une offre à partir de son Id
+/**
+ * Editing the information of an offer from its Id
+ * @param $offerId
+ * @param $category
+ * @param $price
+ * @param $availablity
+ * @param $public
+ * @param $contract
+ * @param $description
+ * @param $pieces
+ * @param $area
+ * @param $country
+ * @param $city
+ * @param $address
+ * @param $postalCode
+ * @param $offerPeculiarity
+ * @param $offerUpdateDate
+ * @return bool
+ */
 function updateOfferById($offerId, $category, $price, $availablity, $public, $contract, $description, $pieces,
                          $area, $country, $city, $address, $postalCode, $offerPeculiarity, $offerUpdateDate): bool
 {

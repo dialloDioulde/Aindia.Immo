@@ -72,7 +72,7 @@ function getUserProfilView() {
         $getPagination = getPagination(1, $_SERVER['REQUEST_URI']);
         $offers = $getPagination[0];
         $totalNumberOfPages = $getPagination[1];
-        $viewHasPagination = $getPagination[2];
+        $hasPagination = $getPagination[2];
         require_once "views/frontend/offers/offerApproved.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "pending") {
         $title = "Offres en Attentes";
@@ -81,8 +81,9 @@ function getUserProfilView() {
         $getPagination = getPagination(6, $_SERVER['REQUEST_URI']);
         $offers = $getPagination[0];
         $totalNumberOfPages = $getPagination[1];
-        $viewHasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerPending.view.php";
+        $hasPagination = $getPagination[2];
+        //require_once "views/frontend/offers/offerPending.view.php";
+        require_once "views/frontend/offers/offerApproved.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "moderated") {
         $title = "Offres Modérées";
         $description = "Page contenant les offres modérées par nos services";
@@ -90,8 +91,9 @@ function getUserProfilView() {
         $getPagination = getPagination(3, $_SERVER['REQUEST_URI']);
         $offers = $getPagination[0];
         $totalNumberOfPages = $getPagination[1];
-        $viewHasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerModerated.view.php";
+        $hasPagination = $getPagination[2];
+        //require_once "views/frontend/offers/offerModerated.view.php";
+        require_once "views/frontend/offers/offerApproved.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "hided") {
         $title = "Offres Retirées";
         $description = "Page contenant les offres retirées de notre système";
@@ -99,8 +101,9 @@ function getUserProfilView() {
         $getPagination = getPagination(4, $_SERVER['REQUEST_URI']);
         $offers = $getPagination[0];
         $totalNumberOfPages = $getPagination[1];
-        $viewHasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerHided.view.php";
+        $hasPagination = $getPagination[2];
+        //require_once "views/frontend/offers/offerHided.view.php";
+        require_once "views/frontend/offers/offerApproved.view.php";
     } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "blocked") {
         $title = "Offres Bloquées";
         $description = "Page contenant les offres retirées de notre système";
@@ -108,28 +111,10 @@ function getUserProfilView() {
         $getPagination = getPagination(5, $_SERVER['REQUEST_URI']);
         $offers = $getPagination[0];
         $totalNumberOfPages = $getPagination[1];
-        $viewHasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerBlocked.view.php";
+        $hasPagination = $getPagination[2];
+        require_once "views/frontend/offers/offerApproved.view.php";
+        //require_once "views/frontend/offers/offerBlocked.view.php";
     }
     require_once "views/frontend/account/userProfil.view.php";
 }
 
-
-
-/*
-        $title = "Offres Approuvées";
-        $description = "Page contenant les offres approuvées";
-        $OFFER_HEADER_TITLE = "Offres Approuvées";
-        $currentPageUri = explode("?", $_SERVER['REQUEST_URI']);
-        $currentPageUriItemsCount = count($currentPageUri);
-        $currentPage = Security::securityHtml(substr($currentPageUri[1], strpos($currentPageUri[1], "=") + 1));
-        $numberTotalOfOffer = count(getOfferByStatusIdAndOfferOwnerId(1, $_SESSION["id"]));
-        $numberOfLinesPerPage = 2;
-        $offset = 0;
-        if ($currentPageUriItemsCount === 1)
-            $offset = 0;
-        if ($currentPageUriItemsCount === 2)
-            $offset = ($currentPage - 1) * $numberOfLinesPerPage;
-        $offers = getUserOffersList(1, $_SESSION["id"], $offset, $numberOfLinesPerPage);
-        $totalNumberOfPages = ceil($numberTotalOfOffer / $numberOfLinesPerPage);
-         */

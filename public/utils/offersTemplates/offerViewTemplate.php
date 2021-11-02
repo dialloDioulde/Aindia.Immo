@@ -252,16 +252,18 @@ ob_start();
         <!-- Offers Table -->
 
         <!-- Pagination -->
-        <?php if ($viewHasPagination) : ?>
         <ul id="offer-dashboard-pagination">
-            <?php for ($i = 1; $i <= $totalNumberOfPages; $i++) :?>
-                <li class="<?php if ($currentPage == $i) {echo  'active';} ?> bg-dark">
-                    <a href="?page=<?php  echo $i; ?>" class="text-white"><?php  echo $i; ?></a>
+        <?php if ($hasPagination) : ?>
+            <?php for ($i = 1; $i <= $totalNumberOfPages; $i++) : ?>
+                <li class="<?php if ($currentPage == $i) {
+                    echo 'active';
+                } ?> bg-dark">
+                    <a href="?page=<?php echo $i; ?>" class="text-white"><?php echo $i; ?></a>
                 </li>
             <?php endfor; ?>
-        </ul>
+            </ul>
+        <?php endif; ?>
         <!-- Pagination -->
-    <?php endif; ?>
     <?php } ?>
 </div>
 

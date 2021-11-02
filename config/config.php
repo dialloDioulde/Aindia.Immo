@@ -20,7 +20,7 @@ const USER_NAME = "root";
 const PASSWORD = "root";
 
 
-
+// Cookie
 const COOKIE_PROTECT = "hersougool";
 
 
@@ -42,6 +42,7 @@ const ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = "Une erreur est survenue lors 
 const ALERT_USER_EMAIL_NOT_EXIST_ERROR = "Utilisateur inconnu de notre system";
 const ALERT_USER_RESET_PASSWORD_IS_OK = "Votre mot de passe a bien été modifié";
 
+
 // Constantes lées aux offres
 const ALERT_OFFER_CREATE = "Votre Offre a bien été créée";
 const ALERT_OFFER_CREATE_ERROR = "Une erreur est survenue lors de l'enregistrement des informations saisies";
@@ -52,27 +53,21 @@ const ALERT_OFFER_CREATE_FILE_EXTENSION_ERROR = "Seules les extensions png, jpeg
 const ALERT_OFFER_CREATE_NUMBER_OF_IMAGES = "Vous devez chosir au moins 4 images";
 const ALERT_OFFER_UPDATE = "Votre offre a bien été mise à jour";
 const ALERT_OFFER_UPDATE_ERROR = "Une érreur est survenue lors de mise à jour de votre offre";
-
-
 const ALERT_OFFER_STATUS_UPDATE = "Offre mis à jour avec succés";
 const ALERT_OFFER_STATUS_UPDATE_ERROR = "Une erreur est survenue lors de la mise à jour de l'offre";
+
+const OFFER_APPROVED_VIEW_TITLE = "Offres Approuvées";
+const OFFER_PENDING_VIEW_TITLE = "Offres en Attentes";
+const OFFER_MODERATED_VIEW_TITLE = "Offres Modérées";
+const OFFER_HIDED_VIEW_TITLE = "Offres Retirées";
+const OFFER_BLOCKED_VIEW_TITLE = "Offres Bloquées";
+
+
+
 
 
 
 // Récupération du Chemin Absolu
 define("URL", str_replace("index.php", "", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]"));
 
-/*
- $addImageResponse = array(
-    'status' => 0,
-    'A_O_C' => ALERT_OFFER_CREATE,
-    'A_O_U' => ALERT_OFFER_UPDATE,
-    'A_O_C_I_I_TO_D_E' => ALERT_OFFER_CREATE_INSERT_IMAGE_TO_DATABASE_ERROR,
-    'A_O_C_U_F_E' => ALERT_OFFER_CREATE_UPLOAD_FILE_ERROR,
-    'A_O_C_F_EXI_E' => ALERT_OFFER_CREATE_FILE_EXIST_ERROR,
-    'A_O_C_F_EXT_E' => ALERT_OFFER_CREATE_FILE_EXTENSION_ERROR,
-    'data' => '',
-);
- */
 
-?>
