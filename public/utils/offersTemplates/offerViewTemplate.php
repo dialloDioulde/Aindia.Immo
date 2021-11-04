@@ -3,7 +3,7 @@ ob_start();
 ?>
 
 <div class="container p-2">
-    <h3 class="text-center"><?= $OFFER_HEADER_TITLE ?></h3>
+    <h3 class="text-center"><?= $viewHeaderTitle ?></h3>
     <?php if (count($offers) > 0) { ?>
         <!-- Offers Table -->
         <table class="table">

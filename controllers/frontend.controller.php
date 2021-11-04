@@ -9,7 +9,7 @@ require_once "models/publicDao.php";
 require_once "models/categoryDao.php";
 require_once "models/userDao.php";
 require_once "models/statusDao..php";
-require_once "public/utils/getPagination.php";
+require_once "public/utils/viewDataCustomization.php";
 
 // Fonction qui renvoie la view ACCUEIL
 function getOffersViews() {
@@ -58,62 +58,22 @@ function getContactView() {
     require_once "views/frontend/contacts/contact.view.php";
 }
 
-
-// Fonction qui renvoie la page de profile de l'utilisateur
+/**
+ * Fonction qui renvoie la page de profile de l'utilisateur
+ */
 function getUserProfilView() {
     $title = "Profile";
     $description = "Page de profil de l'utilisateur";
-
     $contentView = "";
-    if (isset($_GET["actionType"]) && $_GET["actionType"] === "approved") {
-        $title = "Offres Approuvées";
-        $description = "Page contenant les offres approuvées";
-        $OFFER_HEADER_TITLE = "Offres Approuvées";
-        $getPagination = getPagination(1, $_SERVER['REQUEST_URI']);
-        $offers = $getPagination[0];
-        $totalNumberOfPages = $getPagination[1];
-        $hasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerApproved.view.php";
-    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "pending") {
-        $title = "Offres en Attentes";
-        $description = "Page contenant les offres en attantes d'approbation";
-        $OFFER_HEADER_TITLE = "Offres en Attentes d'approbation";
-        $getPagination = getPagination(6, $_SERVER['REQUEST_URI']);
-        $offers = $getPagination[0];
-        $totalNumberOfPages = $getPagination[1];
-        $hasPagination = $getPagination[2];
-        //require_once "views/frontend/offers/offerPending.view.php";
-        require_once "views/frontend/offers/offerApproved.view.php";
-    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "moderated") {
-        $title = "Offres Modérées";
-        $description = "Page contenant les offres modérées par nos services";
-        $OFFER_HEADER_TITLE = "Offres Modérées";
-        $getPagination = getPagination(3, $_SERVER['REQUEST_URI']);
-        $offers = $getPagination[0];
-        $totalNumberOfPages = $getPagination[1];
-        $hasPagination = $getPagination[2];
-        //require_once "views/frontend/offers/offerModerated.view.php";
-        require_once "views/frontend/offers/offerApproved.view.php";
-    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "hided") {
-        $title = "Offres Retirées";
-        $description = "Page contenant les offres retirées de notre système";
-        $OFFER_HEADER_TITLE = "Offres Retirées";
-        $getPagination = getPagination(4, $_SERVER['REQUEST_URI']);
-        $offers = $getPagination[0];
-        $totalNumberOfPages = $getPagination[1];
-        $hasPagination = $getPagination[2];
-        //require_once "views/frontend/offers/offerHided.view.php";
-        require_once "views/frontend/offers/offerApproved.view.php";
-    } elseif (isset($_GET["actionType"]) && $_GET["actionType"] === "blocked") {
-        $title = "Offres Bloquées";
-        $description = "Page contenant les offres retirées de notre système";
-        $OFFER_HEADER_TITLE = "Offres Bloquées";
-        $getPagination = getPagination(5, $_SERVER['REQUEST_URI']);
-        $offers = $getPagination[0];
-        $totalNumberOfPages = $getPagination[1];
-        $hasPagination = $getPagination[2];
-        require_once "views/frontend/offers/offerApproved.view.php";
-        //require_once "views/frontend/offers/offerBlocked.view.php";
+    if (isset($_GET["actionType"]) && !empty($_GET["actionType"]) ) {
+        $actionType = Security::securityHtml($_GET["actionType"]);
+        $viewDataCustomization = viewDataCustomization($actionType, $_SERVER['REQUEST_URI']);
+        $viewHeaderTitle = $title = $viewDataCustomization[0];
+        $description = $viewDataCustomization[1];
+        $offers = $viewDataCustomization[2];
+        $totalNumberOfPages = $viewDataCustomization[3];
+        $hasPagination = $viewDataCustomization[4];
+        require_once "./public/utils/offersTemplates/offerViewTemplate.php";
     }
     require_once "views/frontend/account/userProfil.view.php";
 }

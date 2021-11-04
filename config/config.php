@@ -56,15 +56,23 @@ const ALERT_OFFER_UPDATE_ERROR = "Une érreur est survenue lors de mise à jour 
 const ALERT_OFFER_STATUS_UPDATE = "Offre mis à jour avec succés";
 const ALERT_OFFER_STATUS_UPDATE_ERROR = "Une erreur est survenue lors de la mise à jour de l'offre";
 
+const APPROVED = "approved";
+const MODERATED = "moderated";
+const HIDED = "hided";
+const BLOCKED = "blocked";
+const PENDING = "pending";
+
 const OFFER_APPROVED_VIEW_TITLE = "Offres Approuvées";
 const OFFER_PENDING_VIEW_TITLE = "Offres en Attentes";
 const OFFER_MODERATED_VIEW_TITLE = "Offres Modérées";
 const OFFER_HIDED_VIEW_TITLE = "Offres Retirées";
 const OFFER_BLOCKED_VIEW_TITLE = "Offres Bloquées";
 
-
-
-
+const OFFER_APPROVED_VIEW_DESCRIPTION = "Page contenant les offres approuvées";
+const OFFER_PENDING_VIEW_DESCRIPTION = "Page contenant les offres en attantes d'approbation";
+const OFFER_MODERATED_VIEW_DESCRIPTION = "Page contenant les offres modérées par nos services";
+const OFFER_HIDED_VIEW_DESCRIPTION = "Page contenant les offres retirées de notre système";
+const OFFER_BLOCKED_VIEW_DESCRIPTION = "Page contenant les offres bloquées de notre système";
 
 
 // Récupération du Chemin Absolu

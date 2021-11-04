@@ -102,7 +102,12 @@ function getOfferByOwner($offerOwnerId): array
     return $offer;
 }
 
-// Récupérer une offre par son statut et l'Id de son auteur
+/**
+ * Get offer by his id and owner id
+ * @param $offerStatusId
+ * @param $offerOwnerId
+ * @return array
+ */
 function getOfferByStatusIdAndOfferOwnerId($offerStatusId, $offerOwnerId): array
 {
     $database = connexionPDO();

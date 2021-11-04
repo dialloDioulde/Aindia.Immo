@@ -1,7 +1,12 @@
 <?php
 
-
-function getCheckBoxValue($checkBoxFieldValue): string {
+/**
+ * Get checkbox value
+ * @param $checkBoxFieldValue
+ * @return string
+ */
+function getCheckBoxValue($checkBoxFieldValue): string
+{
     $offerShowerAndKitchen = array();
     foreach($checkBoxFieldValue as $checkBoxValue)
     {
@@ -16,6 +21,5 @@ function getCheckBoxValue($checkBoxFieldValue): string {
             $offerPeculiarity .= $offerShowerAndKitchen[$i] . "," . " ";
         }
     }
-
     return $offerPeculiarity;
 }
