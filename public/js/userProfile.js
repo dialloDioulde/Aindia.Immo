@@ -1,4 +1,10 @@
-// Show Navbar
+/**
+ * Show Navbar
+ * @param toggleId
+ * @param navId
+ * @param bodyId
+ * @param headerId
+ */
 const showNavbar = (toggleId, navId, bodyId, headerId) =>{
     const toggle = document.getElementById(toggleId),
         nav = document.getElementById(navId),

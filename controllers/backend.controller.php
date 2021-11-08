@@ -29,12 +29,11 @@ function userRegisterView()
         isset($_POST['password']) && !empty($_POST['password']) &&
         isset($_POST['passwordConfirmation']) && !empty($_POST['passwordConfirmation'])
     ) {
-        $username = Security::securityHtml($_POST['username']);
-        $email = Security::securityHtml($_POST['email']);
-        $password = Security::securityHtml($_POST['password']);
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
         $token = generateToken();
         $createDate = date("Y-m-d H:i:s");
-        echo $createDate;
 
         $usernameResult = getUserByUsername($username);
         $emailResult = getUserByEmail($email);
@@ -67,8 +66,8 @@ function getUserLogin()
     $description = "Page de Connexion";
     if (isset($_POST['username']) && !empty($_POST['username']) &&
         isset($_POST['password']) && !empty($_POST['password'])) {
-        $username = Security::securityHtml($_POST['username']);
-        $password = Security::securityHtml($_POST['password']);
+        $username = $_POST['username'];
+        $password = $_POST['password'];
         if (loginUser($username, $password)) {
             $user = getUserByUsername($username);
             $_SESSION['id'] = $user['id_user'];
@@ -131,7 +130,7 @@ function getUserResetPasswordSendLinkView() {
     $ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = "";
     $ALERT_USER_EMAIL_NOT_EXIST_ERROR = "";
     if (isset($_POST['email']) && !empty($_POST['email'])) {
-        $email = Security::securityHtml($_POST['email']);
+        $email = $_POST['email'];
         $verifyIfUserExist = getUserByEmail($email);
         if ($verifyIfUserExist > 0) {
             $token = generateToken();
@@ -169,7 +168,7 @@ function getUserResetPasswordView() {
     if ($user > 0) {
         if (isset($_POST['password']) && !empty($_POST['password']) &&
             isset($_POST['passwordConfirmation']) && !empty($_POST['passwordConfirmation'])) {
-            $password = Security::securityHtml($_POST['password']);
+            $password = $_POST['password'];
             $result = updateUserPassword($email, $password, $updateDate);
             if ($result)
                 $ALERT_USER_RESET_PASSWORD_IS_OK = ALERT_USER_RESET_PASSWORD_IS_OK;

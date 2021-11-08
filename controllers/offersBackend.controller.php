@@ -32,18 +32,18 @@ function createOfferWithAJAX() {
         isset($_POST['offerPostalCode']) && !empty($_POST['offerPostalCode']) &&
         isset($_POST['checkBoxValue']) && !empty($_POST['checkBoxValue'])
     ) {
-        $offerCategory = Security::securityHtml($_POST['offerCategory']);
-        $offerPrice = Security::securityHtml($_POST['offerPrice']);
-        $offerAvailable = Security::securityHtml($_POST['offerAvailable']);
-        $offerPeople = Security::securityHtml($_POST['offerPeople']);
-        $offerTime = Security::securityHtml($_POST['offerTime']);
-        $offerDescription = Security::securityHtml($_POST['offerDescription']);
-        $offerPieces = Security::securityHtml($_POST['offerPieces']);
-        $offerArea = Security::securityHtml($_POST['offerArea']);
-        $offerCountry = Security::securityHtml($_POST['offerCountry']);
-        $offerCity = Security::securityHtml($_POST['offerCity']);
-        $offerAddress = Security::securityHtml($_POST['offerAddress']);
-        $offerPostalCode = Security::securityHtml($_POST['offerPostalCode']);
+        $offerCategory = $_POST['offerCategory'];
+        $offerPrice = $_POST['offerPrice'];
+        $offerAvailable = $_POST['offerAvailable'];
+        $offerPeople = $_POST['offerPeople'];
+        $offerTime = $_POST['offerTime'];
+        $offerDescription = htmlspecialchars($_POST['offerDescription']);
+        $offerPieces = $_POST['offerPieces'];
+        $offerArea = $_POST['offerArea'];
+        $offerCountry = $_POST['offerCountry'];
+        $offerCity = $_POST['offerCity'];
+        $offerAddress = $_POST['offerAddress'];
+        $offerPostalCode = $_POST['offerPostalCode'];
         $numberOfImage = count($_FILES["offerImage"]['name']);
         $offerPeculiarity = getCheckBoxValue($_POST['checkBoxValue']);
         $offerCreateDate = date("Y-m-d H:i:s");
@@ -75,7 +75,7 @@ function createOfferWithAJAX() {
 // Récupération des données d'une offre à partir de son ID via AJAX
 function getDataOfOfferWithAJAX() {
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $offerId = Security::securityHtml($_POST['offerId']);
+        $offerId = $_POST['offerId'];
         $offer = getOfferById($offerId);
         echo json_encode($offer);
     }
@@ -91,7 +91,7 @@ function getAllDataOfOfferWithAJAX() {
         'offerCategory' => '',
     );
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $offerId = Security::securityHtml($_POST['offerId']);
+        $offerId = $_POST['offerId'];
         $offer = getOfferById($offerId);
         $data['offerOwner'] = getUserById($offer['offer_owner']);
         $data['offerImages'] = getImagesOfOffer($offerId);
@@ -125,20 +125,20 @@ function updateDataOfOfferWithAJAX() {
         isset($_POST['offerPostalCode']) && !empty($_POST['offerPostalCode']) &&
         isset($_POST['checkBoxValue']) && !empty($_POST['checkBoxValue'])
     ) {
-        $offerCategory = Security::securityHtml($_POST['offerCategory']);
-        $offerPrice = Security::securityHtml($_POST['offerPrice']);
-        $offerAvailable = Security::securityHtml($_POST['offerAvailable']);
-        $offerPeople = Security::securityHtml($_POST['offerPeople']);
-        $offerTime = Security::securityHtml($_POST['offerTime']);
-        $offerDescription = Security::securityHtml($_POST['offerDescription']);
-        $offerPieces = Security::securityHtml($_POST['offerPieces']);
-        $offerArea = Security::securityHtml($_POST['offerArea']);
-        $offerCountry = Security::securityHtml($_POST['offerCountry']);
-        $offerCity = Security::securityHtml($_POST['offerCity']);
-        $offerAddress = Security::securityHtml($_POST['offerAddress']);
-        $offerPostalCode = Security::securityHtml($_POST['offerPostalCode']);
-        $imagesToDelete = Security::securityHtml($_POST['imagesToDelete']);
-        $offerId = Security::securityHtml($_POST['offerId']);
+        $offerCategory = $_POST['offerCategory'];
+        $offerPrice = $_POST['offerPrice'];
+        $offerAvailable = $_POST['offerAvailable'];
+        $offerPeople = $_POST['offerPeople'];
+        $offerTime = $_POST['offerTime'];
+        $offerDescription = $_POST['offerDescription'];
+        $offerPieces = $_POST['offerPieces'];
+        $offerArea = $_POST['offerArea'];
+        $offerCountry = $_POST['offerCountry'];
+        $offerCity = $_POST['offerCity'];
+        $offerAddress = $_POST['offerAddress'];
+        $offerPostalCode = $_POST['offerPostalCode'];
+        $imagesToDelete = $_POST['imagesToDelete'];
+        $offerId = $_POST['offerId'];
         $offerPeculiarity = getCheckBoxValue($_POST['checkBoxValue']);
         $offerUpdateDate = date("Y-m-d H:i:s");
 
@@ -179,7 +179,7 @@ function updateDataOfOfferWithAJAX() {
 // Récupération des données d'une offre à partir de son ID via AJAX
 function getStatusOfOfferWithAJAX() {
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $offerId = Security::securityHtml($_POST['offerId']);
+        $offerId = $_POST['offerId'];
         $offerStatus = getStatusOfOfferById($offerId);
         echo json_encode($offerStatus);
     }
@@ -193,8 +193,8 @@ function editOfferStatusWithAJAX() {
     );
     if (isset($_POST['offerId']) && !empty($_POST['offerId']) &&
         isset($_POST['e_offerStatus']) && !empty($_POST['e_offerStatus'])) {
-        $offerId = Security::securityHtml($_POST['offerId']);
-        $offerStatusId = Security::securityHtml($_POST['e_offerStatus']);
+        $offerId = $_POST['offerId'];
+        $offerStatusId = $_POST['e_offerStatus'];
         $result = updateOfferStatusById($offerId, $offerStatusId);
         if ($result > 0) {
             $response['status'] = 1;
@@ -213,7 +213,7 @@ function getImagesOfOfferByIdWithAJAX() {
         'imageData' => '',
     );
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
-        $offerId = Security::securityHtml($_POST['offerId']);
+        $offerId = $_POST['offerId'];
         $data['offerId'] = $offerId;
         $data['imageData'] = getImagesOfOffer($offerId);
         echo json_encode($data);
@@ -230,7 +230,7 @@ function deleteOfferByIdWithAJAX() {
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
         if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
             $offerOwner = (int)$_SESSION['id'];
-            $offerId = Security::securityHtml($_POST['offerId']);
+            $offerId = $_POST['offerId'];
             $result = deleteOfferById($offerId, $offerOwner);
             if ($result) {
                 $data['status'] = 1;
@@ -253,7 +253,7 @@ function deleteOfferByIdAndAdminStatusWithAJAX() {
     );
     if (isset($_POST['offerId']) && !empty($_POST['offerId'])) {
         if (isset($_SESSION['id']) && !empty($_SESSION['id']) && $_SESSION['role_is_admin']) {
-            $offerId = Security::securityHtml($_POST['offerId']);
+            $offerId = $_POST['offerId'];
             $result = deleteOfferWithAdminStatus($offerId);
             if ($result) {
                 $data['status'] = 1;

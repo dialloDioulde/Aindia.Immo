@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Files Import
  */
 require_once "config/config.php";
@@ -13,9 +13,8 @@ require_once "models/userDao.php";
 require_once "models/statusDao..php";
 
 /**
- * Custom offer list Pagination
+ * View data customization
  * @param $actionType
- * @param $offerStatusId
  * @param $uri
  * @return array
  */
@@ -43,7 +42,6 @@ function viewDataCustomization($actionType, $uri): array
         $offerStatusId = 6;
         array_push($titleAndDescription,OFFER_PENDING_VIEW_TITLE, OFFER_PENDING_VIEW_DESCRIPTION);
     }
-
     $currentPageUri = explode("?", $uri);
     $currentPageUriItemsCount = count($currentPageUri);
     $currentPage = Security::securityHtml(substr($currentPageUri[1], strpos($currentPageUri[1], "=") + 1));
@@ -59,7 +57,6 @@ function viewDataCustomization($actionType, $uri): array
     $hasPagination = true;
     if ($numberTotalOfOffer <= $numberOfLinesPerPage)
         $hasPagination = false;
-
     return array($titleAndDescription[0], $titleAndDescription[1], $offers, $totalNumberOfPages, $hasPagination);
 }
 

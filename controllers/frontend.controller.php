@@ -24,7 +24,7 @@ function getOfferDetailsView() {
 
     if(isset($_GET['id_offer']) && !empty($_GET['id_offer'])) {
 
-        $id_offer = Security::securityHtml($_GET['id_offer']);
+        $id_offer = $_GET['id_offer'];
         $offer = getOfferById($id_offer);
         $images = getImagesOfOffer($offer['id_offer']);
         $publicOffer = getPublicOfOffer($offer['public_offer']);
@@ -66,7 +66,7 @@ function getUserProfilView() {
     $description = "Page de profil de l'utilisateur";
     $contentView = "";
     if (isset($_GET["actionType"]) && !empty($_GET["actionType"]) ) {
-        $actionType = Security::securityHtml($_GET["actionType"]);
+        $actionType = $_GET["actionType"];
         $viewDataCustomization = viewDataCustomization($actionType, $_SERVER['REQUEST_URI']);
         $viewHeaderTitle = $title = $viewDataCustomization[0];
         $description = $viewDataCustomization[1];

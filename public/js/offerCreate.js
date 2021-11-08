@@ -1,6 +1,12 @@
-// Offer creation
+/**
+ * Offer creation
+ */
 $("#createOfferForm").submit( function (e) {
     e.preventDefault();
+    let spanTags = document.getElementsByClassName("error");
+    for (const spanTag of spanTags) {
+        spanTag.textContent = " ";
+    }
     $.ajax({
         type: 'POST',
         url: 'createOfferWithAJAX',
@@ -13,6 +19,7 @@ $("#createOfferForm").submit( function (e) {
             if (response.status === 1) {
                 $('.notificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
                 $("#createOfferForm")[0].reset();
+                formBtnSubmitID.disabled = true;
             } else {
                 $('.notificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
             }
@@ -20,7 +27,11 @@ $("#createOfferForm").submit( function (e) {
     });
 });
 
-// Input fields validation
+
+/**
+ * Input fields validation
+ * @type {boolean}
+ */
 let offerTimeIsValid = false;
 let offerPiecesIsValid = false;
 let offerAreaIsValid = false;
@@ -33,13 +44,18 @@ let offerDescriptionIsValid = false;
 let offerDateIsValid = false;
 let offerImageIsValid = false;
 
-// Disable form submit button after loading page
+/**
+ * Disable form submit button after loading page
+ * @type {HTMLElement}
+ */
 let formBtnSubmitID = document.getElementById('btnSubmit');
 addEventListener("load", function () {
     formBtnSubmitID.disabled = true;
 });
 
-// Display form submit button
+/**
+ * Display form submit button
+ */
 function displayFormBtnSubmit() {
     if (offerTimeIsValid && offerPiecesIsValid && offerAreaIsValid && offerPriceIsValid && offerCountryIsValid && offerCityIsValid
         && offerPostalCodeIsValid && offerAddressIsValid && offerDescriptionIsValid && offerDateIsValid && offerImageIsValid) {
@@ -47,14 +63,20 @@ function displayFormBtnSubmit() {
     }
 }
 
-// Regex
+/**
+ * Regex
+ * @type {RegExp}
+ */
 let regexIntAndFloat = /^(?![0,]+$)\d+(\,\d{1,2})?$/;
 let regexOnlyIntAndLetters = /^[A-Za-z0-9\sàâçéèêëîïôûùüÿñæœ',]*$/;
 let regexOnlyInt = /^[1-9]\d*$/;
 let regexOnlyLetters = /^[A-Za-z\sàâçéèêëîïôûùüÿñæœ',]*$/;
 let regexOnlyLettersDescription = /^[A-Za-z0-9\sàâçéèêëîïôûùüÿñæœ.',]*$/;
 
-// Message of errors
+/**
+ * Message of errors
+ * @type {string}
+ */
 let timeErrorMessage = 'Saisir la durée du contrat';
 let countryErrorMessage = 'Saisir le pays';
 let cityErrorMessage = 'Indiquer la ville';
@@ -65,7 +87,13 @@ let areaErrorMessage = 'Indiquer la surface en m2';
 let priceErrorMessage = 'Saisir le montant du loyé';
 let descriptionMessage = 'Veuillez saisir une petite description de votre offre de location';
 
-// This function is called in the php script for the input field validation
+/**
+ * This function is called in the php script for the input field validation
+ * @param inputField
+ * @param inputStatusNotificationFieldId
+ * @param regexApply
+ * @param errorMessage
+ */
 function inputFieldValidation(inputField, inputStatusNotificationFieldId, regexApply, errorMessage) {
     let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
     if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
@@ -73,6 +101,7 @@ function inputFieldValidation(inputField, inputStatusNotificationFieldId, regexA
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Saisie Correcte', 'green');
             fieldStatusValidation(inputStatusNotificationFieldId);
             displayFormBtnSubmit();
+            //formBtnSubmitID.disabled = false;
         } else {
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '2px solid red', "Saisie incorrecte", 'red');
         }
@@ -82,7 +111,10 @@ function inputFieldValidation(inputField, inputStatusNotificationFieldId, regexA
     }
 }
 
-// This function allows to set status of input field to Valid
+/**
+ * This function allows to set status of input field to Valid
+ * @param inputStatusNotificationFieldId
+ */
 function fieldStatusValidation(inputStatusNotificationFieldId) {
     if (inputStatusNotificationFieldId === 'offerTimeError')
         offerTimeIsValid = true;
@@ -104,7 +136,11 @@ function fieldStatusValidation(inputStatusNotificationFieldId) {
         offerDescriptionIsValid = true;
 }
 
-// Count number of spaces in input value
+/**
+ * Count number of spaces in input value
+ * @param fieldValue
+ * @returns {number}
+ */
 function calculateNumberOfSpaces(fieldValue) {
     let numberOfSpaces = 0;
     for (let i = 0; i < fieldValue.length; i++) {
@@ -115,12 +151,23 @@ function calculateNumberOfSpaces(fieldValue) {
     return numberOfSpaces;
 }
 
-// Verify if input field value contain only spaces
+/**
+ * Verify if input field value contain only spaces
+ * @param fieldValue
+ * @returns {boolean}
+ */
 function verifyIfFieldValueContainOnlySpaces(fieldValue) {
     return calculateNumberOfSpaces(fieldValue) === fieldValue.length;
 }
 
-// This function allows to display date input field validation status notification
+/**
+ * This function allows to display date input field validation status notification
+ * @param inputField
+ * @param inputNotification
+ * @param border
+ * @param textContent
+ * @param color
+ */
 function displayInputFieldValidationStatus(inputField, inputNotification, border, textContent, color) {
     formBtnSubmitID.disabled = true;
     inputField.style.border = border;
@@ -128,7 +175,9 @@ function displayInputFieldValidationStatus(inputField, inputNotification, border
     inputNotification.style.color = color;
 }
 
-// Date input field validation
+/**
+ * Date input field validation
+ */
 $('#offerAvailable').on('change', function(){
     let offerAvailableInputField = document.getElementById("offerAvailable");
     let inputStatusNotificationField = document.getElementById('offerAvailableError');
@@ -147,8 +196,14 @@ $('#offerAvailable').on('change', function(){
     }
 });
 
-// Image input field validation
+/**
+ *
+ * @type {string[]}
+ */
 let imageExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+/**
+ * Image input field validation
+ */
 $('#offerImage').on('change', function(){
     let offerImage = document.getElementById("offerImage");
     let inputStatusNotificationField = document.getElementById("offerImageError");
@@ -171,4 +226,5 @@ $('#offerImage').on('change', function(){
         displayFormBtnSubmit();
     }
 });
+
 
