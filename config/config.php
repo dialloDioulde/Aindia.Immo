@@ -41,7 +41,9 @@ const ALERT_USER_RESET_PASSWORD_LINK_SENT = "Un lien vous permettant de procéde
 const ALERT_USER_RESET_PASSWORD_LINK_SENT_ERROR = "Une erreur est survenue lors de la prise en compte de votre requête";
 const ALERT_USER_EMAIL_NOT_EXIST_ERROR = "Utilisateur inconnu de notre system";
 const ALERT_USER_RESET_PASSWORD_IS_OK = "Votre mot de passe a bien été modifié";
-
+const ALERT_USER_CHANGE_PASSWORD_IS_OK = "Votre mot de passe a bien été modifié";
+const ALERT_USER_CHANGE_PASSWORD_ERROR = "Mot de passe invalide";
+const ALERT_ACTION_ERROR_COMMON = "Une erreur est survenue lors de l'enregistrement des informations saisies";
 
 // Constantes lées aux offres
 const ALERT_OFFER_CREATE = "Votre Offre a bien été créée";

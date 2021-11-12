@@ -189,7 +189,8 @@ $(document).ready(function () {
             if (idOfferParam === parseInt(idOffer)) {
                 let imageDivContent = '<div id="'+imageDivContentId+'">';
                 for (let i = 0; i < imageData.length; i++) {
-                    let image = '<img style="height: 100px; width: 100px;" src="'+ imageData[i]['url_image'] +'" class="m-1 image-to-edit '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'"/>';
+                    //let image = '<img style="height: 100px; width: 100px;" src="'+ imageData[i]['url_image'] +'" class="m-1 image-to-edit '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'"/>';
+                    let image = '<img src="'+ imageData[i]['url_image'] +'" class="m-1 image-to-edit '+ imgTagClassName +'" alt="'+ imageData[i]['name_image'] +'" data-id="'+ imageData[i]['id_image'] +'"/>';
                     imageDivContent += image;
                 }
                 imageDivContent += '</div>';

@@ -4,7 +4,7 @@ session_start();
 require_once "controllers/frontend.controller.php";
 require_once "controllers/backend.controller.php";
 require_once "controllers/offersBackend.controller.php";
-//require_once "controllers/usersBackend.controller.php";
+require_once "controllers/usersBackend.controller.php";
 require_once "config/Security.class.php";
 
 try {
@@ -58,6 +58,8 @@ try {
             case "userResetPasswordSendLink": getUserResetPasswordSendLinkView();
             break;
             case "userResetPassword": getUserResetPasswordView();
+            break;
+            case "changeUserPassword": changeUserPassword();
             break;
             case "error301":
             case "error302":

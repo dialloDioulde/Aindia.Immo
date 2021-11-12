@@ -74,6 +74,8 @@ function getUserProfilView() {
         $totalNumberOfPages = $viewDataCustomization[3];
         $hasPagination = $viewDataCustomization[4];
         require_once "./public/utils/offersTemplates/offerViewTemplate.php";
+    } else {
+        require_once "views/frontend/account/userDataView.view.php";
     }
     require_once "views/frontend/account/userProfil.view.php";
 }

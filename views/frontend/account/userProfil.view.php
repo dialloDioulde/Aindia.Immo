@@ -34,12 +34,8 @@
     <div class="header__toggle">
         <i class='bx bx-menu' id="header-toggle"></i>
     </div>
-
-    <div class="header__img">
-        <?php echo $_SESSION['name_user']?>
-        <img src="assets/img/perfil.jpg" alt="">
-    </div>
 </header>
+
 
 <div class="l-navbar" id="nav-bar">
     <nav class="nav">
