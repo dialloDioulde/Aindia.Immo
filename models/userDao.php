@@ -168,3 +168,20 @@ function updateUserPassword($email, $password, $updateDate): bool
     if ($result > 0) return true;
     return false;
 }
+
+
+function updateUsernameAndEmail($userId, $email, $username, $updateDate): bool
+{
+    $database = connexionPDO();
+    $query = 'UPDATE users SET email_user = :email, name_user = :username, update_date_user = :update_date    
+        WHERE id_user = :userId';
+    $request = $database->prepare($query);
+    $request->bindValue(":userId", $userId, PDO::PARAM_INT);
+    $request->bindValue(":email", $email, PDO::PARAM_STR);
+    $request->bindValue(":username", $username, PDO::PARAM_STR);
+    $request->bindValue(":update_date", $updateDate, PDO::PARAM_STR);
+    $result = $request->execute();
+    $request->closeCursor();
+    if ($result > 0) return true;
+    return false;
+}

@@ -207,3 +207,68 @@ function displayFormBtnSubmit() {
     if (currentPasswordIsValid && newPasswordIsValid && confirmationIsValid)
         formBtnSubmitID.disabled = false;
 }
+
+/**
+ * UPDATE USERNAME AND EMAIL
+ */
+$(".name_user").click(function () {
+    $('.notificationMessage').html('');
+    $(".userEditEmailAndUsernameModal").appendTo("body").modal('show');
+});
+
+$(".userEditEmailAndUsernameModalCancelBtn").click(function () {
+    $(".userEditEmailAndUsernameModal").modal('hide');
+});
+
+let emailAndUsernameSubmitBtn = document.getElementById("userEditEmailAndUsernameModalFormSubmitBtn");
+
+/**
+ * Username input field validation
+ * @param inputField
+ * @param inputStatusNotificationFieldId
+ */
+function usernameInputFieldValidation(inputField, inputStatusNotificationFieldId) {
+    let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
+    if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+        if (inputField.value.length >= 3) {
+            if (inputField.value.match(regexUsername)) {
+                displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', "Pseudo valide", 'green');
+                emailAndUsernameSubmitBtn.disabled = false;
+            } else {
+                displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Seules les lettres et le caractère tiré (_) sont autorisés', 'red');
+                emailAndUsernameSubmitBtn.disabled = true;
+            }
+        }
+        if (inputField.value.length < 3) {
+            displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Le pseudo doit avoir 3 caractères au minimum', 'red');
+            emailAndUsernameSubmitBtn.disabled = true;
+        }
+    }
+    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+        displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Un pseudo est obligatoire', 'red');
+        emailAndUsernameSubmitBtn.disabled = true;
+    }
+}
+
+
+/**
+ * Email input field validation
+ * @param inputField
+ * @param inputStatusNotificationFieldId
+ */
+function emailInputFieldValidation(inputField, inputStatusNotificationFieldId) {
+    let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
+    if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+        if (inputField.value.match(regexEmail)) {
+            displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Email valide', 'green');
+            emailAndUsernameSubmitBtn.disabled = false;
+        } else {
+            displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', "L'adresse email saisie est invalide", 'red');
+            emailAndUsernameSubmitBtn.disabled = true;
+        }
+    }
+    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+        displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Un email est obligatoire', 'red');
+        emailAndUsernameSubmitBtn.disabled = true;
+    }
+}

@@ -35,7 +35,7 @@ function inputUsernameValidation(usernameInputFieldValue) {
                 displayFormBtnSubmit(usernameIsValid, emailIsValid, passwordIsValid, passwordConfirmationIsValid);
             } else {
                 disableFormBtnSubmit();
-                usernameErrorInputField.textContent = 'Seuls les lettres et le caractère tiré (-) sont autorisés';
+                usernameErrorInputField.textContent = 'Seuls les lettres et le caractère tiré (_) sont autorisés';
                 usernameErrorInputField.style.color = 'red';
             }
         } else {

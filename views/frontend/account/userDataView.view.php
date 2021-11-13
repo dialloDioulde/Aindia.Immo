@@ -8,9 +8,9 @@ ob_start();
         <div class="card shadow mt-5 p-2">
             <h3 class="">Mes Informations Personnelles <i class='bx bxs-message-square-edit userEditIcon'></i></h3>
             <div class="border-top mt-2 p-2">
-                <p><?php echo $_SESSION['name_user']; ?>
+                <p class="name_user"><?php echo $_SESSION['name_user']; ?>
                 </p>
-                <p><?php echo $_SESSION['email_user']; ?>
+                <p class="email_user"><?php echo $_SESSION['email_user']; ?>
                 </p>
             </div>
         </div>
@@ -18,7 +18,7 @@ ob_start();
 </div>
 
 
-<!-- user edit form -->
+<!-- user change password  form -->
 <div class="modal fade userEditModal p-2" id="userEditModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -63,7 +63,50 @@ ob_start();
         </div>
     </div>
 </div>
-<!-- user edit form -->
+<!-- user change password form -->
+
+
+<!-- user change email and username  form -->
+<div class="modal fade userEditEmailAndUsernameModal p-2" id="userEditEmailAndUsernameModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userEditEmailAndUsernameModalTitle">Modification d'Informations Personnelles</h5>
+            </div>
+            <div class="notificationMessage p-2"></div>
+            <form id="userEditEmailAndUsernameModalForm" class="userEditEmailAndUsernameModalForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="newUsername" name="username"
+                               placeholder="Saisir votre pseudo"
+                               onkeyup="usernameInputFieldValidation(this, 'newUsernameError')"
+                               value="<?= $_SESSION['name_user'] ?>"
+                        >
+                        <span class="error mb-1" id="newUsernameError"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" id="newEmail" name="email"
+                               placeholder="Renseigner un email"
+                               onkeyup="emailInputFieldValidation(this, 'newEmailError')"
+                               value="<?= $_SESSION['email_user'] ?>"
+                        >
+                        <span class="error mb-1" id="newEmailError"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary userEditEmailAndUsernameModalCancelBtn"
+                                data-bs-dismiss="modal">ANNULER
+                        </button>
+                        <button type="submit" class="btn btn-primary" name="userEditEmailAndUsernameModalFormSubmitBtn"
+                                id="userEditEmailAndUsernameModalFormSubmitBtn">
+                            VALIDER
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- user change email and username  form -->
 
 <script src="<?= URL ?>public/js/user.js"></script>
 

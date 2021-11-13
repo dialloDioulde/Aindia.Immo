@@ -27,13 +27,48 @@ function changeUserPassword()
         $currentPassword = htmlspecialchars($_POST['currentPassword']);
         $newPassword = htmlspecialchars($_POST['newPassword']);
         $updateDate = date("Y-m-d H:i:s");
-        if (loginUser($_SESSION['name_user'], $currentPassword)) {
-            $result = updateUserPassword($_SESSION['email_user'], $newPassword, $updateDate);
-            if ($result)
-                $response['status'] = 1;
-                $response['message'] = ALERT_USER_CHANGE_PASSWORD_IS_OK;
+
+        if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
+            $user = loginUser($_SESSION['name_user'], $currentPassword);
+            if ($user) {
+                $result = updateUserPassword($_SESSION['email_user'], $newPassword, $updateDate);
+                if ($result) {
+                    $response['status'] = 1;
+                    $response['message'] = ALERT_USER_CHANGE_PASSWORD_IS_OK;
+                }
+            }
+            if (!$user)
+                $response['message'] = ALERT_USER_CHANGE_PASSWORD_ERROR;
         } else {
-            $response['message'] = ALERT_USER_CHANGE_PASSWORD_ERROR;
+            $response['message'] = ALERT_USER_NOT_LOGIN_ERROR;
+        }
+    }
+    echo json_encode($response);
+}
+
+/**
+ * Update Email and Username
+ */
+function updateUserEmailAndUsername() {
+    $response = array(
+        'status' => 0,
+        'message' => ALERT_ACTION_ERROR_COMMON,
+    );
+    if (isset($_POST['username']) && !empty($_POST['username']) &&
+        isset($_POST['email']) && !empty($_POST['email']))
+    {
+        $username = htmlspecialchars($_POST['username']);
+        $email = htmlspecialchars($_POST['email']);
+        $updateDate = date("Y-m-d H:i:s");
+        if (isset($_SESSION['id']) && !empty($_SESSION['id']))
+        {
+            $result = updateUsernameAndEmail($_SESSION['id'], $email, $username, $updateDate);
+            if ($result) {
+                $response['status'] = 1;
+                $response['message'] = ALERT_USER_CHANGE_USERNAME_AND_EMAIL_IS_OK;
+            }
+        } else {
+            $response['message'] = ALERT_USER_NOT_LOGIN_ERROR;
         }
     }
     echo json_encode($response);

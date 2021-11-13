@@ -61,6 +61,8 @@ try {
             break;
             case "changeUserPassword": changeUserPassword();
             break;
+            case "updateUserEmailAndUsername": updateUserEmailAndUsername();
+            break;
             case "error301":
             case "error302":
             case "error400":
