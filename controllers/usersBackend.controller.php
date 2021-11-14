@@ -66,6 +66,8 @@ function updateUserEmailAndUsername() {
             if ($result) {
                 $response['status'] = 1;
                 $response['message'] = ALERT_USER_CHANGE_USERNAME_AND_EMAIL_IS_OK;
+                $_SESSION['name_user'] = $username;
+                $_SESSION['email_user'] = $email;
             }
         } else {
             $response['message'] = ALERT_USER_NOT_LOGIN_ERROR;

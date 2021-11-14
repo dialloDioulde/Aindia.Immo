@@ -1,3 +1,6 @@
+/**
+ * CHANGE USER PASSWORD
+ */
 $(".userEditIcon").click(function () {
     formBtnSubmitID.disabled = true;
     $('.notificationMessage').html('');
@@ -39,7 +42,7 @@ $(".userEditCancelBtn").click(function () {
  *
  * @type {HTMLElement}
  */
-let formBtnSubmitID = document.getElementById('userEditFormSubmitBtn');
+let formBtnSubmitID = document.getElementById('userFormSubmitBtn');
 
 /**
  * Regex
@@ -80,16 +83,19 @@ function inputFieldValidation(inputField, inputStatusNotificationFieldId, regexA
             } else {
                 manageFieldValueStatus(inputStatusNotificationFieldId);
                 displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Le mot de passe doit avoir au moins un caractère spécial (?!;/%@_#)', 'red');
+                formBtnSubmitID.disabled = true;
             }
         }
         if (inputField.value.length < 8) {
             manageFieldValueStatus(inputStatusNotificationFieldId);
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Le mot de passe doit avoir 8 caractères au minimum', 'red');
+            formBtnSubmitID.disabled = true;
         }
     }
     if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
         manageFieldValueStatus(inputStatusNotificationFieldId);
         displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', passwordInvalidMessage, 'red');
+        formBtnSubmitID.disabled = true;
     }
 }
 
@@ -109,6 +115,7 @@ function displayFieldValidNotification(inputField, inputStatusNotificationFieldI
         } else {
             manageFieldValueStatus(inputStatusNotificationFieldId);
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', "Les mots de passes ne correspondent pas", 'red');
+            formBtnSubmitID.disabled = true;
         }
     } else {
         displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', passwordValidMessage, 'green');
@@ -163,7 +170,6 @@ function verifyIfFieldValueContainOnlySpaces(fieldValue) {
  * @param color
  */
 function displayInputFieldValidationStatus(inputField, inputNotification, border, textContent, color) {
-    formBtnSubmitID.disabled = true;
     inputField.style.border = border;
     inputNotification.textContent = textContent;
     inputNotification.style.color = color;
@@ -228,26 +234,21 @@ let emailAndUsernameSubmitBtn = document.getElementById("userEditEmailAndUsernam
  * @param inputStatusNotificationFieldId
  */
 function usernameInputFieldValidation(inputField, inputStatusNotificationFieldId) {
+    emailAndUsernameSubmitBtn.disabled = true;
     let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
     if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
         if (inputField.value.length >= 3) {
             if (inputField.value.match(regexUsername)) {
                 displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', "Pseudo valide", 'green');
                 emailAndUsernameSubmitBtn.disabled = false;
-            } else {
+            } else
                 displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Seules les lettres et le caractère tiré (_) sont autorisés', 'red');
-                emailAndUsernameSubmitBtn.disabled = true;
-            }
         }
-        if (inputField.value.length < 3) {
+        if (inputField.value.length < 3)
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Le pseudo doit avoir 3 caractères au minimum', 'red');
-            emailAndUsernameSubmitBtn.disabled = true;
-        }
     }
-    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value))
         displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Un pseudo est obligatoire', 'red');
-        emailAndUsernameSubmitBtn.disabled = true;
-    }
 }
 
 
@@ -257,18 +258,41 @@ function usernameInputFieldValidation(inputField, inputStatusNotificationFieldId
  * @param inputStatusNotificationFieldId
  */
 function emailInputFieldValidation(inputField, inputStatusNotificationFieldId) {
+    emailAndUsernameSubmitBtn.disabled = true;
     let inputStatusNotificationField = document.getElementById(inputStatusNotificationFieldId);
     if (inputField.value !== '' && !verifyIfFieldValueContainOnlySpaces(inputField.value)) {
         if (inputField.value.match(regexEmail)) {
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Email valide', 'green');
             emailAndUsernameSubmitBtn.disabled = false;
-        } else {
+        } else
             displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', "L'adresse email saisie est invalide", 'red');
-            emailAndUsernameSubmitBtn.disabled = true;
-        }
     }
-    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value)) {
+    if (inputField.value === '' || verifyIfFieldValueContainOnlySpaces(inputField.value))
         displayInputFieldValidationStatus(inputField, inputStatusNotificationField, '', 'Un email est obligatoire', 'red');
-        emailAndUsernameSubmitBtn.disabled = true;
-    }
 }
+
+
+$(".userEditEmailAndUsernameModalForm").submit(function (e) {
+    e.preventDefault();
+    let spanTags = document.getElementsByClassName("error");
+    for (const spanTag of spanTags) {
+        spanTag.textContent = " ";
+    }
+    $.ajax({
+        type: 'POST',
+        url: 'updateUserEmailAndUsername',
+        data: new FormData(this),
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            $('.notificationMessage').html('');
+            if (response.status === 1) {
+                $('.notificationMessage').html('<p class="alert alert-success">'+response.message+'</p>');
+                $(".userEditForm")[0].reset();
+            } else {
+                $('.notificationMessage').html('<p class="alert alert-danger">'+response.message+'</p>');
+            }
+        }
+    });
+});

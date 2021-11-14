@@ -53,8 +53,8 @@ ob_start();
                         <button type="button" class="btn btn-secondary userEditCancelBtn"
                                 data-bs-dismiss="modal">Annuler
                         </button>
-                        <button type="submit" class="btn btn-primary" name="userEditFormSubmitBtn"
-                                id="userEditFormSubmitBtn">
+                        <button type="submit" class="btn btn-primary" name="userFormSubmitBtn"
+                                id="userFormSubmitBtn">
                             Mettre À Jour
                         </button>
                     </div>
